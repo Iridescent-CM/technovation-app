@@ -1,9 +1,9 @@
 <template>
-  <button @click.prevent="$emit('next')" class="registration-btns">Next</button>
+  <button class="registration-btns" @click.prevent="$emit('next')">Next</button>
 </template>
 
 <script>
 export default {
-  name: "NextButton"
-}
+  name: "NextButton",
+};
 </script>

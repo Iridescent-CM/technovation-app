@@ -4,15 +4,15 @@
     <div id="profile-type" class="form-wrapper">
       <div
         v-if="
-          (this.inviteCode != null || this.teamInviteCode != null) &&
-          this.successMessage.length > 0
+          (inviteCode != null || teamInviteCode != null) &&
+          successMessage.length > 0
         "
       >
         <h2 class="registration-title">Welcome to Technovation Girls!</h2>
 
         <div class="border-l-2 border-energetic-blue bg-blue-50 p-2 mb-8">
           <p class="text-left">
-            {{ this.successMessage }}
+            {{ successMessage }}
           </p>
         </div>
       </div>
@@ -46,16 +46,16 @@
         need to select “I am registering myself and am 13-18 years old.”
       </p>
 
-      <div v-if="this.errorMessage.length > 0">
+      <div v-if="errorMessage.length > 0">
         <div class="border-l-2 border-red-700 bg-red-50 p-2 mt-10">
           <p class="text-left text-rose-900">
-            {{ this.errorMessage }}
+            {{ errorMessage }}
           </p>
         </div>
       </div>
     </div>
 
-    <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
+    <NextButton :disabled="hasValidationErrors" @next="$emit('next')" />
   </div>
 </template>
 
@@ -71,6 +71,12 @@ import { exampleStudentBirthday } from "../../utilities/age-helpers.js";
 export default {
   name: "StepOne",
   components: { ContainerHeader, NextButton },
+  props: {
+    formValues: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       values: {},
@@ -92,6 +98,20 @@ export default {
       ),
       hasValidationErrors: true,
     };
+  },
+  computed: {
+    divisionCutoffDate: divisionCutoffDateFormatted,
+    exampleStudentBirthday,
+  },
+  async created() {
+    await this.getRegistrationSettings();
+    await this.setupProfileTypes();
+
+    if (this.invitedRegistrationProfileType.length > 0) {
+      this.preSelectInvitedProfileType();
+      this.disableNonInvitedProfileTypes();
+      await this.getUserInvitationEmail();
+    }
   },
   methods: {
     async getRegistrationSettings() {
@@ -187,6 +207,7 @@ export default {
             params: { invite_code: this.inviteCode },
           }
         );
+        // eslint-disable-next-line vue/no-mutating-props
         this.formValues.email = response.data.email;
       } catch (error) {
         airbrake.notify({
@@ -239,26 +260,6 @@ export default {
     displayDivisionCutoffDescription() {
       return this.isStudentRegistrationOpen;
     },
-  },
-  computed: {
-    divisionCutoffDate: divisionCutoffDateFormatted,
-    exampleStudentBirthday,
-  },
-  props: {
-    formValues: {
-      type: Object,
-      required: true,
-    },
-  },
-  async created() {
-    await this.getRegistrationSettings();
-    await this.setupProfileTypes();
-
-    if (this.invitedRegistrationProfileType.length > 0) {
-      this.preSelectInvitedProfileType();
-      this.disableNonInvitedProfileTypes();
-      await this.getUserInvitationEmail();
-    }
   },
 };
 </script>

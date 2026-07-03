@@ -37,7 +37,7 @@ export default {
     commit("apiMethod", "patch");
   },
 
-  saveEmail({ commit, state }, { email }) {
+  saveEmail({ state }, { email }) {
     axios
       .post("/registration/email", {
         email: {
@@ -131,7 +131,7 @@ export default {
       .catch((err) => console.error(err));
   },
 
-  updateBasicProfile({ commit, state }, attrs) {
+  updateBasicProfile({ state }, attrs) {
     const data = Object.assign(
       {},
       {
@@ -157,4 +157,3 @@ export default {
     }).catch((err) => console.error(err));
   },
 };
-

@@ -1,14 +1,14 @@
-import Vue from 'vue'
+import Vue from "vue";
 
 export default {
-  addChartEndpoints (state, payload) {
-    const mergedEndpoints = Object.assign({}, state.chartEndpoints, payload)
+  addChartEndpoints(state, payload) {
+    const mergedEndpoints = Object.assign({}, state.chartEndpoints, payload);
     Object.keys(mergedEndpoints).forEach((key) => {
-      Vue.set(state.chartEndpoints, key, mergedEndpoints[key])
-    })
+      Vue.set(state.chartEndpoints, key, mergedEndpoints[key]);
+    });
   },
 
-  addChartDataToCache (state, payload) {
-    Vue.set(state.cachedStates, payload.url, payload.chartData)
+  addChartDataToCache(state, payload) {
+    Vue.set(state.cachedStates, payload.url, payload.chartData);
   },
-}
+};

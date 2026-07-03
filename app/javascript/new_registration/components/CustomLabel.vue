@@ -8,22 +8,24 @@
 
 <script>
 export default {
-  computed: {
-    label() {
-      const validationRules = this.context.rules.map(rule => rule.ruleName)
-
-      if (validationRules.includes("required")) {
-        return this.context.label + "<span class='formulate-required-field'>*</span>"
-      } else {
-        return this.context.label
-      }
-    }
-  },
   props: {
     context: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+  computed: {
+    label() {
+      const validationRules = this.context.rules.map((rule) => rule.ruleName);
+
+      if (validationRules.includes("required")) {
+        return (
+          this.context.label + "<span class='formulate-required-field'>*</span>"
+        );
+      } else {
+        return this.context.label;
+      }
+    },
+  },
+};
 </script>

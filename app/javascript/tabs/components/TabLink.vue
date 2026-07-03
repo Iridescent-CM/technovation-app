@@ -1,15 +1,12 @@
 <template>
   <router-link
-    tag="li"
     :id="id"
+    tag="li"
     :class="['tabs__menu-link'].concat(cssClasses)"
     active-class="tabs__menu-link--active"
     :to="to"
   >
-    <button
-      :class="buttonClasses"
-      v-tooltip="tooltipContent"
-    >
+    <button v-tooltip="tooltipContent" :class="buttonClasses">
       <icon
         :name="completedEnabledOrDisabledIcon"
         size="16"
@@ -22,14 +19,14 @@
 </template>
 
 <script>
-import Icon from 'components/Icon'
+import Icon from "components/Icon";
 
-import { VTooltip } from 'v-tooltip'
+import { VTooltip } from "v-tooltip";
 
-import 'components/tooltip.scss'
+import "components/tooltip.scss";
 
 export default {
-  name: 'tab-link',
+  name: "TabLink",
 
   directives: {
     tooltip: VTooltip,
@@ -48,7 +45,7 @@ export default {
 
     disabledTooltip: {
       type: String,
-      default: '',
+      default: "",
     },
 
     to: {
@@ -69,56 +66,56 @@ export default {
     cssClasses: {
       type: [Array, String],
       required: false,
-      default () { return [] },
+      default() {
+        return [];
+      },
     },
   },
 
   computed: {
-    tooltipContent () {
+    tooltipContent() {
       if (!this.conditionToEnable && this.disabledTooltip.length) {
         return {
           content: this.disabledTooltipMessage,
-          classes: ['tabs__menu-button--tooltip'],
-        }
+          classes: ["tabs__menu-button--tooltip"],
+        };
       } else {
-        return false
+        return false;
       }
     },
 
-    buttonClasses () {
+    buttonClasses() {
       return {
-        'tabs__menu-button': true,
+        "tabs__menu-button": true,
         disabled: !this.conditionToEnable,
-      }
+      };
     },
 
-    completedEnabledOrDisabledIcon () {
-      if (this.conditionToComplete)
-        return 'check-circle'
+    completedEnabledOrDisabledIcon() {
+      if (this.conditionToComplete) return "check-circle";
 
-      return 'circle-o'
+      return "circle-o";
     },
 
-    activeEnabledOrDisabledColor () {
-      if ((this.to.meta && this.to.meta.active) ||
-            this.$route.name === this.to.name)
-        return '000000'
+    activeEnabledOrDisabledColor() {
+      if (
+        (this.to.meta && this.to.meta.active) ||
+        this.$route.name === this.to.name
+      )
+        return "000000";
 
-      if (this.conditionToEnable)
-        return '28A880'
+      if (this.conditionToEnable) return "28A880";
 
-      return '999999'
+      return "999999";
     },
   },
 
   methods: {
-    disabledTooltipMessage () {
-      if (!this.conditionToEnable)
-        return this.disabledTooltip
+    disabledTooltipMessage() {
+      if (!this.conditionToEnable) return this.disabledTooltip;
 
-      return ''
+      return "";
     },
   },
-
-}
+};
 </script>

@@ -1,30 +1,25 @@
 <template>
   <div id="new-event">
-    <p
-    v-if="canCreateEvents"
-    class="grid__cell--padding-sm">
+    <p v-if="canCreateEvents" class="grid__cell--padding-sm">
       <button
+        v-if="!active"
         class="button button--small"
         @click.prevent="active = true"
-        v-if="!active"
-      >+ Add an event</button>
+      >
+        + Add an event
+      </button>
     </p>
 
-    <p
-    v-else
-    class="color--danger">
+    <p v-else class="color--danger">
       New events cannot be created at this time.
     </p>
 
-    <form
-      v-if="active"
-      @submit.prevent="handleSubmit"
-    >
+    <form v-if="active" @submit.prevent="handleSubmit">
       <div class="grid">
         <div class="grid__col-sm-6">
           <label>
             Event name
-            <input type="text" v-model="event.name" />
+            <input v-model="event.name" type="text" />
           </label>
 
           <errors :errors="eventErrors.name"></errors>
@@ -35,9 +30,9 @@
 
           <label>
             <input
+              v-model="eventDivision"
               type="radio"
               name="division"
-              v-model="eventDivision"
               :value="seniorDivisionId"
             />
             Senior division
@@ -45,9 +40,9 @@
 
           <label>
             <input
+              v-model="eventDivision"
               type="radio"
               name="division"
-              v-model="eventDivision"
               :value="juniorDivisionId"
             />
             Junior division
@@ -55,9 +50,9 @@
 
           <label>
             <input
+              v-model="eventDivision"
               type="radio"
               name="division"
-              v-model="eventDivision"
               :value="beginnerDivisionId"
             />
             Beginner division
@@ -69,7 +64,7 @@
         <div class="grid__col-sm-6">
           <label>
             City
-            <input type="text" v-model="event.city" />
+            <input v-model="event.city" type="text" />
           </label>
 
           <errors :errors="eventErrors.city"></errors>
@@ -78,7 +73,7 @@
         <div class="grid__col-sm-6">
           <label>
             Venue address
-            <input type="text" v-model="event.venue_address" />
+            <input v-model="event.venue_address" type="text" />
           </label>
 
           <errors :errors="eventErrors.venue_address"></errors>
@@ -87,9 +82,7 @@
         <div class="grid__col-sm-6">
           <label id="event-date">
             Date
-            <datetime-input
-              v-model="eventDate"
-              :options="dateOpts" />
+            <datetime-input v-model="eventDate" :options="dateOpts" />
           </label>
 
           <errors :errors="eventErrors.date"></errors>
@@ -98,7 +91,8 @@
         <div class="grid__col-6">
           <h6 class="margin--none">Event Time</h6>
           <p class="hint">
-            Please select the time using a 24 hour clock. The time will display to students as the local time zone in your area.
+            Please select the time using a 24 hour clock. The time will display
+            to students as the local time zone in your area.
           </p>
 
           <label id="event-start-time">
@@ -124,16 +118,13 @@
 
         <div class="grid__col-sm-6">
           <label>
-            <input
-              type="checkbox"
-              v-model="showCapacity"
-            />
+            <input v-model="showCapacity" type="checkbox" />
             Set a cap on the number of teams that can attend
           </label>
 
-          <label class="padding--t-medium" v-if="showCapacity">
+          <label v-if="showCapacity" class="padding--t-medium">
             Capacity
-            <integer-input input-name="capacity" v-model="event.capacity" />
+            <integer-input v-model="event.capacity" input-name="capacity" />
           </label>
 
           <errors :errors="eventErrors.capacity"></errors>
@@ -142,7 +133,7 @@
         <div class="grid__col-12">
           <label>
             Event URL (Optional)
-            <input type="text" v-model="event.event_link" />
+            <input v-model="event.event_link" type="text" />
           </label>
 
           <errors :errors="eventErrors.event_link"></errors>
@@ -153,7 +144,7 @@
               :value="saveBtnTxt"
               :disabled="saving"
             />
-            or <a @click.prevent="reset" href="#">cancel</a>
+            or <a href="#" @click.prevent="reset">cancel</a>
           </p>
         </div>
       </div>
@@ -162,409 +153,420 @@
 </template>
 
 <script>
-  import axios from 'axios';
+import axios from "axios";
 
-  import DatetimeInput from "../../components/DatetimeInput";
-  import Errors from '../../components/Errors';
-  import EventBus from '../../components/EventBus';
-  import IntegerInput from 'components/IntegerInput';
+import DatetimeInput from "../../components/DatetimeInput";
+import Errors from "../../components/Errors";
+import EventBus from "../../components/EventBus";
+import IntegerInput from "components/IntegerInput";
 
-  import Event from './Event';
+import Event from "./Event";
 
-  import { airbrake, isEmptyObject } from 'utilities/utilities';
+import { airbrake, isEmptyObject } from "utilities/utilities";
 
-  export default {
-    name: "event-form",
+export default {
+  name: "EventForm",
 
-    components: {
-      App,
-      Errors,
-      DatetimeInput,
-      IntegerInput,
+  components: {
+    Errors,
+    DatetimeInput,
+    IntegerInput,
+  },
+
+  props: [
+    "postUrl",
+    "beginnerDivisionId",
+    "beginnerDivisionName",
+    "juniorDivisionId",
+    "juniorDivisionName",
+    "seniorDivisionId",
+    "seniorDivisionName",
+  ],
+
+  data() {
+    return {
+      saving: false,
+
+      dateOpts: {
+        enableTime: false,
+        altInput: true,
+        altFormat: "l, F J",
+        dateFormat: "Y-m-d",
+        minDate: this.minDate(),
+        maxDate: this.maxDate(),
+      },
+
+      timeOpts: {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        minuteIncrement: 15,
+        minTime: "07:00",
+        maxTime: "23:30",
+      },
+
+      httpMethod: "POST",
+      saveBtnTxt: "Create this event",
+      active: false,
+
+      event: new Event({
+        url: this.postUrl,
+      }),
+
+      eventErrors: {},
+      eventDate: "",
+      eventStartTime: "",
+      eventEndTime: "",
+      eventDivision: null,
+
+      showCapacity: false,
+
+      canCreateEvents: false,
+    };
+  },
+
+  computed: {
+    url() {
+      return this.event.url;
     },
 
-    props: [
-      "postUrl",
-      "beginnerDivisionId",
-      "beginnerDivisionName",
-      "juniorDivisionId",
-      "juniorDivisionName",
-      "seniorDivisionId",
-      "seniorDivisionName",
-    ],
-
-    data () {
-      return {
-        saving: false,
-
-        dateOpts: {
-          enableTime: false,
-          altInput: true,
-          altFormat: "l, F J",
-          dateFormat: "Y-m-d",
-          minDate: this.minDate(),
-          maxDate: this.maxDate(),
-        },
-
-        timeOpts: {
-          enableTime: true,
-          noCalendar: true,
-          dateFormat: "H:i",
-          time_24hr: true,
-          minuteIncrement: 15,
-          minTime: "07:00",
-          maxTime: "23:30",
-        },
-
-        httpMethod: "POST",
-        saveBtnTxt: "Create this event",
-        active: false,
-
-        event: new Event({
-          url: this.postUrl,
-        }),
-
-        eventErrors: {},
-        eventDate: "",
-        eventStartTime: "",
-        eventEndTime: "",
-        eventDivision: null,
-
-        showCapacity: false,
-
-        canCreateEvents: false,
-      };
+    division_ids() {
+      return this.event.division_ids;
     },
 
-    computed: {
-      url () {
-        return this.event.url;
-      },
+    date() {
+      return this.event.date;
+    },
 
+    time() {
+      return this.event.time;
+    },
 
-      division_ids () {
-        return this.event.division_ids;
-      },
-
-      date () {
-        return this.event.date;
-      },
-
-      time () {
-        return this.event.time;
-      },
-
-      startDateInputOptions () {
-        return Object.assign({}, this.timeOpts, {
-          onClose: (_selectedDates, dateStr, instance) => {
-            if (this.eventEndTime !== "") {
-              const startTime = this.createTimeFromString(dateStr);
-              const endTime = this.createTimeFromString(this.eventEndTime);
-              if (startTime > endTime) {
-                this.eventEndTime = "";
-              }
+    startDateInputOptions() {
+      return Object.assign({}, this.timeOpts, {
+        onClose: (_selectedDates, dateStr, _instance) => {
+          if (this.eventEndTime !== "") {
+            const startTime = this.createTimeFromString(dateStr);
+            const endTime = this.createTimeFromString(this.eventEndTime);
+            if (startTime > endTime) {
+              this.eventEndTime = "";
             }
           }
-        });
-      },
+        },
+      });
+    },
 
-      endDateInputOptions () {
-        return Object.assign({}, this.timeOpts, {
-          onOpen: (_selectedDates, _dateStr, instance) => {
-            if (this.eventStartTime !== "") {
-              const startTime = this.createTimeFromString(this.eventStartTime);
+    endDateInputOptions() {
+      return Object.assign({}, this.timeOpts, {
+        onOpen: (_selectedDates, _dateStr, instance) => {
+          if (this.eventStartTime !== "") {
+            const startTime = this.createTimeFromString(this.eventStartTime);
 
-              let endTime = 0;
-              if (this.eventEndTime !== "") {
-                endTime = this.createTimeFromString(this.eventEndTime);
-              }
-
-              if (startTime > endTime) {
-                this.eventEndTime = this.eventStartTime;
-              }
-
-              instance.set('minTime', startTime);
+            let endTime = 0;
+            if (this.eventEndTime !== "") {
+              endTime = this.createTimeFromString(this.eventEndTime);
             }
-          },
-        });
+
+            if (startTime > endTime) {
+              this.eventEndTime = this.eventStartTime;
+            }
+
+            instance.set("minTime", startTime);
+          }
+        },
+      });
+    },
+  },
+
+  watch: {
+    active(current) {
+      if (current) EventBus.$emit("EventForm.active");
+    },
+
+    eventDivision(divisionId) {
+      if (divisionId) {
+        this.event.division_ids = [divisionId];
+      } else {
+        this.event.division_ids = [];
       }
     },
 
-    watch: {
-      active (current) {
-        if (current)
-          EventBus.$emit("EventForm.active");
-      },
+    division_ids(ids) {
+      if (!ids || !ids.length) {
+        this.event.division_names = "";
+        return;
+      }
 
-      eventDivision (divisionId) {
-        if (!!divisionId) {
-          this.event.division_ids = [divisionId];
-        } else {
-          this.event.division_ids = [];
-        }
-      },
+      ids = Array.from(ids || []).map((ids, i) => parseInt(i));
+      this.event.division_names = [];
 
-      division_ids (ids) {
-        if (!ids || !ids.length) {
-          this.event.division_names = "";
-          return;
-        }
+      if (ids.includes(parseInt(this.seniorDivisionId)))
+        this.event.division_names.push(this.seniorDivisionName);
 
-        ids = Array.from(ids || []).map((ids, i) => parseInt(i))
-        this.event.division_names = []
+      if (ids.includes(parseInt(this.juniorDivisionId)))
+        this.event.division_names.push(this.juniorDivisionName);
 
-        if (ids.includes(parseInt(this.seniorDivisionId)))
-          this.event.division_names.push(this.seniorDivisionName);
+      if (ids.includes(parseInt(this.beginnerDivisionId)))
+        this.event.division_names.push(this.beginnerDivisionName);
 
-        if (ids.includes(parseInt(this.juniorDivisionId)))
-          this.event.division_names.push(this.juniorDivisionName);
+      this.event.division_names = this.event.division_names.join(", ");
+    },
 
-        if (ids.includes(parseInt(this.beginnerDivisionId)))
-          this.event.division_names.push(this.beginnerDivisionName);
+    date(val) {
+      if (!val || !val.length) return;
 
-        this.event.division_names = this.event.division_names.join(", ")
-      },
+      var startDateTime = this.event.starts_at.split("T"),
+        endDateTime = this.event.ends_at.split("T");
 
-      date (val) {
-        if (!val || !val.length)
-          return;
+      this.eventDate = startDateTime[0];
+      this.eventStartTime = startDateTime[1].replace(/:00\.000.+/, "");
+      this.eventEndTime = endDateTime[1].replace(/:00\.000.+/, "");
+    },
 
-        var startDateTime = this.event.starts_at.split("T"),
-            endDateTime = this.event.ends_at.split("T");
-
-        this.eventDate = startDateTime[0];
-        this.eventStartTime = startDateTime[1].replace(/:00\.000.+/, "");
-        this.eventEndTime = endDateTime[1].replace(/:00\.000.+/, "");
-      },
-
-      eventDate () {
-        if (this.eventDate.length && this.eventStartTime) {
-          this.event.starts_at = this.eventDate + "T" + this.eventStartTime;
-        }
-
-        if (this.eventDate.length && this.eventEndTime) {
-          this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
-        }
-      },
-
-      eventStartTime () {
+    eventDate() {
+      if (this.eventDate.length && this.eventStartTime) {
         this.event.starts_at = this.eventDate + "T" + this.eventStartTime;
-      },
+      }
 
-      eventEndTime () {
+      if (this.eventDate.length && this.eventEndTime) {
         this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
-      },
+      }
     },
 
-    methods: {
-      bindError (k, v) {
-        this.eventErrors[k] = v;
-      },
+    eventStartTime() {
+      this.event.starts_at = this.eventDate + "T" + this.eventStartTime;
+    },
 
-      reset () {
-        this.httpMethod = "POST";
-        this.saveBtnTxt = "Create this event";
-        this.event = new Event({
-          url: this.postUrl,
-        });
-        this.active = false;
-        this.eventDate = "";
-        this.eventStartTime = "";
-        this.eventEndTime = "";
-        this.showCapacity = false;
-        this.eventErrors = {};
-        this.saving = false;
-        EventBus.$emit("EventForm.reset");
-      },
+    eventEndTime() {
+      this.event.ends_at = this.eventDate + "T" + this.eventEndTime;
+    },
+  },
 
-      handleSubmit () {
-        const vm = this;
-        const form = new FormData();
+  mounted() {
+    EventBus.$on("EventsTable.editEvent", (event) => {
+      this.httpMethod = "PATCH";
+      this.active = true;
+      this.saveBtnTxt = "Save changes";
+      this.event = new Event(event);
+      this.event.url = event.url;
+      this.showCapacity = Boolean(this.event.capacity);
 
-        vm.saving = true;
+      // TODO - This EventForm functionality only allows for a single division
+      // to be selected to satisfy #1950. On the back-end, we allow for more than
+      // one division to be selected for an event, so we are only limiting that
+      // on the front-end. Between seasons, we should modify the back-end to only
+      // allow one division for a given event.
+      if (
+        this.event.division_ids.length === 1 &&
+        parseInt(this.event.division_ids[0], 10) ===
+          parseInt(this.seniorDivisionId, 10)
+      ) {
+        this.eventDivision = parseInt(this.seniorDivisionId, 10);
+      } else if (
+        this.event.division_ids.length === 1 &&
+        parseInt(this.event.division_ids[0], 10) ===
+          parseInt(this.juniorDivisionId, 10)
+      ) {
+        this.eventDivision = parseInt(this.juniorDivisionId, 10);
+      } else if (
+        this.event.division_ids.length === 1 &&
+        parseInt(this.event.division_ids[0], 10) ===
+          parseInt(this.beginnerDivisionId, 10)
+      ) {
+        this.eventDivision = parseInt(this.beginnerDivisionId, 10);
+      } else {
+        this.eventDivision = null;
+        this.event.division_ids = [];
+      }
+    });
+  },
+  async created() {
+    await this.getRegionalPitchEventSettings();
+  },
 
-        const isValid = this.validateInput();
-        if (!isValid) {
+  methods: {
+    bindError(k, v) {
+      this.eventErrors[k] = v;
+    },
+
+    reset() {
+      this.httpMethod = "POST";
+      this.saveBtnTxt = "Create this event";
+      this.event = new Event({
+        url: this.postUrl,
+      });
+      this.active = false;
+      this.eventDate = "";
+      this.eventStartTime = "";
+      this.eventEndTime = "";
+      this.showCapacity = false;
+      this.eventErrors = {};
+      this.saving = false;
+      EventBus.$emit("EventForm.reset");
+    },
+
+    handleSubmit() {
+      const vm = this;
+      const form = new FormData();
+
+      vm.saving = true;
+
+      const isValid = this.validateInput();
+      if (!isValid) {
+        vm.saving = false;
+        return false;
+      }
+
+      form.append("regional_pitch_event[name]", vm.event.name);
+      form.append("regional_pitch_event[city]", vm.event.city);
+      form.append("regional_pitch_event[starts_at]", vm.event.starts_at);
+      form.append("regional_pitch_event[ends_at]", vm.event.ends_at);
+
+      Array.from(vm.event.division_ids || []).forEach((id) => {
+        form.append("regional_pitch_event[division_ids][]", id);
+      });
+
+      form.append(
+        "regional_pitch_event[venue_address]",
+        vm.event.venue_address
+      );
+
+      form.append("regional_pitch_event[event_link]", vm.event.event_link);
+
+      if (this.showCapacity && Boolean(vm.event.capacity)) {
+        form.append("regional_pitch_event[capacity]", vm.event.capacity);
+      } else {
+        form.append("regional_pitch_event[capacity]", null);
+      }
+
+      $.ajax({
+        method: vm.httpMethod,
+        url: vm.url,
+        contentType: false,
+        processData: false,
+        data: form,
+
+        success: (resp) => {
+          vm.event = new Event(resp);
+          EventBus.$emit("EventForm.handleSubmit", vm.event);
+          vm.reset();
+        },
+
+        error: (resp) => {
+          var errors = resp.responseJSON.errors;
+
+          vm.eventErrors = {};
+
+          Object.keys(errors).forEach((k) => {
+            vm.bindError(k, errors[k]);
+          });
+        },
+
+        complete: () => {
           vm.saving = false;
-          return false;
-        }
-
-        form.append("regional_pitch_event[name]", vm.event.name);
-        form.append("regional_pitch_event[city]", vm.event.city);
-        form.append("regional_pitch_event[starts_at]", vm.event.starts_at);
-        form.append("regional_pitch_event[ends_at]", vm.event.ends_at);
-
-        Array.from(vm.event.division_ids || []).forEach(id => {
-          form.append("regional_pitch_event[division_ids][]", id)
-        })
-
-        form.append("regional_pitch_event[venue_address]",
-          vm.event.venue_address);
-
-        form.append("regional_pitch_event[event_link]",
-          vm.event.event_link);
-
-        if (this.showCapacity && Boolean(vm.event.capacity)) {
-          form.append("regional_pitch_event[capacity]", vm.event.capacity);
-        } else {
-          form.append("regional_pitch_event[capacity]", null);
-        }
-
-        $.ajax({
-          method: vm.httpMethod,
-          url: vm.url,
-          contentType: false,
-          processData: false,
-          data: form,
-
-          success: (resp) => {
-            vm.event = new Event(resp)
-            EventBus.$emit("EventForm.handleSubmit", vm.event);
-            vm.reset();
-          },
-
-          error: (resp) => {
-            var errors = resp.responseJSON.errors;
-
-            vm.eventErrors = {};
-
-            Object.keys(errors).forEach(k => {
-              vm.bindError(k, errors[k])
-            })
-          },
-
-          complete: () => {
-            vm.saving = false;
-          },
-        });
-      },
-
-      /**
-       * We have to do front-end validation in addition to back-end validation
-       * here due to the fact that "date" doesn't exist on the model in Rails
-       */
-      validateInput() {
-        this.eventErrors = {};
-
-        if (!this.event.name) {
-          this.eventErrors.name = ["can't be blank"];
-        }
-
-        if (!this.event.city) {
-          this.eventErrors.city = ["can't be blank"];
-        }
-
-        if (!this.eventDate) {
-          this.eventErrors.date = ["can't be blank"];
-        }
-
-        if (!this.event.starts_at) {
-          this.eventErrors.starts_at = ["can't be blank"];
-        }
-
-        if (!this.event.ends_at) {
-          this.eventErrors.ends_at = ["can't be blank"];
-        }
-
-        if (this.event.event_link.length > 0 && !(/^(http|https):\/\//.test(this.event.event_link))) {
-          this.eventErrors.event_link = ["Please start the event URL with http:// or https://"];
-        }
-
-        if (!Array.from(this.event.division_ids || []).length) {
-          this.eventErrors.division_ids = ["can't be blank"];
-        }
-
-        if (!this.event.venue_address) {
-          this.eventErrors.venue_address = ["can't be blank"];
-        }
-
-        if (this.showCapacity && !this.event.capacity) {
-          this.eventErrors.capacity = ["can't be blank or zero"];
-        }
-
-        if (!isEmptyObject(this.eventErrors)) {
-          return false;
-        }
-
-        return true;
-      },
-
-      createTimeFromString(twentyFourHourTime) {
-        const newTime = new Date();
-        const timeParts = twentyFourHourTime.split(':');
-        newTime.setHours(
-          parseInt(timeParts[0], 10),
-          parseInt(timeParts[1], 10),
-          0
-        );
-        return newTime;
-      },
-
-      minDate() {
-        return process.env.DATES_REGIONAL_PITCH_EVENTS_BEGINS_YEAR + '-' +
-          process.env.DATES_REGIONAL_PITCH_EVENTS_BEGINS_MONTH + '-' +
-          process.env.DATES_REGIONAL_PITCH_EVENTS_BEGINS_DAY
-      },
-
-      maxDate() {
-        return process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_YEAR + '-' +
-          process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_MONTH + '-' +
-          process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_DAY
-      },
-      async getRegionalPitchEventSettings() {
-        try {
-          const response = await axios.get('/api/regional_pitch_events/settings')
-
-          this.canCreateEvents = response.data.canCreateEvents
-        }
-        catch(error) {
-          airbrake.notify({
-            error: `[REGIONAL PITCH EVENTS] Error getting event settings - ${error.response.data}`
-          })
-        }
-      },
-    },
-
-    mounted () {
-      EventBus.$on("EventsTable.editEvent", (event) => {
-        this.httpMethod = "PATCH";
-        this.active = true;
-        this.saveBtnTxt = "Save changes";
-        this.event = new Event(event);
-        this.event.url = event.url;
-        this.showCapacity = Boolean(this.event.capacity);
-
-        // TODO - This EventForm functionality only allows for a single division
-        // to be selected to satisfy #1950. On the back-end, we allow for more than
-        // one division to be selected for an event, so we are only limiting that
-        // on the front-end. Between seasons, we should modify the back-end to only
-        // allow one division for a given event.
-        if (
-          this.event.division_ids.length === 1 &&
-          parseInt(this.event.division_ids[0], 10) === parseInt(this.seniorDivisionId, 10)
-        ) {
-          this.eventDivision = parseInt(this.seniorDivisionId, 10);
-        } else if (
-          this.event.division_ids.length === 1 &&
-          parseInt(this.event.division_ids[0], 10) === parseInt(this.juniorDivisionId, 10)
-        ) {
-          this.eventDivision = parseInt(this.juniorDivisionId, 10);
-        } else if (
-          this.event.division_ids.length === 1 &&
-          parseInt(this.event.division_ids[0], 10) === parseInt(this.beginnerDivisionId, 10)
-        ) {
-          this.eventDivision = parseInt(this.beginnerDivisionId, 10);
-        } else {
-          this.eventDivision = null;
-          this.event.division_ids = [];
-        }
+        },
       });
     },
-    async created() {
-      await this.getRegionalPitchEventSettings()
-    }
-  };
+
+    /**
+     * We have to do front-end validation in addition to back-end validation
+     * here due to the fact that "date" doesn't exist on the model in Rails
+     */
+    validateInput() {
+      this.eventErrors = {};
+
+      if (!this.event.name) {
+        this.eventErrors.name = ["can't be blank"];
+      }
+
+      if (!this.event.city) {
+        this.eventErrors.city = ["can't be blank"];
+      }
+
+      if (!this.eventDate) {
+        this.eventErrors.date = ["can't be blank"];
+      }
+
+      if (!this.event.starts_at) {
+        this.eventErrors.starts_at = ["can't be blank"];
+      }
+
+      if (!this.event.ends_at) {
+        this.eventErrors.ends_at = ["can't be blank"];
+      }
+
+      if (
+        this.event.event_link.length > 0 &&
+        !/^(http|https):\/\//.test(this.event.event_link)
+      ) {
+        this.eventErrors.event_link = [
+          "Please start the event URL with http:// or https://",
+        ];
+      }
+
+      if (!Array.from(this.event.division_ids || []).length) {
+        this.eventErrors.division_ids = ["can't be blank"];
+      }
+
+      if (!this.event.venue_address) {
+        this.eventErrors.venue_address = ["can't be blank"];
+      }
+
+      if (this.showCapacity && !this.event.capacity) {
+        this.eventErrors.capacity = ["can't be blank or zero"];
+      }
+
+      if (!isEmptyObject(this.eventErrors)) {
+        return false;
+      }
+
+      return true;
+    },
+
+    createTimeFromString(twentyFourHourTime) {
+      const newTime = new Date();
+      const timeParts = twentyFourHourTime.split(":");
+      newTime.setHours(
+        parseInt(timeParts[0], 10),
+        parseInt(timeParts[1], 10),
+        0
+      );
+      return newTime;
+    },
+
+    minDate() {
+      return (
+        process.env.DATES_REGIONAL_PITCH_EVENTS_BEGINS_YEAR +
+        "-" +
+        process.env.DATES_REGIONAL_PITCH_EVENTS_BEGINS_MONTH +
+        "-" +
+        process.env.DATES_REGIONAL_PITCH_EVENTS_BEGINS_DAY
+      );
+    },
+
+    maxDate() {
+      return (
+        process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_YEAR +
+        "-" +
+        process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_MONTH +
+        "-" +
+        process.env.DATES_REGIONAL_PITCH_EVENTS_ENDS_DAY
+      );
+    },
+    async getRegionalPitchEventSettings() {
+      try {
+        const response = await axios.get("/api/regional_pitch_events/settings");
+
+        this.canCreateEvents = response.data.canCreateEvents;
+      } catch (error) {
+        airbrake.notify({
+          error: `[REGIONAL PITCH EVENTS] Error getting event settings - ${error.response.data}`,
+        });
+      }
+    },
+  },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

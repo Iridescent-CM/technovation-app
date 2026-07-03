@@ -1,22 +1,22 @@
-import Vue from 'vue'
-import VueDragula from 'vue-dragula'
+import Vue from "vue";
+import VueDragula from "vue-dragula";
 
-Vue.use(VueDragula)
+Vue.use(VueDragula);
 
-import ScreenshotUploader from '../components/ScreenshotUploader'
+import ScreenshotUploader from "../components/ScreenshotUploader";
 
-document.addEventListener('turbo:load', () => {
-  if (document.getElementById('vue-screenshot-uploader') !== null) {
+document.addEventListener("turbo:load", () => {
+  if (document.getElementById("vue-screenshot-uploader") !== null) {
     // We have to assign the VueDragula event bus to a global level variable in
     // order to communicate with sub components.
-    window.vueDragula = Vue.vueDragula
+    window.vueDragula = Vue.vueDragula;
 
     new Vue({
-      el: '#vue-screenshot-uploader',
+      el: "#vue-screenshot-uploader",
 
       components: {
         ScreenshotUploader,
       },
-    })
+    });
   }
-})
+});

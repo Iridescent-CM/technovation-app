@@ -8,8 +8,8 @@
 
         <div class="formulate-input-wrapper name-group">
           <FormulateInput
-            name="firstName"
             id="firstName"
+            name="firstName"
             type="text"
             label="First Name"
             placeholder="First Name"
@@ -18,14 +18,14 @@
               matches: 'Must start with an alphabetical character.',
             }"
             validation-name="First name"
+            class="flex-grow pr-2"
             @keyup="checkValidation"
             @blur="checkValidation"
-            class="flex-grow pr-2"
           />
 
           <FormulateInput
-            name="lastName"
             id="lastName"
+            name="lastName"
             type="text"
             label="Last Name"
             placeholder="Last Name"
@@ -34,29 +34,29 @@
               matches: 'Must start with an alphabetical character.',
             }"
             validation-name="Last name"
+            class="flex-grow pl-2"
             @keyup="checkValidation"
             @blur="checkValidation"
-            class="flex-grow pl-2"
           />
         </div>
 
         <FormulateInput
+          id="genderIdentity"
           name="gender"
           :options="genderOptions"
           type="select"
           placeholder="Select an option"
           validation="required"
           validation-name="Gender identity"
+          label="Gender Identity"
+          input-class="mentorSelectClass"
           @keyup="checkValidation"
           @blur="checkValidation"
-          label="Gender Identity"
-          id="genderIdentity"
-          input-class="mentorSelectClass"
         />
 
         <FormulateInput
-          name="meetsMinimumAgeRequirement"
           id="meetsMinimumAgeRequirement"
+          name="meetsMinimumAgeRequirement"
           type="checkbox"
           label="I confirm that I am 18 years or older"
           validation="required"
@@ -69,8 +69,8 @@
         />
 
         <FormulateInput
-          name="dateOfBirth"
           id="dateOfBirth"
+          name="dateOfBirth"
           type="date"
           label="Birthday"
           placeholder="Birthday"
@@ -92,8 +92,8 @@
         </p>
 
         <FormulateInput
-          name="phoneNumber"
           id="phoneNumber"
+          name="phoneNumber"
           type="tel"
           :validation="[['matches', /^([\+\(\s.\-\/\d]{5,30}|)$/]]"
           :validation-messages="{ matches: 'Phone number is invalid.' }"
@@ -109,8 +109,8 @@
         </p>
 
         <FormulateInput
-          name="mentorSchoolCompanyName"
           id="mentorSchoolCompanyName"
+          name="mentorSchoolCompanyName"
           type="text"
           label="Company Name"
           placeholder="Company Name"
@@ -121,8 +121,8 @@
         />
 
         <FormulateInput
-          name="mentorJobTitle"
           id="mentorJobTitle"
+          name="mentorJobTitle"
           type="text"
           label="Job Title"
           placeholder="Job Title"
@@ -132,7 +132,7 @@
           @blur="checkValidation"
         />
 
-        <div class="mentor-information" v-show="mentorTypeOptions.length > 0">
+        <div v-show="mentorTypeOptions.length > 0" class="mentor-information">
           <h4 class="registration-title">
             As a mentor you may call me a...<span
               class="formulate-required-field"
@@ -141,8 +141,8 @@
           </h4>
 
           <FormulateInput
-            name="mentorTypes"
             id="mentorTypes"
+            name="mentorTypes"
             type="checkbox"
             :options="mentorTypeOptions"
             validation="required"
@@ -154,16 +154,16 @@
         </div>
 
         <div
-          class="mentor-information"
           v-show="mentorProfileExpertiseOptions.length > 0"
+          class="mentor-information"
         >
           <h2 class="registration-title">Skills & Interests</h2>
 
           <FormulateInput
+            id="mentorExpertise"
             name="mentorExpertises"
             :options="mentorProfileExpertiseOptions"
             type="checkbox"
-            id="mentorExpertise"
           />
         </div>
 
@@ -177,8 +177,8 @@
             <span class="formulate-required-field">*</span>
           </p>
           <FormulateInput
-            name="mentorBio"
             id="mentorBio"
+            name="mentorBio"
             type="textarea"
             validation="required|between:100,1500,length"
             validation-name="Personal summary"
@@ -193,7 +193,7 @@
 
     <div class="registration-btn-wrapper">
       <PreviousButton @prev="$emit('prev')" />
-      <NextButton @next="$emit('next')" :disabled="hasValidationErrors" />
+      <NextButton :disabled="hasValidationErrors" @next="$emit('next')" />
     </div>
   </div>
 </template>
@@ -216,6 +216,12 @@ export default {
     PreviousButton,
     NextButton,
   },
+  props: {
+    formValues: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       genderOptions: ["Female", "Male", "Non-binary", "Prefer not to say"],
@@ -223,6 +229,17 @@ export default {
       mentorProfileExpertiseOptions: [],
       hasValidationErrors: true,
     };
+  },
+  computed: {
+    birthdayValidation() {
+      const today = DateTime.now().toFormat("MM/dd/yyyy");
+
+      return `mentor_age|after:01/01/1900|before:${today}`;
+    },
+  },
+  created() {
+    this.getMentorExpertiseOptions();
+    this.getMentorTypeOptions();
   },
   methods: {
     checkValidation() {
@@ -291,23 +308,6 @@ export default {
           error: `[REGISTRATION] Error getting mentor types - ${error.response.data}`,
         });
       }
-    },
-  },
-  created() {
-    this.getMentorExpertiseOptions();
-    this.getMentorTypeOptions();
-  },
-  computed: {
-    birthdayValidation() {
-      const today = DateTime.now().toFormat("MM/dd/yyyy");
-
-      return `mentor_age|after:01/01/1900|before:${today}`;
-    },
-  },
-  props: {
-    formValues: {
-      type: Object,
-      required: true,
     },
   },
 };

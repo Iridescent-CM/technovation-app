@@ -16,24 +16,24 @@ export default {
   methods: {
     subRouteIsActive(parentRouteId) {
       const parentRoute = this.$router.options.routes.find((parentRoute) => {
-        if (Object.prototype.hasOwnProperty.call(parentRoute, 'children')) {
+        if (Object.prototype.hasOwnProperty.call(parentRoute, "children")) {
           return parentRoute.children.some((childRoute) => {
-            return this.$route.name === childRoute.name
-          })
+            return this.$route.name === childRoute.name;
+          });
         }
 
-        return false
-      })
+        return false;
+      });
 
       if (
         parentRoute &&
-        Object.prototype.hasOwnProperty.call(parentRoute, 'meta') &&
-        Object.prototype.hasOwnProperty.call(parentRoute.meta, 'routeId')
+        Object.prototype.hasOwnProperty.call(parentRoute, "meta") &&
+        Object.prototype.hasOwnProperty.call(parentRoute.meta, "routeId")
       ) {
-        return parentRouteId === parentRoute.meta.routeId
+        return parentRouteId === parentRoute.meta.routeId;
       }
 
-      return false
+      return false;
     },
   },
-}
+};

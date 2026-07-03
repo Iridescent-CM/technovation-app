@@ -11,8 +11,11 @@
       </router-view>
     </div>
 
-    <div class="grid__col-3" v-if="!embedded">
-      <div class="tabs-menu__child-menu" v-sticky-sidebar="stickySidebarClasses">
+    <div v-if="!embedded" class="grid__col-3">
+      <div
+        v-sticky-sidebar="stickySidebarClasses"
+        class="tabs-menu__child-menu"
+      >
         <team-menu />
       </div>
     </div>
@@ -20,14 +23,14 @@
 </template>
 
 <script>
-import StickySidebar from 'directives/sticky-sidebar'
-import TeamMenu from 'mentor/menus/Team'
+import StickySidebar from "directives/sticky-sidebar";
+import TeamMenu from "mentor/menus/Team";
 
 export default {
-  name: 'team-building',
+  name: "TeamBuilding",
 
   directives: {
-    'sticky-sidebar': StickySidebar,
+    "sticky-sidebar": StickySidebar,
   },
 
   components: {
@@ -37,8 +40,8 @@ export default {
   props: {
     stickySidebarClasses: {
       type: Array,
-      default () {
-        return []
+      default() {
+        return [];
       },
     },
 
@@ -50,12 +53,11 @@ export default {
   },
 
   computed: {
-    mainContainerGridColumn () {
-      if (this.embedded)
-        return 'grid__col-12 tabs__content--embedded'
+    mainContainerGridColumn() {
+      if (this.embedded) return "grid__col-12 tabs__content--embedded";
 
-      return 'grid__col-9'
+      return "grid__col-9";
     },
   },
-}
+};
 </script>

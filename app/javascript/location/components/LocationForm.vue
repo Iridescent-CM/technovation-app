@@ -43,7 +43,7 @@
               </div>
             </div>
 
-            <div class="Rtable Rtable--3cols" ref="savedLocationTableRow">
+            <div ref="savedLocationTableRow" class="Rtable Rtable--3cols">
               <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
                 {{ savedLocation.city || "(no city)" }}
               </div>
@@ -72,9 +72,9 @@
             </div>
 
             <div
-              class="Rtable Rtable--3cols suggestion"
               v-for="suggestion in suggestions"
               :key="suggestion.id"
+              class="Rtable Rtable--3cols suggestion"
               @click="handleSuggestionClick(suggestion)"
             >
               <div class="Rtable-cell padding--t-b-medium padding--r-l-large">
@@ -97,11 +97,11 @@
             <label for="location_country">Country / Territory</label>
 
             <input
-              ref="countryField"
-              type="text"
               id="location_country"
-              autocomplete="country-name"
+              ref="countryField"
               v-model="country"
+              type="text"
+              autocomplete="country-name"
             />
           </template>
 
@@ -111,10 +111,10 @@
             <p class="inline-checkbox">
               <label>
                 <input
+                  v-model="country"
                   type="radio"
                   name="location_country"
                   value="Israel"
-                  v-model="country"
                   @click="confirmCountry('Israel')"
                 />
                 Israel
@@ -124,10 +124,10 @@
             <p class="inline-checkbox">
               <label>
                 <input
+                  v-model="country"
                   type="radio"
                   name="location_country"
                   value="Palestine"
-                  v-model="country"
                   @click="confirmCountry('Palestine')"
                 />
                 Palestine
@@ -140,45 +140,45 @@
           >
 
           <input
-            type="text"
             id="location_state"
+            v-model="state"
+            type="text"
             autocomplete="address-level1"
             :placeholder="optionalStatePlaceholder"
-            v-model="state"
           />
 
           <label for="location_city">City</label>
 
           <input
-            type="text"
             id="location_city"
             ref="cityField"
-            autocomplete="address-level2"
             v-model="city"
+            type="text"
+            autocomplete="address-level2"
           />
 
           <a
+            v-if="formHasInput"
             href="#"
             class="color--danger font-size--small padding--t-b-medium"
             @click.prevent="resetAll"
-            v-if="formHasInput"
           >
             reset this form
           </a>
         </div>
 
         <a
+          v-if="showBackBtn"
           class="button float--left"
           @click.prevent="handleBack"
-          v-if="showBackBtn"
         >
           Back
         </a>
         <p class="padding--none margin--none">
           <a
+            v-if="showCancel"
             href="#"
             class="tw-green-btn float--left"
-            v-if="showCancel"
             @click.prevent="handleCancel"
           >
             {{ cancelText }}
@@ -203,19 +203,6 @@ import HttpStatusCodes from "../../constants/HttpStatusCodes";
 import Swal from "sweetalert2";
 
 export default {
-  data() {
-    return {
-      city: "",
-      state: "",
-      country: "",
-      countryConfirmed: null,
-      suggestions: [],
-      savedLocation: null,
-      searching: false,
-      status: null,
-    };
-  },
-
   props: {
     wizardToken: {
       type: String,
@@ -282,31 +269,17 @@ export default {
       default: true,
     },
   },
-
-  created() {
-    if (this.value) {
-      this.city = this.value.city;
-      this.state = this.value.state;
-      this.country = this.value.country;
-    } else {
-      window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
-        this.city = data.city;
-        this.state = data.state;
-        this.country = data.country;
-      });
-    }
-  },
-
-  mounted() {
-    if (
-      window.location.pathname === "/chapter_ambassador/chapter_location/edit"
-    ) {
-      this.openAlertMessage({ chapterableType: "chapter" });
-    } else if (
-      window.location.pathname === "/club_ambassador/club_location/edit"
-    ) {
-      this.openAlertMessage({ chapterableType: "club" });
-    }
+  data() {
+    return {
+      city: "",
+      state: "",
+      country: "",
+      countryConfirmed: null,
+      suggestions: [],
+      savedLocation: null,
+      searching: false,
+      status: null,
+    };
   },
 
   computed: {
@@ -425,6 +398,7 @@ export default {
         case HttpStatusCodes.NOT_FOUND:
           console.warn("geocoding results not found");
           this.$refs.countryField.focus();
+          break;
         default:
         // no op
       }
@@ -471,6 +445,32 @@ export default {
         )
       );
     },
+  },
+
+  created() {
+    if (this.value) {
+      this.city = this.value.city;
+      this.state = this.value.state;
+      this.country = this.value.country;
+    } else {
+      window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
+        this.city = data.city;
+        this.state = data.state;
+        this.country = data.country;
+      });
+    }
+  },
+
+  mounted() {
+    if (
+      window.location.pathname === "/chapter_ambassador/chapter_location/edit"
+    ) {
+      this.openAlertMessage({ chapterableType: "chapter" });
+    } else if (
+      window.location.pathname === "/club_ambassador/club_location/edit"
+    ) {
+      this.openAlertMessage({ chapterableType: "club" });
+    }
   },
 
   methods: {

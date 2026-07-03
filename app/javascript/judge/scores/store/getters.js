@@ -1,5 +1,3 @@
-import flatMap from "lodash/flatMap";
-
 export const comment = (state) => (sectionName) => {
   return state.score.comments[sectionName];
 };
@@ -108,7 +106,7 @@ export const isScoreComplete = (state) => {
   return state.score.complete;
 };
 
-export const hasScoreBeenStarted = (state, getters) => {
+export const hasScoreBeenStarted = (state, _getters) => {
   return state.questions.some((question) => question.score > 0);
 };
 

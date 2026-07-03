@@ -55,9 +55,9 @@
       <div v-if="score.incomplete">
         <div v-if="judge.recusal_scores_count <= maximumNumberOfRecusals - 1">
           <judge-recusal-popup
-            cssClass="link-button link-button-neutral"
-            :judgeRecusalCount="judge.recusal_scores_count"
-            :maximumNumberOfRecusals="maximumNumberOfRecusals"
+            css-class="link-button link-button-neutral"
+            :judge-recusal-count="judge.recusal_scores_count"
+            :maximum-number-of-recusals="maximumNumberOfRecusals"
           >
             I cannot judge this submission
           </judge-recusal-popup>
@@ -65,7 +65,7 @@
 
         <div v-else>
           <judge-recusal-exceeded-popup
-            cssClass="link-button link-button-neutral"
+            css-class="link-button link-button-neutral"
           >
             I cannot judge this submission
           </judge-recusal-exceeded-popup>

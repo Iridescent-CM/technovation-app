@@ -1,11 +1,11 @@
 <template>
-  <div class="home" id="home">
-    <Navbar/>
-    <Banner/>
-    <FormWrapper/>
+  <div id="home" class="home">
+    <Navbar />
+    <Banner />
+    <FormWrapper />
     <div id="thick-rule" class="bg-energetic-blue h-6 my-16"></div>
-    <ContactUs/>
-    <Footer/>
+    <ContactUs />
+    <Footer />
   </div>
 </template>
 
@@ -16,17 +16,16 @@ import Footer from "./components/Footer";
 import ContactUs from "./components/ContactUs";
 import FormWrapper from "./components/FormWrapper";
 
-
 export default {
-  name: 'app',
+  name: "App",
   components: {
     Navbar,
     Banner,
     Footer,
     ContactUs,
-    FormWrapper
-  }
-}
+    FormWrapper,
+  },
+};
 </script>
 
 <style>

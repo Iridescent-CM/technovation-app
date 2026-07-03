@@ -20,20 +20,20 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import {getFilestackResizeUrl} from "../../../utilities/filestack-helpers";
+import { mapState } from "vuex";
+import { getFilestackResizeUrl } from "../../../utilities/filestack-helpers";
 
 export default {
   computed: {
-    ...mapState(['submission']),
+    ...mapState(["submission"]),
     screenshots() {
-      return this.submission.screenshots || []
+      return this.submission.screenshots || [];
     },
   },
   methods: {
     filestackResizeUrl(screenshotUrl) {
-      return getFilestackResizeUrl(screenshotUrl, 300)
-    }
-  }
-}
+      return getFilestackResizeUrl(screenshotUrl, 300);
+    },
+  },
+};
 </script>

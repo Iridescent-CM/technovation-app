@@ -49,10 +49,7 @@
 
           <small>
             <drop-down label="Helpful Links">
-              <h6
-                v-for="link in resourceLinks"
-                v-if="link.text.length && link.url.length"
-              >
+              <h6 v-for="(link, index) in filteredResourceLinks" :key="index">
                 {{ link.heading }}
                 <small>
                   <a :href="link.url" target="_blank">{{ link.text }}</a>
@@ -75,7 +72,7 @@ import Icon from "components/Icon";
 const { mapGetters } = createNamespacedHelpers("authenticated");
 
 export default {
-  name: "dashboard-header",
+  name: "DashboardHeader",
 
   components: {
     DropDown,
@@ -104,7 +101,7 @@ export default {
       "currentAccountAvatarUrl",
       "assignedToChapterable",
       "chapterableName",
-      "chapterableAmbassadorAvatarUrl"
+      "chapterableAmbassadorAvatarUrl",
     ]),
 
     surveyLink() {
@@ -119,6 +116,12 @@ export default {
       return Object.assign(
         {},
         this.resourceLinks.filter((l) => l.isSurveyLink)[0]
+      );
+    },
+
+    filteredResourceLinks() {
+      return this.resourceLinks.filter(
+        (link) => link.text.length && link.url.length
       );
     },
   },

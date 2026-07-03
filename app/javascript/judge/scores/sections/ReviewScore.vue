@@ -5,8 +5,8 @@
       <ThickRule />
 
       <ul role="list" class="divide-y divide-gray-200">
-        <li v-for="section in sections" class="py-4">
-          <router-link :to="{ name: section.name }" :key="section.name">
+        <li v-for="section in sections" :key="section.name" class="py-4">
+          <router-link :to="{ name: section.name }">
             <div class="flex space-x-3">
               <div
                 v-if="!isSectionComplete(section.name)"
@@ -78,7 +78,7 @@
         </li>
       </ul>
 
-      <p class="mt-12 text-center" v-tooltip.top-center="finishScoreTooltip">
+      <p v-tooltip.top-center="finishScoreTooltip" class="mt-12 text-center">
         <a
           :href="`/judge/score_completions?id=${score.id}`"
           :disabled="isScoreIncomplete"
@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 import EnergeticContainer from "../../../components/rebrand/EnergeticContainer";
 import TeamInfo from "../TeamInfo";
@@ -151,6 +151,17 @@ export default {
     },
   },
 
+  mounted() {
+    if (this.isCompletingTooFast()) {
+      this.displayCompletingTooFastAlert();
+    } else if (
+      !this.isScoreIncomplete &&
+      this.totalScore === this.totalPossibleScore
+    ) {
+      this.displayPerfectScoreAlert();
+    }
+  },
+
   methods: {
     isCompletingTooFast() {
       const currentTime = new Date();
@@ -158,7 +169,7 @@ export default {
       const timeElapsedInMs = currentTime.getTime() - startedAtTime;
       const tenMinutesInMs = 10 * 60 * 1000;
 
-      return !this.isScoreIncomplete && (timeElapsedInMs < tenMinutesInMs);
+      return !this.isScoreIncomplete && timeElapsedInMs < tenMinutesInMs;
     },
     displayCompletingTooFastAlert() {
       Swal.fire({
@@ -200,14 +211,6 @@ export default {
         width: "50%",
       });
     },
-  },
-
-  mounted() {
-    if (this.isCompletingTooFast()) {
-      this.displayCompletingTooFastAlert();
-    } else if (!this.isScoreIncomplete && this.totalScore === this.totalPossibleScore) {
-      this.displayPerfectScoreAlert();
-    }
   },
 };
 </script>

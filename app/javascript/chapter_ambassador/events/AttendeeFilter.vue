@@ -3,15 +3,12 @@
     <div class="modal">
       <input
         ref="filterInput"
+        v-model="filterTxt"
         type="search"
         :placeholder="placeholder"
-        v-model="filterTxt"
       />
 
-      <div
-        v-show="items.length"
-        class="overflow-scroll"
-      >
+      <div v-show="items.length" class="overflow-scroll">
         <table class="width-full-container headers--left-align">
           <thead>
             <tr>
@@ -22,19 +19,16 @@
 
           <tbody>
             <tr
-              class="cursor-pointer"
               v-for="item in items"
               :key="item.id"
+              class="cursor-pointer"
               @click="handleSelection(item)"
             >
               <td>{{ item.name }}</td>
 
               <slot name="col-2" v-bind="item"></slot>
 
-              <td
-                class="light-opacity"
-                v-show="!isAssigned(item, parentItem)"
-              >
+              <td v-show="!isAssigned(item, parentItem)" class="light-opacity">
                 <icon name="check-circle-o" />
               </td>
 
@@ -47,53 +41,49 @@
       </div>
 
       <div class="modal-footer">
-        <button
-          class="button--unmask"
-          @click="handleClose"
-        >
-          Done
-        </button>
+        <button class="button--unmask" @click="handleClose">Done</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Icon from "../../components/Icon";
+import Icon from "../../components/Icon";
 
-  export default {
-    name: "AttendeeList",
+export default {
+  name: "AttendeeList",
 
-    data () {
-      return {
-        filterTxt: "",
-        items: this.childItems,
-      }
+  components: {
+    Icon,
+  },
+
+  props: [
+    "parentItem",
+    "childItems",
+    "placeholder",
+    "col2Header",
+    "handleSelection",
+    "handleClose",
+    "isAssigned",
+  ],
+
+  data() {
+    return {
+      filterTxt: "",
+      items: this.childItems,
+    };
+  },
+
+  watch: {
+    filterTxt() {
+      this.items = Array.from(this.childItems || []).filter((i) =>
+        i.matchesQuery(this.filterTxt)
+      );
     },
+  },
 
-    props: [
-      'parentItem',
-      'childItems',
-      'placeholder',
-      'col2Header',
-      'handleSelection',
-      'handleClose',
-      'isAssigned'
-    ],
-
-    components: {
-      Icon,
-    },
-
-    watch: {
-      filterTxt () {
-        this.items = Array.from(this.childItems || [])
-                          .filter(i => i.matchesQuery(this.filterTxt))
-      },
-    },
-
-    mounted () {
-      this.$refs.filterInput.focus()
-    },
-  }
+  mounted() {
+    this.$refs.filterInput.focus();
+  },
+};
 </script>

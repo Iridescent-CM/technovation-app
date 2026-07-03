@@ -1,45 +1,44 @@
-Chart.defaults.global.defaultFontFamily = 'sans-serif'
+Chart.defaults.global.defaultFontFamily = "sans-serif";
 
 Chart.plugins.register({
-  id: 'noDataToDisplay',
-	afterDraw: (chart) => {
+  id: "noDataToDisplay",
+  afterDraw: (chart) => {
     const chartHasNonZeroData = chart.data.datasets[0].data.some((value) => {
-      return value > 0
-    })
+      return value > 0;
+    });
 
-  	if (!chartHasNonZeroData) {
-    	// No data is present
-      var ctx = chart.chart.ctx
-      var width = chart.chart.width
-      var height = chart.chart.height
-      chart.clear()
+    if (!chartHasNonZeroData) {
+      // No data is present
+      var ctx = chart.chart.ctx;
+      var width = chart.chart.width;
+      var height = chart.chart.height;
+      chart.clear();
 
-      ctx.save()
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle'
-      ctx.font = '16px sans-serif'
-      ctx.fillStyle = '#999'
-      ctx.fillText('No data to display', width / 2, height / 2)
-      ctx.restore()
+      ctx.save();
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "16px sans-serif";
+      ctx.fillStyle = "#999";
+      ctx.fillText("No data to display", width / 2, height / 2);
+      ctx.restore();
     }
   },
-})
+});
 
 Chart.plugins.register({
-  id: 'onClickUrlHandler',
+  id: "onClickUrlHandler",
   afterEvent: (chart, event) => {
-    const chartElements = chart.getElementAtEvent(event)
+    const chartElements = chart.getElementAtEvent(event);
 
-    if (event.type === 'click' && chartElements.length) {
-      const index = chartElements[0]._index
-      const datasetIndex = chartElements[0]._datasetIndex
+    if (event.type === "click" && chartElements.length) {
+      const index = chartElements[0]._index;
+      const datasetIndex = chartElements[0]._datasetIndex;
 
-      const { type } = chart.config
-      const { urls } = chart.data.datasets[datasetIndex]
+      const { urls } = chart.data.datasets[datasetIndex];
 
-      if (typeof urls !== 'undefined' && urls.length > 0) {
-        window.location.href = urls[index]
+      if (typeof urls !== "undefined" && urls.length > 0) {
+        window.location.href = urls[index];
       }
     }
   },
-})
+});

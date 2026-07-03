@@ -2,14 +2,18 @@
   <div :class="wrapperClasses">
     <div :class="mainContainerGridColumn">
       <transition name="router-fade">
-        <router-view v-if="isReady" :key="$route.path" :profile-icons="profileIcons">
+        <router-view
+          v-if="isReady"
+          :key="$route.path"
+          :profile-icons="profileIcons"
+        >
           <div slot="change-email"><slot name="change-email" /></div>
           <div slot="change-password"><slot name="change-password" /></div>
         </router-view>
       </transition>
     </div>
 
-    <div :class="menuGridColumn" v-if="!embedded">
+    <div v-if="!embedded" :class="menuGridColumn">
       <div v-sticky-sidebar="stickySidebarClasses">
         <dashboard-menu />
       </div>
@@ -18,24 +22,18 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers } from "vuex";
 
-import StickySidebar from 'directives/sticky-sidebar'
-import DashboardMenu from './DashboardMenu'
+import StickySidebar from "directives/sticky-sidebar";
+import DashboardMenu from "./DashboardMenu";
 
-const { mapState } = createNamespacedHelpers('registration')
+const { mapState } = createNamespacedHelpers("registration");
 
 export default {
-  name: 'app',
-
-  data () {
-    return{
-      isSignup: false
-    }
-  },
+  name: "App",
 
   directives: {
-    'sticky-sidebar': StickySidebar,
+    "sticky-sidebar": StickySidebar,
   },
 
   components: {
@@ -50,8 +48,8 @@ export default {
 
     stickySidebarClasses: {
       type: Array,
-      default () {
-        return []
+      default() {
+        return [];
       },
     },
 
@@ -63,59 +61,65 @@ export default {
 
     profileIcons: {
       type: Object,
-      default () {
+      default() {
         return {
-          profileIconMentor: '',
-          profileIconMentorMale: '',
-          profileIconStudent: '',
-        }
+          profileIconMentor: "",
+          profileIconMentorMale: "",
+          profileIconStudent: "",
+        };
       },
     },
   },
 
+  data() {
+    return {
+      isSignup: false,
+    };
+  },
+
   beforeMount() {
-    let pathname = window.location.pathname
-    if (pathname === '/signup') {
-      this.isSignup = true
+    let pathname = window.location.pathname;
+    if (pathname === "/signup") {
+      this.isSignup = true;
     }
   },
 
   computed: {
-    ...mapState([
-      'isReady',
-    ]),
+    ...mapState(["isReady"]),
 
-    mainContainerGridColumn () {
-      if (this.embedded)
-        return "grid__col-12"
+    mainContainerGridColumn() {
+      if (this.embedded) return "grid__col-12";
 
-      if(this.isSignup){
-        return "grid__col-9"
+      if (this.isSignup) {
+        return "grid__col-9";
       }
+
+      return undefined;
     },
 
-    menuGridColumn () {
-      if (this.embedded)
-        return ''
+    menuGridColumn() {
+      if (this.embedded) return "";
 
-      if(this.isSignup)
-        return 'grid__col-3 grid__col--bleed'
+      if (this.isSignup) return "grid__col-3 grid__col--bleed";
+
+      return undefined;
     },
 
-    wrapperClasses () {
-      if(this.isSignup){
+    wrapperClasses() {
+      if (this.isSignup) {
         return {
           grid: true,
           tabs: true,
-          'tabs--vertical': true,
-          'tabs--remove-bg': this.removeWhiteBackground,
-          'tabs--css-only': true,
-        }
+          "tabs--vertical": true,
+          "tabs--remove-bg": this.removeWhiteBackground,
+          "tabs--css-only": true,
+        };
       }
+
+      return undefined;
     },
-  }
-}
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

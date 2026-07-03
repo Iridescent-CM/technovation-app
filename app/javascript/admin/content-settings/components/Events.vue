@@ -9,18 +9,19 @@
         type="checkbox"
         :value="0"
         :disabled="true"
-      >
+      />
       <input
         v-else
         id="season_toggles_create_regional_pitch_event"
-        type="checkbox"
         v-model="$store.state.create_regional_pitch_event"
+        type="checkbox"
         :disabled="!isSuperAdmin"
-      >
+      />
       <label
         for="season_toggles_create_regional_pitch_event"
         :class="{ 'label--disabled': judgingEnabled }"
-      >Creating regional pitch events allowed</label>
+        >Creating regional pitch events allowed</label
+      >
     </p>
 
     <div v-if="judgingEnabled" class="notice info hint user-notice">
@@ -35,18 +36,19 @@
         type="checkbox"
         :value="0"
         :disabled="true"
-      >
+      />
       <input
         v-else
         id="season_toggles_select_regional_pitch_event"
-        type="checkbox"
         v-model="$store.state.select_regional_pitch_event"
+        type="checkbox"
         :disabled="!isSuperAdmin"
-      >
+      />
       <label
         for="season_toggles_select_regional_pitch_event"
         :class="{ 'label--disabled': judgingEnabled }"
-      >Selecting regional pitch events allowed</label>
+        >Selecting regional pitch events allowed</label
+      >
     </p>
 
     <div v-if="judgingEnabled" class="notice info hint user-notice">
@@ -57,37 +59,33 @@
     <p class="inline-checkbox">
       <input
         id="season_toggles_add_teams_to_regional_pitch_event"
-        type="checkbox"
         v-model="$store.state.add_teams_to_regional_pitch_event"
+        type="checkbox"
         :disabled="!isSuperAdmin"
+      />
+      <label for="season_toggles_add_teams_to_regional_pitch_event"
+        >Adding teams to regional pitch events allowed</label
       >
-      <label
-        for="season_toggles_add_teams_to_regional_pitch_event"
-      >Adding teams to regional pitch events allowed</label>
     </p>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import Icon from 'components/Icon.vue'
+import Icon from "components/Icon.vue";
 
 export default {
-  name: 'events-section',
+  name: "EventsSection",
 
   components: {
     Icon,
   },
 
   computed: {
-    ...mapGetters([
-      'judgingEnabled',
-      'isSuperAdmin'
-    ])
-  }
-}
+    ...mapGetters(["judgingEnabled", "isSuperAdmin"]),
+  },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

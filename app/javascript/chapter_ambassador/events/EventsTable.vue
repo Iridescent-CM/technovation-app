@@ -3,8 +3,8 @@
     <template v-for="event in events">
       <div
         v-if="editingThisEventOrNone(event)"
-        :class="['grid__col-12', event.managing ? 'open' : '']"
         :key="event.id"
+        :class="['grid__col-12', event.managing ? 'open' : '']"
       >
         <div class="grid grid--bleed">
           <div class="grid__col-12">
@@ -51,78 +51,78 @@
             <div class="grid__cell">
               <template v-if="managingAttendanceEnabled">
                 <icon
+                  v-tooltip.top-center="editEventTeamsMsg"
                   alt="edit teams"
                   title="Manage teams"
-                  className="events-list__action-item"
+                  class-name="events-list__action-item"
                   name="flag"
                   size="16"
-                  v-tooltip.top-center="editEventTeamsMsg"
-                  :handleClick="
+                  :handle-click="
                     event.toggleManaging.bind(event, 'managingTeams')
                   "
                 />
 
                 <icon
+                  v-tooltip.top-center="editEventJudgesMsg"
                   alt="edit judges"
                   title="Manage judges"
-                  className="events-list__action-item"
+                  class-name="events-list__action-item"
                   name="gavel"
                   size="16"
-                  v-tooltip.top-center="editEventJudgesMsg"
-                  :handleClick="
+                  :handle-click="
                     event.toggleManaging.bind(event, 'managingJudges')
                   "
                 />
               </template>
 
               <icon
+                v-tooltip.top-center="`Print for live event`"
                 alt="print"
-                className="events-list__action-item"
+                class-name="events-list__action-item"
                 name="print"
                 size="16"
-                v-tooltip.top-center="`Print for live event`"
-                :handleClick="goToPrintUrl.bind(this, event)"
+                :handle-click="goToPrintUrl.bind(this, event)"
               />
 
               <icon
+                v-tooltip.top-center="`Edit event`"
                 alt="edit"
-                className="events-list__action-item"
+                class-name="events-list__action-item"
                 name="edit"
                 size="16"
-                v-tooltip.top-center="`Edit event`"
-                :handleClick="editEvent.bind(this, event)"
+                :handle-click="editEvent.bind(this, event)"
               />
 
               <icon
+                v-tooltip.top-center="`Delete event`"
                 alt="remove"
-                className="events-list__action-item"
+                class-name="events-list__action-item"
                 name="remove"
                 size="16"
                 color="ff0000"
-                v-tooltip.top-center="`Delete event`"
-                :handleClick="removeEvent.bind(this, event)"
+                :handle-click="removeEvent.bind(this, event)"
               />
             </div>
           </div>
         </div>
 
         <div
-          class="event-manage"
-          :key="event.id + '-manage'"
           v-if="!editingOne && event.managing"
+          :key="event.id + '-manage'"
+          class="event-manage"
         >
           <event-judge-list
             v-if="event.managingJudges"
             :event="event"
-            :fetchUrl="searchJudgesUrl"
-            :saveAssignmentsUrl="saveAssignmentsUrl"
+            :fetch-url="searchJudgesUrl"
+            :save-assignments-url="saveAssignmentsUrl"
           ></event-judge-list>
 
           <event-team-list
             v-if="event.managingTeams"
             :event="event"
-            :fetchUrl="searchTeamsUrl"
-            :saveAssignmentsUrl="saveAssignmentsUrl"
+            :fetch-url="searchTeamsUrl"
+            :save-assignments-url="saveAssignmentsUrl"
           ></event-team-list>
         </div>
       </div>
@@ -139,7 +139,13 @@ import EventJudgeList from "./EventJudgeList";
 import EventTeamList from "./EventTeamList";
 
 export default {
-  name: "events-table",
+  name: "EventsTable",
+
+  components: {
+    EventJudgeList,
+    EventTeamList,
+    Icon,
+  },
 
   props: [
     "fetchUrl",
@@ -173,10 +179,45 @@ export default {
     },
   },
 
-  components: {
-    EventJudgeList,
-    EventTeamList,
-    Icon,
+  mounted() {
+    EventBus.$on("EventForm.handleSubmit", (event) => {
+      var idx = this.events.findIndex((e) => {
+        return e.id === event.id;
+      });
+
+      event.fetchTeamsUrlRoot = this.teamsListUrl;
+      event.fetchJudgesUrlRoot = this.judgesListUrl;
+
+      if (idx !== -1) {
+        this.events.splice(idx, 1, event);
+      } else {
+        this.events.push(event);
+      }
+    });
+
+    EventBus.$on("EventForm.reset", () => {
+      this.formActive = false;
+      this.events.forEach((e) => {
+        e.editing = false;
+      });
+    });
+
+    EventBus.$on("EventForm.active", () => {
+      this.formActive = true;
+    });
+
+    $.ajax({
+      method: "GET",
+      url: this.fetchUrl,
+      success: (resp) => {
+        Array.from(resp).forEach((event) => {
+          event.fetchTeamsUrlRoot = this.teamsListUrl;
+          event.fetchJudgesUrlRoot = this.judgesListUrl;
+
+          this.events.push(new Event(event));
+        });
+      },
+    });
   },
 
   methods: {
@@ -226,47 +267,6 @@ export default {
 
       return event.capacity;
     },
-  },
-
-  mounted() {
-    EventBus.$on("EventForm.handleSubmit", (event) => {
-      var idx = this.events.findIndex((e) => {
-        return e.id === event.id;
-      });
-
-      event.fetchTeamsUrlRoot = this.teamsListUrl;
-      event.fetchJudgesUrlRoot = this.judgesListUrl;
-
-      if (idx !== -1) {
-        this.events.splice(idx, 1, event);
-      } else {
-        this.events.push(event);
-      }
-    });
-
-    EventBus.$on("EventForm.reset", () => {
-      this.formActive = false;
-      this.events.forEach((e) => {
-        e.editing = false;
-      });
-    });
-
-    EventBus.$on("EventForm.active", () => {
-      this.formActive = true;
-    });
-
-    $.ajax({
-      method: "GET",
-      url: this.fetchUrl,
-      success: (resp) => {
-        Array.from(resp).forEach((event) => {
-          event.fetchTeamsUrlRoot = this.teamsListUrl;
-          event.fetchJudgesUrlRoot = this.judgesListUrl;
-
-          this.events.push(new Event(event));
-        });
-      },
-    });
   },
 };
 </script>

@@ -1,10 +1,10 @@
 <template>
   <a
     href="#"
+    :class="cssClass"
     @click.prevent="
       openJudgeRecusalForm(judgeRecusalCount, maximumNumberOfRecusals)
     "
-    :class="cssClass"
   >
     <slot></slot>
   </a>
@@ -29,7 +29,7 @@ export default {
       default: 0,
     },
     maximumNumberOfRecusals: {
-      type: String,
+      type: Number,
       default: 0,
     },
   },
@@ -114,8 +114,12 @@ export default {
             characterCountEl.innerHTML = characterCount.toString();
           });
 
-          const contentCheckboxEls = document.querySelector("#recusal-flagged-contents");
-          const radioEls = document.querySelectorAll('input[name="judge-recusal-reason"]');
+          const contentCheckboxEls = document.querySelector(
+            "#recusal-flagged-contents"
+          );
+          const radioEls = document.querySelectorAll(
+            'input[name="judge-recusal-reason"]'
+          );
 
           radioEls.forEach((radio) => {
             radio.addEventListener("change", () => {
@@ -123,9 +127,11 @@ export default {
                 contentCheckboxEls.style.display = "block";
               } else {
                 contentCheckboxEls.style.display = "none";
-                document.querySelectorAll('input[name="recusal-flagged-contents"]').forEach((checkbox) => {
-                  checkbox.checked = false;
-                });
+                document
+                  .querySelectorAll('input[name="recusal-flagged-contents"]')
+                  .forEach((checkbox) => {
+                    checkbox.checked = false;
+                  });
               }
             });
           });
@@ -168,7 +174,9 @@ export default {
           }
 
           const judgeRecusalFlaggedContents = [
-            ...document.querySelectorAll('input[name="recusal-flagged-contents"]:checked')
+            ...document.querySelectorAll(
+              'input[name="recusal-flagged-contents"]:checked'
+            ),
           ].map((checkbox) => ({ name: checkbox.value }));
 
           if (
@@ -181,7 +189,11 @@ export default {
             return false;
           }
 
-          return { judgeRecusalReason, judgeRecusalComment, judgeRecusalFlaggedContents };
+          return {
+            judgeRecusalReason,
+            judgeRecusalComment,
+            judgeRecusalFlaggedContents,
+          };
         },
         confirmButtonText: "Remove me from this submission",
         confirmButtonColor: "#3FA428",
@@ -199,7 +211,8 @@ export default {
             submission_score: {
               judge_recusal_reason: formValues.judgeRecusalReason,
               judge_recusal_comment: formValues.judgeRecusalComment,
-              judge_recusal_flagged_contents_attributes: formValues.judgeRecusalFlaggedContents,
+              judge_recusal_flagged_contents_attributes:
+                formValues.judgeRecusalFlaggedContents,
             },
           }
         );

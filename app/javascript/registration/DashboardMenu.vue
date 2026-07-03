@@ -44,31 +44,31 @@
     </tab-link>
 
     <tab-link
+      v-if="!currentAccount"
       :to="{ name: 'login' }"
       :disabled-tooltip="Tooltips.MUST_FILL_OTHER_SECTIONS"
       :condition-to-enable="readyForAccount"
-      v-if="!currentAccount"
     >
       Sign in
     </tab-link>
 
     <tab-link
+      v-if="currentAccount"
       :to="{ name: 'change-email' }"
       css-classes="tabs__menu-link--has-subtitles"
       :condition-to-complete="true"
       :condition-to-enable="true"
-      v-if="currentAccount"
     >
       Change email
       <span>{{ currentAccount.email }}</span>
     </tab-link>
 
     <tab-link
+      v-if="currentAccount"
       :to="{ name: 'change-password' }"
       css-classes="tabs__menu-link--has-subtitles"
       :condition-to-complete="true"
       :condition-to-enable="true"
-      v-if="currentAccount"
     >
       Change password
       <span>************</span>
@@ -76,90 +76,79 @@
   </ul>
 </template>
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers } from "vuex";
 
-import TabLink from 'tabs/components/TabLink'
+import TabLink from "tabs/components/TabLink";
 
-const { mapState, mapGetters } = createNamespacedHelpers('registration')
-const { mapState: mapAuthState } = createNamespacedHelpers('authenticated')
+const { mapState, mapGetters } = createNamespacedHelpers("registration");
+const { mapState: mapAuthState } = createNamespacedHelpers("authenticated");
 
 const Tooltips = {
-  MUST_AGREE_TERMS:         'You must agree to the data use terms to continue',
-  MUST_SET_AGE:             'Please fill out your date of birth first',
-  MUST_CHOOSE_PROFILE:      'Please choose a profile first',
-  MUST_FILL_OTHER_SECTIONS: 'Please fill out other sections first',
-}
+  MUST_AGREE_TERMS: "You must agree to the data use terms to continue",
+  MUST_SET_AGE: "Please fill out your date of birth first",
+  MUST_CHOOSE_PROFILE: "Please choose a profile first",
+  MUST_FILL_OTHER_SECTIONS: "Please fill out other sections first",
+};
 
 export default {
-  name: 'dashboard-menu',
+  name: "DashboardMenu",
 
   components: {
     TabLink,
   },
 
-  created () {
-    this.Tooltips = Tooltips
+  created() {
+    this.Tooltips = Tooltips;
   },
 
   computed: {
-    ...mapState([
-      'termsAgreed',
-      'termsAgreedDate',
-      'profileChoice',
-    ]),
+    ...mapState(["termsAgreed", "termsAgreedDate", "profileChoice"]),
 
-    ...mapAuthState([
-      'currentAccount',
-    ]),
+    ...mapAuthState(["currentAccount"]),
 
     ...mapGetters([
-      'isAgeSet',
-      'getAge',
-      'isProfileChosen',
-      'isBasicProfileSet',
-      'isLocationSet',
-      'getLocation',
-      'readyForAccount',
-      'getFullName',
+      "isAgeSet",
+      "getAge",
+      "isProfileChosen",
+      "isBasicProfileSet",
+      "isLocationSet",
+      "getLocation",
+      "readyForAccount",
+      "getFullName",
     ]),
 
-    termsAgreedLabel () {
+    termsAgreedLabel() {
       if (this.termsAgreed && this.termsAgreedDate)
-        return `Agreed on ${this.termsAgreedDate}`
+        return `Agreed on ${this.termsAgreedDate}`;
 
-      return ''
+      return "";
     },
 
-    ageLabel () {
-      if (this.isAgeSet)
-        return `${this.getAge()} years old`
+    ageLabel() {
+      if (this.isAgeSet) return `${this.getAge()} years old`;
 
-      return ''
+      return "";
     },
 
-    regionLabel () {
-      if (this.isLocationSet)
-        return Object.values(this.getLocation).join(', ')
+    regionLabel() {
+      if (this.isLocationSet) return Object.values(this.getLocation).join(", ");
 
-      return ''
+      return "";
     },
 
-    profileLabel () {
-      return this.getFullName || ""
+    profileLabel() {
+      return this.getFullName || "";
     },
 
-    chooseProfileDisabledMessage () {
-      if (!this.termsAgreed)
-        return Tooltips.MUST_AGREE_TERMS
+    chooseProfileDisabledMessage() {
+      if (!this.termsAgreed) return Tooltips.MUST_AGREE_TERMS;
 
-      if (!this.isAgeSet)
-        return Tooltips.MUST_SET_AGE
+      if (!this.isAgeSet) return Tooltips.MUST_SET_AGE;
 
-      return ''
+      return "";
     },
   },
-}
+};
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

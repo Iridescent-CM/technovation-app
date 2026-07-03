@@ -4,4 +4,4 @@ import translations from "../config/locales/en.json";
 
 const i18n = new I18n(translations);
 
-export {i18n}
+export { i18n };

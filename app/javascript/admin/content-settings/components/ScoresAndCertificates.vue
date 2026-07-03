@@ -9,18 +9,19 @@
         type="checkbox"
         :value="0"
         :disabled="true"
-      >
+      />
       <input
         v-else
         id="season_toggles_display_scores"
-        type="checkbox"
         v-model="$store.state.display_scores"
+        type="checkbox"
         :disabled="!isSuperAdmin"
-      >
+      />
       <label
         for="season_toggles_display_scores"
         :class="{ 'label--disabled': judgingEnabled }"
-      >Scores &amp; Certificates Accessible</label>
+        >Scores &amp; Certificates Accessible</label
+      >
     </p>
 
     <div v-if="judgingEnabled" class="notice info hint user-notice">
@@ -31,25 +32,21 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import Icon from 'components/Icon.vue'
+import Icon from "components/Icon.vue";
 
 export default {
-  name: 'scores-and-certificates-section',
+  name: "ScoresAndCertificatesSection",
 
   components: {
     Icon,
   },
 
   computed: {
-    ...mapGetters([
-      'judgingEnabled',
-      'isSuperAdmin'
-    ])
-  }
-}
+    ...mapGetters(["judgingEnabled", "isSuperAdmin"]),
+  },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

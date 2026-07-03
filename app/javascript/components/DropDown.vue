@@ -1,16 +1,11 @@
 <template>
-  <div class="drop-down" v-click-outside="collapseDropDown">
+  <div v-click-outside="collapseDropDown" class="drop-down">
     <a @click.stop.prevent="toggleCollapse">
       {{ label }}
-      <icon
-        :title="caretTitle"
-        :name="caretIcon"
-        color="000000"
-        :size="12"
-      />
+      <icon :title="caretTitle" :name="caretIcon" color="000000" :size="12" />
     </a>
     <transition name="collapse">
-      <div class="drop-down__content" v-show="expanded">
+      <div v-show="expanded" class="drop-down__content">
         <slot></slot>
       </div>
     </transition>
@@ -18,14 +13,14 @@
 </template>
 
 <script>
-import Icon from 'components/Icon'
-import ClickOutside from 'directives/click-outside'
+import Icon from "components/Icon";
+import ClickOutside from "directives/click-outside";
 
 export default {
-  name: 'top-section-header',
+  name: "TopSectionHeader",
 
   directives: {
-    'click-outside': ClickOutside,
+    "click-outside": ClickOutside,
   },
 
   components: {
@@ -39,36 +34,36 @@ export default {
     },
   },
 
-  data () {
+  data() {
     return {
       expanded: false,
-    }
+    };
   },
 
   computed: {
-    caretTitle () {
-      return this.expanded ? 'Collapse' : 'Expand'
+    caretTitle() {
+      return this.expanded ? "Collapse" : "Expand";
     },
 
-    caretIcon () {
-      return this.expanded ? 'caret-up' : 'caret-down'
+    caretIcon() {
+      return this.expanded ? "caret-up" : "caret-down";
     },
   },
 
   methods: {
-    collapseDropDown () {
-      this.expanded = false
+    collapseDropDown() {
+      this.expanded = false;
     },
 
-    toggleCollapse () {
-      this.expanded = !this.expanded
+    toggleCollapse() {
+      this.expanded = !this.expanded;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/stylesheets/_variables';
+@import "../../assets/stylesheets/_variables";
 
 .drop-down {
   position: relative;
@@ -86,11 +81,11 @@ export default {
 }
 
 .collapse-enter-active {
-  animation: scale .2s;
+  animation: scale 0.2s;
 }
 
 .collapse-leave-active {
-  animation: scale .2s reverse;
+  animation: scale 0.2s reverse;
 }
 
 @keyframes scale {

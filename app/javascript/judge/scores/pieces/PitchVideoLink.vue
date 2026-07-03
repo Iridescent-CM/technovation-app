@@ -7,14 +7,14 @@
         :data-modal-fetch="submission.pitch_video_url"
         class="text-energetic-blue flex text-3xl"
       >
-        <Icon name="play-circle-o" color="0075cf"/>
+        <Icon name="play-circle-o" color="0075cf" />
         Watch the pitch video
       </a>
     </p>
 
     <div
-      class="modal"
       :id="`video-modal-${submission.pitch_video_id}`"
+      class="modal"
       data-width="700px"
     >
       <div class="modal-content"></div>
@@ -23,15 +23,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
-import Icon from '../../../components/Icon'
+import Icon from "../../../components/Icon";
 
 export default {
-  computed: mapState(['score', 'submission']),
+  computed: mapState(["score", "submission"]),
 
   components: {
-    Icon
+    Icon,
   },
-}
+};
 </script>

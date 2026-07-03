@@ -3,8 +3,8 @@
     <div class="grid__col-auto grid__col--bleed-y">
       <p v-if="canAddTeamsToEvents">
         <button
-          class="button button--remove-bg"
           v-show="!searching"
+          class="button button--remove-bg"
           @click="searching = true"
         >
           {{ addBtnText }}
@@ -15,7 +15,7 @@
         New teams cannot be added to events at this time.
       </p>
 
-      <div class="modal-container" v-show="searching">
+      <div v-show="searching" class="modal-container">
         <div class="modal">
           <div v-if="eventAtCapacity()" class="margin--b-xlarge">
             <div class="flash flash--error margin--none">
@@ -25,16 +25,16 @@
           </div>
 
           <input
+            v-model="query"
             type="search"
             :placeholder="searchPlaceholder"
-            v-model="query"
           />
 
-          <div class="align-center padding-small" v-show="fetching">
+          <div v-show="fetching" class="align-center padding-small">
             <icon class="spin" name="spinner" />
           </div>
 
-          <div class="padding-small" v-show="!fetching && !items.length">
+          <div v-show="!fetching && !items.length" class="padding-small">
             <slot name="no-results" />
           </div>
 
@@ -48,17 +48,17 @@
 
               <tbody>
                 <tr
-                  class="cursor-pointer"
                   v-for="item in filteredItems"
                   :key="item.id"
+                  class="cursor-pointer"
                   @click="toggleSelection(item)"
                 >
                   <slot name="table-rows" :item="item" />
 
                   <td
-                    class="light-opacity"
                     v-show="!item.selected"
                     v-tooltip="selectionDisabledTooltip"
+                    class="light-opacity"
                   >
                     <icon name="check-circle-o" />
                   </td>
@@ -96,17 +96,6 @@ export default {
     Icon,
   },
 
-  data() {
-    return {
-      query: "",
-      searching: false,
-      fetching: false,
-      items: [],
-      selectableItems: [],
-      canAddTeamsToEvents: false,
-    };
-  },
-
   props: {
     addBtnText: String,
     searchPlaceholder: String,
@@ -128,24 +117,15 @@ export default {
     },
   },
 
-  async created() {
-    EventBus.$on(
-      [
-        "EventTeamList.saveAssignments",
-        "EventJudgeList.saveAssignments",
-        "EventTeamList.removeTeam",
-        "EventJudgeList.removeJudge",
-      ],
-      () => {
-        this.fetchRemoteItems();
-      }
-    );
-
-    this.debouncedFetchRemoteItems = debounce(() => {
-      this.fetchRemoteItems({ expandSearch: 1 });
-    }, 300);
-
-    await this.getRegionalPitchEventSettings();
+  data() {
+    return {
+      query: "",
+      searching: false,
+      fetching: false,
+      items: [],
+      selectableItems: [],
+      canAddTeamsToEvents: false,
+    };
   },
 
   computed: {
@@ -183,6 +163,26 @@ export default {
     searching(current) {
       if (current && !this.items.length) this.fetchRemoteItems();
     },
+  },
+
+  async created() {
+    EventBus.$on(
+      [
+        "EventTeamList.saveAssignments",
+        "EventJudgeList.saveAssignments",
+        "EventTeamList.removeTeam",
+        "EventJudgeList.removeJudge",
+      ],
+      () => {
+        this.fetchRemoteItems();
+      }
+    );
+
+    this.debouncedFetchRemoteItems = debounce(() => {
+      this.fetchRemoteItems({ expandSearch: 1 });
+    }, 300);
+
+    await this.getRegionalPitchEventSettings();
   },
 
   methods: {

@@ -38,7 +38,7 @@ export const saveComment = (state, sectionName) => {
     data: data,
     contentType: false,
     processData: false,
-    success: (resp) => {
+    success: (_resp) => {
       // Verify the resp here
     },
     error: (jqXHR, textStatus, errorThrown) => {
@@ -66,7 +66,7 @@ export const updateScores = (state, qData) => {
     contentType: false,
     processData: false,
 
-    success: (resp) => {
+    success: (_resp) => {
       question.score = qData.score;
     },
 

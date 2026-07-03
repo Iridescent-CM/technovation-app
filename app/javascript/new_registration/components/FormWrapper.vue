@@ -1,40 +1,44 @@
 <template>
   <FormulateForm
-    class="registration-container pb-6"
+    id="registration-form"
+    v-slot="{ isLoading }"
     v-model="formValues"
-    @submit="submitHandler"
-    #default="{ isLoading }"
+    class="registration-container pb-6"
     :form-errors="formErrors"
     :errors="inputErrors"
-    id="registration-form"
+    @submit="submitHandler"
   >
-
     <div v-show="step === 1">
       <StepOne :form-values="formValues" @next="next" />
     </div>
 
     <div v-show="step === 2">
-      <MentorStepTwo v-if="formValues.profileType === 'mentor'"
+      <MentorStepTwo
+        v-if="formValues.profileType === 'mentor'"
         :form-values="formValues"
         @next="next"
         @prev="prev"
       />
-      <JudgeStepTwo v-else-if="formValues.profileType === 'judge'"
+      <JudgeStepTwo
+        v-else-if="formValues.profileType === 'judge'"
         :form-values="formValues"
         @next="next"
         @prev="prev"
       />
-      <ChapterAmbassadorStepTwo v-else-if="formValues.profileType === 'chapter_ambassador'"
+      <ChapterAmbassadorStepTwo
+        v-else-if="formValues.profileType === 'chapter_ambassador'"
         :form-values="formValues"
         @next="next"
         @prev="prev"
       />
-      <ClubAmbassadorStepTwo v-else-if="formValues.profileType === 'club_ambassador'"
+      <ClubAmbassadorStepTwo
+        v-else-if="formValues.profileType === 'club_ambassador'"
         :form-values="formValues"
         @next="next"
         @prev="prev"
       />
-      <StudentStepTwo v-else
+      <StudentStepTwo
+        v-else
         :form-values="formValues"
         @next="next"
         @prev="prev"
@@ -46,7 +50,11 @@
     </div>
 
     <div v-show="step === 4">
-      <StepFour :form-values="formValues" :isLoading="isLoading" @prev="prev" />
+      <StepFour
+        :form-values="formValues"
+        :is-loading="isLoading"
+        @prev="prev"
+      />
 
       <FormulateErrors />
     </div>
@@ -54,20 +62,20 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
-import StepOne from './StepOne';
-import MentorStepTwo from './MentorStepTwo';
-import StudentStepTwo from './StudentStepTwo';
+import StepOne from "./StepOne";
+import MentorStepTwo from "./MentorStepTwo";
+import StudentStepTwo from "./StudentStepTwo";
 import JudgeStepTwo from "./JudgeStepTwo";
 import ChapterAmbassadorStepTwo from "./ChapterAmbassadorStepTwo";
 import ClubAmbassadorStepTwo from "./ClubAmbassadorStepTwo";
-import StepThree from './StepThree';
-import StepFour from './StepFour';
+import StepThree from "./StepThree";
+import StepFour from "./StepFour";
 
 export default {
   name: "FormWrapper.vue",
-  components:{
+  components: {
     StepOne,
     MentorStepTwo,
     StudentStepTwo,
@@ -75,22 +83,22 @@ export default {
     ChapterAmbassadorStepTwo,
     ClubAmbassadorStepTwo,
     StepThree,
-    StepFour
+    StepFour,
   },
-  data(){
+  data() {
     return {
       step: 1,
       formValues: {},
       formErrors: [],
       inputErrors: {},
-      mentorProfileExpertiseOptions: []
-    }
+      mentorProfileExpertiseOptions: [],
+    };
   },
   created() {
-    window.addEventListener('keypress', this.onKeyPress);
+    window.addEventListener("keypress", this.onKeyPress);
   },
   beforeDestroy() {
-    window.removeEventListener('keypress', this.onKeyPress);
+    window.removeEventListener("keypress", this.onKeyPress);
   },
   methods: {
     prev() {
@@ -102,53 +110,60 @@ export default {
       this.scrollToTopOfForm();
     },
     scrollToTopOfForm() {
-      document.getElementById('registration-form').scrollIntoView();
+      document.getElementById("registration-form").scrollIntoView();
     },
     onKeyPress(e) {
       if (e.which === 13) {
         e.preventDefault();
       }
     },
-    async submitHandler (data) {
-      const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]')
-      const inviteCode = new URLSearchParams(document.location.search).get('invite_code')
+    async submitHandler(data) {
+      const csrfTokenMetaTag = document.querySelector(
+        'meta[name="csrf-token"]'
+      );
+      const inviteCode = new URLSearchParams(document.location.search).get(
+        "invite_code"
+      );
 
       let config = {
         headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-Csrf-Token' : csrfTokenMetaTag.getAttribute('content')
-        }
-      }
+          "X-Requested-With": "XMLHttpRequest",
+          "X-Csrf-Token": csrfTokenMetaTag.getAttribute("content"),
+        },
+      };
 
       try {
-        await axios.post('/new-registration', Object.assign(data, {inviteCode}), config)
+        await axios.post(
+          "/new-registration",
+          Object.assign(data, { inviteCode }),
+          config
+        );
 
-        switch(data.profileType) {
-          case 'student':
-          case 'parent':
-            window.location.href = '/student/profile'
-            break
-          case 'mentor':
-            window.location.href = '/mentor/dashboard'
-            break
-          case 'judge':
-            window.location.href = '/judge/dashboard'
-            break
-          case 'chapter_ambassador':
-            window.location.href = '/chapter_ambassador/dashboard'
-            break
-          case 'club_ambassador':
-            window.location.href = '/club_ambassador/dashboard'
-            break
+        switch (data.profileType) {
+          case "student":
+          case "parent":
+            window.location.href = "/student/profile";
+            break;
+          case "mentor":
+            window.location.href = "/mentor/dashboard";
+            break;
+          case "judge":
+            window.location.href = "/judge/dashboard";
+            break;
+          case "chapter_ambassador":
+            window.location.href = "/chapter_ambassador/dashboard";
+            break;
+          case "club_ambassador":
+            window.location.href = "/club_ambassador/dashboard";
+            break;
+        }
+      } catch (error) {
+        if (error.response) {
+          this.formErrors = error.response.data.full_error_messages;
+          this.inputErrors = error.response.data.errors;
         }
       }
-      catch(error) {
-        if(error.response) {
-          this.formErrors = error.response.data.full_error_messages
-          this.inputErrors = error.response.data.errors
-        }
-      }
-    }
-  }
-}
+    },
+  },
+};
 </script>

@@ -3,7 +3,7 @@
     <h4>Survey Links</h4>
 
     <div class="notice info hint">
-      Please use a full URL with correct formatting.<br>
+      Please use a full URL with correct formatting.<br />
       (i.e., you must include the "https://" part)
     </div>
 
@@ -11,26 +11,28 @@
       <p class="margin--t-none">
         <label for="season_toggles_student_survey_link_text">Students</label>
         <input
-          placeholder="Headline call to action (keep it short)"
-          type="text"
           id="season_toggles_student_survey_link_text"
           v-model="$store.state.student_survey_link.text"
-          :disabled="!isSuperAdmin"
-        >
-        <input
-          placeholder="URL"
+          placeholder="Headline call to action (keep it short)"
           type="text"
+          :disabled="!isSuperAdmin"
+        />
+        <input
           id="season_toggles_student_survey_link_url"
           v-model="$store.state.student_survey_link.url"
+          placeholder="URL"
+          type="text"
           :disabled="!isSuperAdmin"
-        >
+        />
       </p>
       <p class="margin--t-none">
-        <label for="season_toggles_student_survey_link_long_desc">(optional popup modal text)</label>
+        <label for="season_toggles_student_survey_link_long_desc"
+          >(optional popup modal text)</label
+        >
         <textarea
-          placeholder="Add more text that appears only in the popup modal"
           id="season_toggles_student_survey_link_long_desc"
           v-model="$store.state.student_survey_link.long_desc"
+          placeholder="Add more text that appears only in the popup modal"
           :disabled="!isSuperAdmin"
         />
       </p>
@@ -43,26 +45,28 @@
       <p class="margin--t-none">
         <label for="season_toggles_mentor_survey_link_text">Mentors</label>
         <input
-          placeholder="Headline call to action (keep it short)"
-          type="text"
           id="season_toggles_mentor_survey_link_text"
           v-model="$store.state.mentor_survey_link.text"
-          :disabled="!isSuperAdmin"
-        >
-        <input
-          placeholder="URL"
+          placeholder="Headline call to action (keep it short)"
           type="text"
+          :disabled="!isSuperAdmin"
+        />
+        <input
           id="season_toggles_mentor_survey_link_url"
           v-model="$store.state.mentor_survey_link.url"
+          placeholder="URL"
+          type="text"
           :disabled="!isSuperAdmin"
-        >
+        />
       </p>
       <p class="margin--t-none">
-        <label for="season_toggles_mentor_survey_link_long_desc">(optional popup modal text)</label>
+        <label for="season_toggles_mentor_survey_link_long_desc"
+          >(optional popup modal text)</label
+        >
         <textarea
-          placeholder="Add more text that appears only in the popup modal"
           id="season_toggles_mentor_survey_link_long_desc"
           v-model="$store.state.mentor_survey_link.long_desc"
+          placeholder="Add more text that appears only in the popup modal"
           :disabled="!isSuperAdmin"
         />
       </p>
@@ -74,15 +78,14 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'surveys-section',
+  name: "SurveysSection",
   computed: {
-    ...mapGetters(['isSuperAdmin'])
-  }
-}
+    ...mapGetters(["isSuperAdmin"]),
+  },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

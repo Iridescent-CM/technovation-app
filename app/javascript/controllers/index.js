@@ -2,22 +2,25 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application"
+import { application } from "./application";
 
-import DateFieldsController from "./date_fields_controller"
-application.register("date-fields", DateFieldsController)
+import DateFieldsController from "./date_fields_controller";
+application.register("date-fields", DateFieldsController);
 
-import LanguageSelectorController from "./language_selector_controller"
-application.register("language-selector", LanguageSelectorController)
+import LanguageSelectorController from "./language_selector_controller";
+application.register("language-selector", LanguageSelectorController);
 
-import MinimumAgeController from "./minimum_age_controller"
-application.register("minimum-age", MinimumAgeController)
+import MinimumAgeController from "./minimum_age_controller";
+application.register("minimum-age", MinimumAgeController);
 
-import ModalController from "./modal_controller"
-application.register("modal", ModalController)
+import ModalController from "./modal_controller";
+application.register("modal", ModalController);
 
-import SearchController from "./search_controller"
-application.register("search", SearchController)
+import SearchController from "./search_controller";
+application.register("search", SearchController);
 
-import Students__ParentalConsentContactToggleController from "./students/parental_consent_contact_toggle_controller"
-application.register("students--parental-consent-contact-toggle", Students__ParentalConsentContactToggleController)
+import Students__ParentalConsentContactToggleController from "./students/parental_consent_contact_toggle_controller";
+application.register(
+  "students--parental-consent-contact-toggle",
+  Students__ParentalConsentContactToggleController
+);

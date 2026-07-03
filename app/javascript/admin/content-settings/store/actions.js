@@ -1,21 +1,23 @@
-import axios from 'axios'
+import axios from "axios";
 /* FIXME: The content-settings store speaks snake_case, and window.axios comes with
  * an axios-case-converter transformation that transforms snake_case to camelCase,
  * so we have to bypass that for now with a fresh import.
  */
 
 export default {
-  init({ commit, state}) {
+  init({ commit, state: _state }) {
     return new Promise((resolve, reject) => {
-      axios.get('/admin/season_schedule_settings.json')
+      axios
+        .get("/admin/season_schedule_settings.json")
         .then(({ data }) => {
           if (data.data) {
-            commit('setFormData', data.data.attributes)
-            resolve()
+            commit("setFormData", data.data.attributes);
+            resolve();
           } else {
-            reject()
+            reject();
           }
-        }).catch(err => reject(err))
-    })
-  }
-}
+        })
+        .catch((err) => reject(err));
+    });
+  },
+};
