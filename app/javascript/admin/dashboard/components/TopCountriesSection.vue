@@ -19,9 +19,14 @@
 
 <script>
 import DashboardSection from "./DashboardSection";
+import BarChart from "@appjs/components/BarChart";
 
 export default {
   name: "TopCountriesSection",
+
+  components: {
+    BarChart,
+  },
 
   extends: DashboardSection,
 
