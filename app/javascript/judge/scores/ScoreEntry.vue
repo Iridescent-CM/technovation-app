@@ -1,6 +1,6 @@
 <template>
   <div v-if="!questions.length" class="loading">
-    <icon name="spinner" class-name="spin" />
+    <app-icon name="spinner" class-name="spin" />
     <div>Loading questions...</div>
   </div>
 
@@ -62,17 +62,22 @@
 </template>
 
 <script>
-import Icon from "../../components/Icon";
+import AppIcon from "../../components/AppIcon";
 import { mapState } from "vuex";
 
 export default {
-  computed: mapState(["team"]),
-
   components: {
-    Icon,
+    AppIcon,
   },
 
-  props: ["questions"],
+  props: {
+    questions: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  computed: mapState(["team"]),
 
   methods: {
     updateScores(question, score) {

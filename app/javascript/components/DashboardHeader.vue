@@ -67,7 +67,6 @@
 import { createNamespacedHelpers } from "vuex";
 
 import DropDown from "components/DropDown";
-import Icon from "components/Icon";
 
 const { mapGetters } = createNamespacedHelpers("authenticated");
 
@@ -76,7 +75,6 @@ export default {
 
   components: {
     DropDown,
-    Icon,
   },
 
   props: {

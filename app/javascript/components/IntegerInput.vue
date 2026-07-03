@@ -25,7 +25,10 @@ export default {
       default: 0,
     },
 
-    maximum: Number,
+    maximum: {
+      type: Number,
+      default: null,
+    },
   },
 
   data() {

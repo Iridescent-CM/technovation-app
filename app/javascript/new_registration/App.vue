@@ -1,27 +1,27 @@
 <template>
   <div id="home" class="home">
-    <Navbar />
-    <Banner />
+    <RegistrationNavbar />
+    <RegistrationBanner />
     <FormWrapper />
     <div id="thick-rule" class="bg-energetic-blue h-6 my-16"></div>
     <ContactUs />
-    <Footer />
+    <RegistrationFooter />
   </div>
 </template>
 
 <script>
-import Navbar from "./components/Navbar";
-import Banner from "./components/Banner";
-import Footer from "./components/Footer";
+import RegistrationNavbar from "./components/RegistrationNavbar";
+import RegistrationBanner from "./components/RegistrationBanner";
+import RegistrationFooter from "./components/RegistrationFooter";
 import ContactUs from "./components/ContactUs";
 import FormWrapper from "./components/FormWrapper";
 
 export default {
   name: "App",
   components: {
-    Navbar,
-    Banner,
-    Footer,
+    RegistrationNavbar,
+    RegistrationBanner,
+    RegistrationFooter,
     ContactUs,
     FormWrapper,
   },

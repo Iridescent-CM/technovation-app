@@ -91,6 +91,7 @@ export default {
     sectionScore: {
       type: String,
       required: false,
+      default: "",
     },
     showSectionProgress: {
       type: Boolean,

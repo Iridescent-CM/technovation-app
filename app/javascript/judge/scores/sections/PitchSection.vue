@@ -24,17 +24,18 @@ import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 import PitchVideoLink from "../pieces/PitchVideoLink";
 
 export default {
+  name: "PitchSection",
+  components: {
+    GenericJudgingContainer,
+    PitchVideoLink,
+  },
+
   computed: {
     ...mapState(["team", "submission"]),
 
     nextSection() {
       return this.team.division === "senior" ? "entrepreneurship" : "overall";
     },
-  },
-
-  components: {
-    GenericJudgingContainer,
-    PitchVideoLink,
   },
 };
 </script>

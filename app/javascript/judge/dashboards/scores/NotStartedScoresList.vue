@@ -115,10 +115,6 @@
 import { mapGetters } from "vuex";
 
 export default {
-  computed: {
-    ...mapGetters(["notStartedSubmissions"]),
-  },
-
   props: {
     title: {
       type: String,
@@ -132,6 +128,10 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+
+  computed: {
+    ...mapGetters(["notStartedSubmissions"]),
   },
 
   methods: {

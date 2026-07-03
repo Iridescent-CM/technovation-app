@@ -8,6 +8,12 @@
 
 <script>
 export default {
-  props: ["errors"],
+  name: "FormErrors",
+  props: {
+    errors: {
+      type: Array,
+      default: null,
+    },
+  },
 };
 </script>

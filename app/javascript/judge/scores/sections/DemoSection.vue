@@ -8,7 +8,7 @@
     >
       <template #main-content>
         <DemoVideoLink />
-        <Code />
+        <SourceCode />
       </template>
     </GenericJudgingContainer>
   </div>
@@ -19,9 +19,16 @@ import { mapState } from "vuex";
 
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 import DemoVideoLink from "../pieces/DemoVideoLink";
-import Code from "../pieces/Code";
+import SourceCode from "../pieces/SourceCode";
 
 export default {
+  name: "DemoSection",
+  components: {
+    GenericJudgingContainer,
+    DemoVideoLink,
+    SourceCode,
+  },
+
   computed: {
     ...mapState(["team", "submission"]),
 
@@ -30,12 +37,6 @@ export default {
         ? "entrepreneurship"
         : "ideation";
     },
-  },
-
-  components: {
-    GenericJudgingContainer,
-    DemoVideoLink,
-    Code,
   },
 };
 </script>

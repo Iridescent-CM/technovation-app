@@ -16,7 +16,7 @@
           :to="{ name: 'registration' }"
         >
           <button role="button" class="tabs__menu-button">
-            <icon
+            <app-icon
               v-if="judgingEnabled"
               name="exclamation-circle"
               :size="16"
@@ -54,7 +54,7 @@
           :to="{ name: 'teams_and_submissions' }"
         >
           <button role="button" class="tabs__menu-button">
-            <icon
+            <app-icon
               v-if="judgingEnabled"
               name="exclamation-circle"
               :size="16"
@@ -72,7 +72,7 @@
           :to="{ name: 'events' }"
         >
           <button role="button" class="tabs__menu-button">
-            <icon
+            <app-icon
               v-if="judgingEnabled"
               name="exclamation-circle"
               :size="16"
@@ -100,7 +100,7 @@
           :to="{ name: 'scores_and_certificates' }"
         >
           <button role="button" class="tabs__menu-button">
-            <icon
+            <app-icon
               v-if="judgingEnabled"
               name="exclamation-circle"
               :size="16"
@@ -145,14 +145,14 @@
 import Swal from "sweetalert2";
 import { mapGetters } from "vuex";
 
-import Icon from "components/Icon";
+import AppIcon from "components/AppIcon";
 import { isProduction } from "../../../utilities/utilities";
 
 export default {
   name: "AdminContentSettings",
 
   components: {
-    Icon,
+    AppIcon,
   },
 
   props: {
@@ -169,6 +169,14 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters(["judgingEnabled", "formData", "isSuperAdmin"]),
+
+    currentRoute() {
+      return this.$route.name;
+    },
+  },
+
   created() {
     this.$store
       .dispatch("init")
@@ -180,14 +188,6 @@ export default {
         this.isLoading = false;
         this.hasError = true;
       });
-  },
-
-  computed: {
-    ...mapGetters(["judgingEnabled", "formData", "isSuperAdmin"]),
-
-    currentRoute() {
-      return this.$route.name;
-    },
   },
 
   methods: {

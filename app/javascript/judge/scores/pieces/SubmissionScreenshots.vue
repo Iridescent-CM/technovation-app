@@ -24,6 +24,7 @@ import { mapState } from "vuex";
 import { getFilestackResizeUrl } from "../../../utilities/filestack-helpers";
 
 export default {
+  name: "SubmissionScreenshots",
   computed: {
     ...mapState(["submission"]),
     screenshots() {

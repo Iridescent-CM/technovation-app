@@ -71,6 +71,7 @@ const { mapGetters } = createNamespacedHelpers("authenticated");
 import TabLink from "tabs/components/TabLink";
 
 export default {
+  name: "MentorTeam",
   components: {
     TabLink,
   },

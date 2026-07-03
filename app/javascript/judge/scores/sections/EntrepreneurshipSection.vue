@@ -9,7 +9,7 @@
       next-section="ideation"
     >
       <template #main-content>
-        <business />
+        <BusinessSection />
       </template>
     </GenericJudgingContainer>
   </div>
@@ -18,14 +18,15 @@
 <script>
 import { mapState } from "vuex";
 
-import Business from "../pieces/Business";
+import BusinessSection from "../pieces/BusinessSection";
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
 
 export default {
-  computed: mapState(["submission", "team"]),
+  name: "EntrepreneurshipSection",
   components: {
-    Business,
+    BusinessSection,
     GenericJudgingContainer,
   },
+  computed: mapState(["submission", "team"]),
 };
 </script>

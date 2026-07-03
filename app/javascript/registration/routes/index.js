@@ -3,14 +3,14 @@ import VueRouter from "vue-router";
 
 import store from "../store";
 
-import Location from "../components/Location";
+import RegistrationLocation from "../components/RegistrationLocation";
 
 import AgeVerification from "../components/AgeVerification";
 import ChooseProfile from "../components/ChooseProfile";
 
 import BasicProfile from "../components/BasicProfile";
 
-import Login from "../components/Login";
+import LoginForm from "../components/LoginForm";
 import ChangeEmail from "../components/ChangeEmail";
 import ChangePassword from "../components/ChangePassword";
 
@@ -81,7 +81,7 @@ export const routes = [
   {
     path: "/region",
     name: "location",
-    component: Location,
+    component: RegistrationLocation,
     meta: {
       browserTitle: "Step 2: Region",
     },
@@ -105,7 +105,7 @@ export const routes = [
   {
     path: "/signin",
     name: "login",
-    component: Login,
+    component: LoginForm,
     meta: {
       browserTitle: "Final step: Sign In",
     },

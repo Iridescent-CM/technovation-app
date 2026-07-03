@@ -1,11 +1,11 @@
 <template>
   <div>
-    <slot name="scores" />
+    <slot name="events" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "Scores",
+  name: "DashboardEventsRebrand",
 };
 </script>

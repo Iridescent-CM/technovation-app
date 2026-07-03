@@ -240,6 +240,10 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters(["judgingEnabled", "formData", "isSuperAdmin"]),
+  },
+
   methods: {
     isProduction,
 
@@ -252,10 +256,6 @@ export default {
         return "your local environment";
       }
     },
-  },
-
-  computed: {
-    ...mapGetters(["judgingEnabled", "formData", "isSuperAdmin"]),
   },
 };
 </script>

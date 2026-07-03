@@ -19,13 +19,18 @@
         </p>
         <p class="mt-4">
           <span
-            ><icon size="20" name="map-marker" class="inline" color="0075cf" />
+            ><app-icon
+              size="20"
+              name="map-marker"
+              class="inline"
+              color="0075cf"
+            />
             {{ team.location | capitalize }}</span
           >
         </p>
         <p>
           <span
-            ><icon size="18" name="file-o" class="inline" color="0075cf" />
+            ><app-icon size="18" name="file-o" class="inline" color="0075cf" />
             <a :href="rubricLink" class="tw-link-magenta" target="_blank"
               >View</a
             >
@@ -42,10 +47,13 @@ import { mapState } from "vuex";
 import { getJudgingRubricLink } from "../../utilities/judge-helpers";
 import { getFilestackResizeUrl } from "../../utilities/filestack-helpers";
 
-import JudgeRecusalPopup from "./JudgeRecusalPopup";
-import Icon from "../../components/Icon";
+import AppIcon from "../../components/AppIcon";
 
 export default {
+  components: {
+    AppIcon,
+  },
+
   computed: {
     ...mapState(["team", "score", "submission", "deadline"]),
 
@@ -62,11 +70,6 @@ export default {
     filestackResizeUrl() {
       return getFilestackResizeUrl(this.team.photo, 300);
     },
-  },
-
-  components: {
-    Icon,
-    JudgeRecusalPopup,
   },
 };
 </script>

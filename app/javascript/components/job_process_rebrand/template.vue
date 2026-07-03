@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center">
     <div :class="['mb-4 p-4 text-2xl ', statusClass]">
-      <icon v-if="showLoading" name="spinner" size="16" class="spin" />
+      <app-icon v-if="showLoading" name="spinner" size="16" class="spin" />
       {{ statusMsg }}
     </div>
 
@@ -15,11 +15,11 @@
 
 <script>
 import { urlHelpers } from "utilities/utilities";
-import Icon from "../Icon";
+import AppIcon from "../AppIcon";
 
 export default {
   components: {
-    Icon,
+    AppIcon,
   },
 
   props: {

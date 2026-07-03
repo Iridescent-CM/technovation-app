@@ -50,7 +50,7 @@
           <div class="grid__col-3 text-align--right">
             <div class="grid__cell">
               <template v-if="managingAttendanceEnabled">
-                <icon
+                <app-icon
                   v-tooltip.top-center="editEventTeamsMsg"
                   alt="edit teams"
                   title="Manage teams"
@@ -62,7 +62,7 @@
                   "
                 />
 
-                <icon
+                <app-icon
                   v-tooltip.top-center="editEventJudgesMsg"
                   alt="edit judges"
                   title="Manage judges"
@@ -75,7 +75,7 @@
                 />
               </template>
 
-              <icon
+              <app-icon
                 v-tooltip.top-center="`Print for live event`"
                 alt="print"
                 class-name="events-list__action-item"
@@ -84,7 +84,7 @@
                 :handle-click="goToPrintUrl.bind(this, event)"
               />
 
-              <icon
+              <app-icon
                 v-tooltip.top-center="`Edit event`"
                 alt="edit"
                 class-name="events-list__action-item"
@@ -93,7 +93,7 @@
                 :handle-click="editEvent.bind(this, event)"
               />
 
-              <icon
+              <app-icon
                 v-tooltip.top-center="`Delete event`"
                 alt="remove"
                 class-name="events-list__action-item"
@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import Icon from "../../components/Icon";
+import AppIcon from "../../components/AppIcon";
 import EventBus from "../../components/EventBus";
 
 import Event from "./Event";
@@ -144,18 +144,45 @@ export default {
   components: {
     EventJudgeList,
     EventTeamList,
-    Icon,
+    AppIcon,
   },
 
-  props: [
-    "fetchUrl",
-    "saveAssignmentsUrl",
-    "judgesListUrl",
-    "searchJudgesUrl",
-    "teamsListUrl",
-    "searchTeamsUrl",
-    "manageAttendees",
-  ],
+  props: {
+    fetchUrl: {
+      type: String,
+      required: true,
+    },
+
+    saveAssignmentsUrl: {
+      type: String,
+      required: true,
+    },
+
+    judgesListUrl: {
+      type: String,
+      required: true,
+    },
+
+    searchJudgesUrl: {
+      type: String,
+      required: true,
+    },
+
+    teamsListUrl: {
+      type: String,
+      required: true,
+    },
+
+    searchTeamsUrl: {
+      type: String,
+      required: true,
+    },
+
+    manageAttendees: {
+      type: String,
+      default: "true",
+    },
+  },
 
   data() {
     return {

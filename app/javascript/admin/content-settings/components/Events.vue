@@ -25,7 +25,7 @@
     </p>
 
     <div v-if="judgingEnabled" class="notice info hint user-notice">
-      <icon name="exclamation-circle" :size="16" color="00529B" />
+      <app-icon name="exclamation-circle" :size="16" color="00529B" />
       When judging is enabled, regional pitch events cannot be created
     </div>
 
@@ -52,7 +52,7 @@
     </p>
 
     <div v-if="judgingEnabled" class="notice info hint user-notice">
-      <icon name="exclamation-circle" :size="16" color="00529B" />
+      <app-icon name="exclamation-circle" :size="16" color="00529B" />
       When judging is enabled, regional pitch events cannot be selected
     </div>
 
@@ -73,13 +73,13 @@
 <script>
 import { mapGetters } from "vuex";
 
-import Icon from "components/Icon.vue";
+import AppIcon from "components/AppIcon.vue";
 
 export default {
   name: "EventsSection",
 
   components: {
-    Icon,
+    AppIcon,
   },
 
   computed: {

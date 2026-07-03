@@ -185,24 +185,6 @@ export default {
     };
   },
 
-  created() {
-    this.debouncedProfileUpdate = debounce((attributes) => {
-      if (this.embedded) {
-        this.saving = true;
-        this.saved = false;
-      }
-
-      this.updateBasicProfile(attributes).then(() => {
-        if (this.embedded) {
-          this.saving = false;
-          this.saved = true;
-        }
-      });
-    }, 500);
-
-    this.getExpertiseOptions();
-  },
-
   computed: {
     ...mapState(["profileChoice"]),
 
@@ -373,6 +355,24 @@ export default {
     referredByOther(value) {
       this.debouncedProfileUpdate({ referredByOther: value });
     },
+  },
+
+  created() {
+    this.debouncedProfileUpdate = debounce((attributes) => {
+      if (this.embedded) {
+        this.saving = true;
+        this.saved = false;
+      }
+
+      this.updateBasicProfile(attributes).then(() => {
+        if (this.embedded) {
+          this.saving = false;
+          this.saved = true;
+        }
+      });
+    }, 500);
+
+    this.getExpertiseOptions();
   },
 
   methods: {

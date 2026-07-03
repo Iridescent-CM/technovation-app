@@ -7,7 +7,7 @@
         :data-modal-fetch="submission.pitch_video_url"
         class="text-energetic-blue flex text-3xl"
       >
-        <Icon name="play-circle-o" color="0075cf" />
+        <AppIcon name="play-circle-o" color="0075cf" />
         Watch the pitch video
       </a>
     </p>
@@ -25,13 +25,13 @@
 <script>
 import { mapState } from "vuex";
 
-import Icon from "../../../components/Icon";
+import AppIcon from "../../../components/AppIcon";
 
 export default {
-  computed: mapState(["score", "submission"]),
-
   components: {
-    Icon,
+    AppIcon,
   },
+
+  computed: mapState(["score", "submission"]),
 };
 </script>

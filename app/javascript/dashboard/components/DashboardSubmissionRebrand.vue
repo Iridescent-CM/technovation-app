@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  name: "Submission",
+  name: "DashboardSubmissionRebrand",
 };
 </script>

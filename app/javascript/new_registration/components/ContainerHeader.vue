@@ -10,7 +10,10 @@
 export default {
   name: "ContainerHeader",
   props: {
-    headerText: String,
+    headerText: {
+      type: String,
+      default: "",
+    },
   },
 };
 </script>

@@ -11,7 +11,7 @@
       v-if="fetchingList"
       class="grid__col-12 grid--justify-center grid__col--bleed-y"
     >
-      <icon name="spinner" class-name="spin" />
+      <app-icon name="spinner" class-name="spin" />
       Initating team management...
     </div>
 
@@ -27,7 +27,7 @@
             class="button button--small button--remove-bg"
             @click="exportList"
           >
-            <icon name="download" size="16" />
+            <app-icon name="download" size="16" />
             Export to CSV
           </button>
         </p>
@@ -57,14 +57,14 @@
           >
             <td>
               <div v-if="team.hovering" class="attendee-list__actions">
-                <icon
+                <app-icon
                   name="remove"
                   size="16"
                   color="ff0000"
                   :handle-click="removeTeam.bind(this, team)"
                 />
 
-                <icon
+                <app-icon
                   v-if="event.teamListIsTooLong()"
                   name="gavel"
                   size="16"
@@ -150,7 +150,7 @@
 </template>
 
 <script>
-import Icon from "../../components/Icon";
+import AppIcon from "../../components/AppIcon";
 import EventBus from "../../components/EventBus";
 
 import TeamSearch from "./TeamSearch";
@@ -158,12 +158,27 @@ import AttendeeFilter from "./AttendeeFilter";
 
 export default {
   components: {
-    Icon,
+    AppIcon,
     TeamSearch,
     AttendeeFilter,
   },
 
-  props: ["fetchUrl", "saveAssignmentsUrl", "event"],
+  props: {
+    fetchUrl: {
+      type: String,
+      required: true,
+    },
+
+    saveAssignmentsUrl: {
+      type: String,
+      required: true,
+    },
+
+    event: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       fetchingList: true,

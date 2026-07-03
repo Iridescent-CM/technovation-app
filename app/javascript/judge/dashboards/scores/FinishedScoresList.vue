@@ -117,20 +117,6 @@
 import { mapGetters } from "vuex";
 
 export default {
-  computed: {
-    ...mapGetters(["finishedQuarterfinalsScores", "finishedSemifinalsScores"]),
-
-    scores() {
-      switch (this.round) {
-        case "quarterfinals":
-          return this.finishedQuarterfinalsScores;
-        case "semifinals":
-          return this.finishedSemifinalsScores;
-        default:
-          return [];
-      }
-    },
-  },
   props: {
     title: {
       type: String,
@@ -144,6 +130,20 @@ export default {
     scoresEditable: {
       type: Boolean,
       default: true,
+    },
+  },
+  computed: {
+    ...mapGetters(["finishedQuarterfinalsScores", "finishedSemifinalsScores"]),
+
+    scores() {
+      switch (this.round) {
+        case "quarterfinals":
+          return this.finishedQuarterfinalsScores;
+        case "semifinals":
+          return this.finishedSemifinalsScores;
+        default:
+          return [];
+      }
     },
   },
 };

@@ -77,13 +77,6 @@ export default {
     };
   },
 
-  beforeMount() {
-    let pathname = window.location.pathname;
-    if (pathname === "/signup") {
-      this.isSignup = true;
-    }
-  },
-
   computed: {
     ...mapState(["isReady"]),
 
@@ -118,6 +111,13 @@ export default {
 
       return undefined;
     },
+  },
+
+  beforeMount() {
+    let pathname = window.location.pathname;
+    if (pathname === "/signup") {
+      this.isSignup = true;
+    }
   },
 };
 </script>
