@@ -97,10 +97,6 @@ export default {
     TabLink,
   },
 
-  created() {
-    this.Tooltips = Tooltips;
-  },
-
   computed: {
     ...mapState(["termsAgreed", "termsAgreedDate", "profileChoice"]),
 
@@ -147,6 +143,10 @@ export default {
 
       return "";
     },
+  },
+
+  created() {
+    this.Tooltips = Tooltips;
   },
 };
 </script>

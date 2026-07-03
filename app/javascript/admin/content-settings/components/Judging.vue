@@ -10,7 +10,7 @@
         :disabled="!isSuperAdmin"
       />
       <label for="season_toggles_judging_round_off">Off</label>
-      <icon
+      <app-icon
         v-tooltip.right="'Before judging: Judges cannot judge'"
         name="question-circle"
         :size="16"
@@ -26,7 +26,7 @@
         :disabled="!isSuperAdmin"
       />
       <label for="season_toggles_judging_round_qf">Quarterfinals</label>
-      <icon
+      <app-icon
         v-tooltip.right="
           'Judges can now judge either virtually or their assigned submissions'
         "
@@ -44,7 +44,7 @@
         :disabled="!isSuperAdmin"
       />
       <label for="season_toggles_judging_round_between">Between rounds</label>
-      <icon
+      <app-icon
         v-tooltip.right="'Judges now see the &quot;between rounds&quot; screen'"
         name="question-circle"
         :size="16"
@@ -60,7 +60,7 @@
         :disabled="!isSuperAdmin"
       />
       <label for="season_toggles_judging_round_sf">Semifinals</label>
-      <icon
+      <app-icon
         v-tooltip.right="'Judges can now judge semifinals submissions'"
         name="question-circle"
         :size="16"
@@ -76,7 +76,7 @@
         :disabled="!isSuperAdmin"
       />
       <label for="season_toggles_judging_round_finished">Finished</label>
-      <icon
+      <app-icon
         v-tooltip.right="'After judging: judges cannot judge'"
         name="question-circle"
         :size="16"
@@ -94,7 +94,7 @@
     </p>
 
     <div v-if="judgingEnabled" class="notice info hint">
-      <icon name="exclamation-circle" :size="16" color="00529B" />
+      <app-icon name="exclamation-circle" :size="16" color="00529B" />
       Enabling judging has affected other season features.
     </div>
   </div>
@@ -104,13 +104,13 @@
 import { mapGetters } from "vuex";
 
 import "components/tooltip.scss";
-import Icon from "components/Icon";
+import AppIcon from "components/AppIcon";
 
 export default {
   name: "JudgingSection",
 
   components: {
-    Icon,
+    AppIcon,
   },
 
   computed: {

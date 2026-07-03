@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  name: "RegistrationFooter",
   data() {
     return {
       currentYear: new Date().getFullYear(),

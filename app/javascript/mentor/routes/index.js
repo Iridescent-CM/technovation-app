@@ -3,9 +3,9 @@ import VueRouter from "vue-router";
 
 import RegistrationApp from "registration/App";
 import TeamBuilding from "mentor/components/TeamBuilding";
-import Submission from "dashboard/components/Submission";
-import Scores from "dashboard/components/Scores";
-import Events from "dashboard/components/Events";
+import DashboardSubmission from "dashboard/components/DashboardSubmission";
+import DashboardScores from "dashboard/components/DashboardScores";
+import DashboardEvents from "dashboard/components/DashboardEvents";
 
 import store from "../store";
 
@@ -37,9 +37,9 @@ const loadOrRedirect = (to, from, next) => {
 
 export const getRootComponent = () => {
   if (canDisplayScores()) {
-    return Scores;
+    return DashboardScores;
   } else if (anyCurrentTeams()) {
-    return Submission;
+    return DashboardSubmission;
   } else {
     return TeamBuilding;
   }
@@ -114,7 +114,7 @@ export const routes = [
   {
     path: "/submission",
     name: "submission",
-    component: Submission,
+    component: DashboardSubmission,
     props: {
       stickySidebarClasses: ["grid__col-3"],
     },
@@ -127,7 +127,7 @@ export const routes = [
   {
     path: "/events",
     name: "events",
-    component: Events,
+    component: DashboardEvents,
     beforeEnter: loadOrRedirect,
     meta: {
       routeId: "events",
@@ -137,7 +137,7 @@ export const routes = [
   {
     path: "/scores",
     name: "scores",
-    component: Scores,
+    component: DashboardScores,
     props: {
       stickySidebarClasses: ["grid__col-3"],
     },

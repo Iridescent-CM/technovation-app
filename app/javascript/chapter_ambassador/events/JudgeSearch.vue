@@ -42,7 +42,17 @@ export default {
     AttendeeSearch,
   },
 
-  props: ["eventBusId", "event"],
+  props: {
+    eventBusId: {
+      type: String,
+      required: true,
+    },
+
+    event: {
+      type: Object,
+      required: true,
+    },
+  },
 
   methods: {
     handleSelection(item) {

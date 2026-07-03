@@ -27,7 +27,7 @@
         v-if="isRegistrationClosed(scope)"
         class="notice info hint user-notice"
       >
-        <icon name="exclamation-circle" :size="16" color="00529B" />
+        <app-icon name="exclamation-circle" :size="16" color="00529B" />
         When judging is enabled, {{ `${scope}s` }} cannot sign up
       </div>
     </div>
@@ -37,13 +37,13 @@
 <script>
 import { mapGetters } from "vuex";
 
-import Icon from "components/Icon.vue";
+import AppIcon from "components/AppIcon.vue";
 
 export default {
   name: "RegistrationSection",
 
   components: {
-    Icon,
+    AppIcon,
   },
 
   data() {

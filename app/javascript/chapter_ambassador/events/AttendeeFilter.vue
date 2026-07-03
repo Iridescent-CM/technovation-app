@@ -29,11 +29,11 @@
               <slot name="col-2" v-bind="item"></slot>
 
               <td v-show="!isAssigned(item, parentItem)" class="light-opacity">
-                <icon name="check-circle-o" />
+                <app-icon name="check-circle-o" />
               </td>
 
               <td v-show="isAssigned(item, parentItem)">
-                <icon name="check-circle" color="228b22" />
+                <app-icon name="check-circle" color="228b22" />
               </td>
             </tr>
           </tbody>
@@ -48,24 +48,53 @@
 </template>
 
 <script>
-import Icon from "../../components/Icon";
+import AppIcon from "../../components/AppIcon";
 
 export default {
   name: "AttendeeList",
 
   components: {
-    Icon,
+    AppIcon,
   },
 
-  props: [
-    "parentItem",
-    "childItems",
-    "placeholder",
-    "col2Header",
-    "handleSelection",
-    "handleClose",
-    "isAssigned",
-  ],
+  props: {
+    parentItem: {
+      type: Object,
+      default: null,
+    },
+
+    childItems: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+
+    placeholder: {
+      type: String,
+      default: "",
+    },
+
+    col2Header: {
+      type: String,
+      default: "",
+    },
+
+    handleSelection: {
+      type: Function,
+      required: true,
+    },
+
+    handleClose: {
+      type: Function,
+      required: true,
+    },
+
+    isAssigned: {
+      type: Function,
+      required: true,
+    },
+  },
 
   data() {
     return {

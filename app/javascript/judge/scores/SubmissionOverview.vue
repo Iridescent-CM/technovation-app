@@ -20,7 +20,12 @@
         </p>
         <p>
           <span
-            ><icon size="16" name="map-marker" class="inline" color="0075cf" />
+            ><app-icon
+              size="16"
+              name="map-marker"
+              class="inline"
+              color="0075cf"
+            />
             {{ team.location | capitalize }}</span
           >
         </p>
@@ -91,12 +96,18 @@ import { mapState } from "vuex";
 
 import JudgeRecusalPopup from "./JudgeRecusalPopup";
 import JudgeRecusalExceededPopup from "./JudgeRecusalExceededPopup";
-import Icon from "../../components/Icon";
+import AppIcon from "../../components/AppIcon";
 import ThickRule from "../../components/rebrand/ThickRule";
 import { getJudgingRubricLink } from "../../utilities/judge-helpers";
 import { getFilestackResizeUrl } from "../../utilities/filestack-helpers";
 
 export default {
+  components: {
+    AppIcon,
+    JudgeRecusalPopup,
+    JudgeRecusalExceededPopup,
+    ThickRule,
+  },
   data() {
     return {
       devPlatform: null,
@@ -126,12 +137,6 @@ export default {
     maximumNumberOfRecusals() {
       return process.env.JUDGE_MAXIMUM_NUMBER_OF_RECUSALS;
     },
-  },
-  components: {
-    Icon,
-    JudgeRecusalPopup,
-    JudgeRecusalExceededPopup,
-    ThickRule,
   },
 };
 </script>

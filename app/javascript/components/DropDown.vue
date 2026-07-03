@@ -2,7 +2,12 @@
   <div v-click-outside="collapseDropDown" class="drop-down">
     <a @click.stop.prevent="toggleCollapse">
       {{ label }}
-      <icon :title="caretTitle" :name="caretIcon" color="000000" :size="12" />
+      <app-icon
+        :title="caretTitle"
+        :name="caretIcon"
+        color="000000"
+        :size="12"
+      />
     </a>
     <transition name="collapse">
       <div v-show="expanded" class="drop-down__content">
@@ -13,7 +18,7 @@
 </template>
 
 <script>
-import Icon from "components/Icon";
+import AppIcon from "components/AppIcon";
 import ClickOutside from "directives/click-outside";
 
 export default {
@@ -24,7 +29,7 @@ export default {
   },
 
   components: {
-    Icon,
+    AppIcon,
   },
 
   props: {

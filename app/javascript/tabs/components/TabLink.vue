@@ -7,7 +7,7 @@
     :to="to"
   >
     <button v-tooltip="tooltipContent" :class="buttonClasses">
-      <icon
+      <app-icon
         :name="completedEnabledOrDisabledIcon"
         size="16"
         :color="activeEnabledOrDisabledColor"
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Icon from "components/Icon";
+import AppIcon from "components/AppIcon";
 
 import { VTooltip } from "v-tooltip";
 
@@ -33,7 +33,7 @@ export default {
   },
 
   components: {
-    Icon,
+    AppIcon,
   },
 
   props: {
@@ -54,11 +54,13 @@ export default {
     },
 
     conditionToComplete: {
+      type: Boolean,
       required: false,
       default: false,
     },
 
     conditionToEnable: {
+      type: Boolean,
       required: false,
       default: false,
     },

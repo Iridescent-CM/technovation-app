@@ -40,13 +40,6 @@ import { mapState } from "vuex";
 import { getJudgingRubricLink } from "../../utilities/judge-helpers";
 
 export default {
-  computed: {
-    ...mapState(["submission", "team"]),
-
-    rubricLink() {
-      return getJudgingRubricLink(this.team.division);
-    },
-  },
   name: "GenericJudgingContainer",
   components: {
     TeamInfo,
@@ -54,6 +47,33 @@ export default {
     EnergeticContainer,
     ThickRule,
   },
-  props: ["heading", "section", "nextSection", "prevSection"],
+  props: {
+    heading: {
+      type: String,
+      required: true,
+    },
+
+    section: {
+      type: String,
+      required: true,
+    },
+
+    nextSection: {
+      type: String,
+      default: null,
+    },
+
+    prevSection: {
+      type: String,
+      default: null,
+    },
+  },
+  computed: {
+    ...mapState(["submission", "team"]),
+
+    rubricLink() {
+      return getJudgingRubricLink(this.team.division);
+    },
+  },
 };
 </script>

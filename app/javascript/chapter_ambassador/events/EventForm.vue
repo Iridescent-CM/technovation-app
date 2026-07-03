@@ -22,7 +22,7 @@
             <input v-model="event.name" type="text" />
           </label>
 
-          <errors :errors="eventErrors.name"></errors>
+          <form-errors :errors="eventErrors.name"></form-errors>
         </div>
 
         <div class="grid__col-sm-6">
@@ -58,7 +58,7 @@
             Beginner division
           </label>
 
-          <errors :errors="eventErrors.division_ids"></errors>
+          <form-errors :errors="eventErrors.division_ids"></form-errors>
         </div>
 
         <div class="grid__col-sm-6">
@@ -67,7 +67,7 @@
             <input v-model="event.city" type="text" />
           </label>
 
-          <errors :errors="eventErrors.city"></errors>
+          <form-errors :errors="eventErrors.city"></form-errors>
         </div>
 
         <div class="grid__col-sm-6">
@@ -76,7 +76,7 @@
             <input v-model="event.venue_address" type="text" />
           </label>
 
-          <errors :errors="eventErrors.venue_address"></errors>
+          <form-errors :errors="eventErrors.venue_address"></form-errors>
         </div>
 
         <div class="grid__col-sm-6">
@@ -85,7 +85,7 @@
             <datetime-input v-model="eventDate" :options="dateOpts" />
           </label>
 
-          <errors :errors="eventErrors.date"></errors>
+          <form-errors :errors="eventErrors.date"></form-errors>
         </div>
 
         <div class="grid__col-6">
@@ -103,7 +103,7 @@
             />
           </label>
 
-          <errors :errors="eventErrors.starts_at"></errors>
+          <form-errors :errors="eventErrors.starts_at"></form-errors>
 
           <label id="event-end-time">
             To
@@ -113,7 +113,7 @@
             />
           </label>
 
-          <errors :errors="eventErrors.ends_at"></errors>
+          <form-errors :errors="eventErrors.ends_at"></form-errors>
         </div>
 
         <div class="grid__col-sm-6">
@@ -127,7 +127,7 @@
             <integer-input v-model="event.capacity" input-name="capacity" />
           </label>
 
-          <errors :errors="eventErrors.capacity"></errors>
+          <form-errors :errors="eventErrors.capacity"></form-errors>
         </div>
 
         <div class="grid__col-12">
@@ -136,7 +136,7 @@
             <input v-model="event.event_link" type="text" />
           </label>
 
-          <errors :errors="eventErrors.event_link"></errors>
+          <form-errors :errors="eventErrors.event_link"></form-errors>
           <p>
             <input
               type="submit"
@@ -156,7 +156,7 @@
 import axios from "axios";
 
 import DatetimeInput from "../../components/DatetimeInput";
-import Errors from "../../components/Errors";
+import FormErrors from "../../components/FormErrors";
 import EventBus from "../../components/EventBus";
 import IntegerInput from "components/IntegerInput";
 
@@ -168,20 +168,47 @@ export default {
   name: "EventForm",
 
   components: {
-    Errors,
+    FormErrors,
     DatetimeInput,
     IntegerInput,
   },
 
-  props: [
-    "postUrl",
-    "beginnerDivisionId",
-    "beginnerDivisionName",
-    "juniorDivisionId",
-    "juniorDivisionName",
-    "seniorDivisionId",
-    "seniorDivisionName",
-  ],
+  props: {
+    postUrl: {
+      type: String,
+      required: true,
+    },
+
+    beginnerDivisionId: {
+      type: [String, Number],
+      required: true,
+    },
+
+    beginnerDivisionName: {
+      type: String,
+      required: true,
+    },
+
+    juniorDivisionId: {
+      type: [String, Number],
+      required: true,
+    },
+
+    juniorDivisionName: {
+      type: String,
+      required: true,
+    },
+
+    seniorDivisionId: {
+      type: [String, Number],
+      required: true,
+    },
+
+    seniorDivisionName: {
+      type: String,
+      required: true,
+    },
+  },
 
   data() {
     return {

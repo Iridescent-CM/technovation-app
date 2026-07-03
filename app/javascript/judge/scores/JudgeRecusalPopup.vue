@@ -15,10 +15,6 @@ import Swal from "sweetalert2";
 import { mapState } from "vuex";
 
 export default {
-  computed: {
-    ...mapState(["score"]),
-  },
-
   props: {
     cssClass: {
       type: String,
@@ -32,6 +28,10 @@ export default {
       type: Number,
       default: 0,
     },
+  },
+
+  computed: {
+    ...mapState(["score"]),
   },
 
   methods: {

@@ -31,7 +31,7 @@
           />
 
           <div v-show="fetching" class="align-center padding-small">
-            <icon class="spin" name="spinner" />
+            <app-icon class="spin" name="spinner" />
           </div>
 
           <div v-show="!fetching && !items.length" class="padding-small">
@@ -60,11 +60,11 @@
                     v-tooltip="selectionDisabledTooltip"
                     class="light-opacity"
                   >
-                    <icon name="check-circle-o" />
+                    <app-icon name="check-circle-o" />
                   </td>
 
                   <td v-show="item.selected">
-                    <icon name="check-circle" color="228b22" />
+                    <app-icon name="check-circle" color="228b22" />
                   </td>
                 </tr>
               </tbody>
@@ -87,18 +87,25 @@ import axios from "axios";
 import debounce from "lodash/debounce";
 
 import { airbrake } from "utilities/utilities";
-import Icon from "../../components/Icon";
+import AppIcon from "../../components/AppIcon";
 import Attendee from "./Attendee";
 import EventBus from "../../components/EventBus";
 
 export default {
   components: {
-    Icon,
+    AppIcon,
   },
 
   props: {
-    addBtnText: String,
-    searchPlaceholder: String,
+    addBtnText: {
+      type: String,
+      default: "",
+    },
+
+    searchPlaceholder: {
+      type: String,
+      default: "",
+    },
     handleSelection: {
       type: Function,
       required: true,

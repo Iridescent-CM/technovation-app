@@ -8,7 +8,7 @@
         class="text-energetic-blue text-lg flex"
         @click="trackSourceCodeDownload"
       >
-        <icon name="code" color="0075cf" />
+        <app-icon name="code" color="0075cf" />
         <span class="self-center"
           >{{ submission.source_code_url_label }} (optional)</span
         >
@@ -21,7 +21,7 @@
         class="text-energetic-blue text-lg flex"
         @click="trackSourceCodeDownload"
       >
-        <icon name="code" color="0075cf" />
+        <app-icon name="code" color="0075cf" />
         <span class="self-center"
           >Download the source code for this project (optional)</span
         >
@@ -32,14 +32,15 @@
 
 <script>
 import { mapState } from "vuex";
-import Icon from "../../../components/Icon";
+import AppIcon from "../../../components/AppIcon";
 
 export default {
-  computed: mapState(["score", "submission"]),
-
+  name: "SourceCode",
   components: {
-    Icon,
+    AppIcon,
   },
+
+  computed: mapState(["score", "submission"]),
 
   methods: {
     async trackSourceCodeDownload() {

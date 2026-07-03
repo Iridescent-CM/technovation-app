@@ -35,9 +35,14 @@
 
 <script>
 import DashboardSection from "./DashboardSection";
+import PieChart from "@appjs/components/PieChart";
 
 export default {
   name: "MentorsSection",
+
+  components: {
+    PieChart,
+  },
 
   extends: DashboardSection,
 

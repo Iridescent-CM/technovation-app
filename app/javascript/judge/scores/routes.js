@@ -1,28 +1,28 @@
 import VueRouter from "vue-router";
 
-import Overview from "./sections/Overview";
+import OverviewSection from "./sections/OverviewSection";
 import ProjectDetails from "./sections/ProjectDetails";
-import Ideation from "./sections/Ideation";
-import Pitch from "./sections/Pitch";
-import Demo from "./sections/Demo";
-import Entrepreneurship from "./sections/Entrepreneurship";
+import IdeationSection from "./sections/IdeationSection";
+import PitchSection from "./sections/PitchSection";
+import DemoSection from "./sections/DemoSection";
+import EntrepreneurshipSection from "./sections/EntrepreneurshipSection";
 import ReviewScore from "./sections/ReviewScore";
 
 export const routes = [
   { path: "/", redirect: { name: "overview" } },
-  { path: "/overview", name: "overview", component: Overview },
+  { path: "/overview", name: "overview", component: OverviewSection },
   {
     path: "/project-details",
     name: "project_details",
     component: ProjectDetails,
   },
-  { path: "/ideation", name: "ideation", component: Ideation },
-  { path: "/pitch", name: "pitch", component: Pitch },
-  { path: "/demo", name: "demo", component: Demo },
+  { path: "/ideation", name: "ideation", component: IdeationSection },
+  { path: "/pitch", name: "pitch", component: PitchSection },
+  { path: "/demo", name: "demo", component: DemoSection },
   {
     path: "/entrepreneurship",
     name: "entrepreneurship",
-    component: Entrepreneurship,
+    component: EntrepreneurshipSection,
   },
   { path: "/review-score", name: "review-score", component: ReviewScore },
 ];

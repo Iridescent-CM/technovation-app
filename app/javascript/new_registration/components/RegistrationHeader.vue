@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <slot name="events" />
-  </div>
+  <h1>here is a header</h1>
 </template>
 
 <script>
 export default {
-  name: "Events",
+  name: "RegistrationHeader",
 };
 </script>

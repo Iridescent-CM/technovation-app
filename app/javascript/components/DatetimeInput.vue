@@ -8,7 +8,19 @@ import flatpickr from "flatpickr";
 export default {
   name: "FlatpickrInput",
 
-  props: ["value", "options"],
+  props: {
+    value: {
+      type: String,
+      default: "",
+    },
+
+    options: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
 
   data() {
     return {

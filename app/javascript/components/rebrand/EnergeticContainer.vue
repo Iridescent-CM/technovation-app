@@ -14,6 +14,12 @@
 <script>
 export default {
   name: "EnergeticContainer",
-  props: ["heading"],
+
+  props: {
+    heading: {
+      type: String,
+      required: true,
+    },
+  },
 };
 </script>

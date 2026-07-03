@@ -30,14 +30,12 @@
 import { mapState } from "vuex";
 
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
-import Template from "../../../components/job_process/template";
 
 export default {
-  computed: mapState(["submission"]),
-
   components: {
     GenericJudgingContainer,
-    Template,
   },
+
+  computed: mapState(["submission"]),
 };
 </script>

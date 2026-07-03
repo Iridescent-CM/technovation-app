@@ -35,7 +35,7 @@
             target="_blank"
             class="text-energetic-blue"
           >
-            <Icon name="file-o" class="inline text-sm" color="0075cf" />
+            <AppIcon name="file-o" class="inline text-sm" color="0075cf" />
             View the bibliography
           </a>
         </div>
@@ -47,7 +47,7 @@
           Click image to expand. Enlarged images may be pixelated. Please focus
           on the content of the images rather than the photo quality.
         </p>
-        <Screenshots />
+        <SubmissionScreenshots />
       </template>
     </GenericJudgingContainer>
   </div>
@@ -56,11 +56,17 @@
 <script>
 import { mapState } from "vuex";
 import GenericJudgingContainer from "../../components/GenericJudgingContainer";
-import Template from "../../../components/job_process/template";
-import Screenshots from "../pieces/Screenshots";
-import Icon from "../../../components/Icon.vue";
+import SubmissionScreenshots from "../pieces/SubmissionScreenshots";
+import AppIcon from "../../../components/AppIcon.vue";
 
 export default {
+  name: "IdeationSection",
+  components: {
+    AppIcon,
+    GenericJudgingContainer,
+    SubmissionScreenshots,
+  },
+
   computed: {
     ...mapState(["team", "submission"]),
     prevSection() {
@@ -68,13 +74,6 @@ export default {
         ? "entrepreneurship"
         : "demo";
     },
-  },
-
-  components: {
-    Icon,
-    GenericJudgingContainer,
-    Template,
-    Screenshots,
   },
 };
 </script>

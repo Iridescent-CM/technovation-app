@@ -26,7 +26,12 @@ document.addEventListener("turbo:load", () => {
       router,
       store,
 
-      props: ["scoreId"],
+      props: {
+        scoreId: {
+          type: [String, Number],
+          default: null,
+        },
+      },
 
       data: {
         notice: "",

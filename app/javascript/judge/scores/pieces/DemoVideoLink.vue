@@ -7,7 +7,7 @@
         :data-modal-fetch="submission.demo_video_url"
         class="text-energetic-blue flex text-3xl"
       >
-        <icon name="play-circle-o" color="0075cf" />
+        <app-icon name="play-circle-o" color="0075cf" />
         Watch the {{ demo_video() }}
       </a>
     </p>
@@ -25,15 +25,15 @@
 <script>
 import { mapState } from "vuex";
 
-import Icon from "../../../components/Icon";
+import AppIcon from "../../../components/AppIcon";
 import { i18n } from "../../../utilities/i18n.js";
 
 export default {
-  computed: mapState(["score", "submission"]),
-
   components: {
-    Icon,
+    AppIcon,
   },
+
+  computed: mapState(["score", "submission"]),
 
   methods: {
     demo_video() {

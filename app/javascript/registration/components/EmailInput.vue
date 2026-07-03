@@ -18,7 +18,7 @@
 
     <div v-if="emailNeedsValidation" class="text-align--center">
       Checking this email...<br />
-      <icon name="spinner" class="spin" />
+      <app-icon name="spinner" class="spin" />
     </div>
 
     <template v-if="problemsWithInput">
@@ -62,7 +62,7 @@
 <script>
 import { createNamespacedHelpers } from "vuex";
 
-import Icon from "../../components/Icon";
+import AppIcon from "../../components/AppIcon";
 import debounce from "lodash/debounce";
 
 const { mapActions } = createNamespacedHelpers("registration");
@@ -71,7 +71,7 @@ export default {
   name: "EmailInput",
 
   components: {
-    Icon,
+    AppIcon,
   },
 
   props: {

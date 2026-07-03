@@ -1,7 +1,7 @@
 <template>
   <div class="bar-chart">
     <div v-if="loading">
-      <icon class="spin" name="spinner" size="16" />
+      <app-icon class="spin" name="spinner" size="16" />
 
       <span>Loading chart...</span>
     </div>
@@ -14,7 +14,7 @@
 import Chart from "chart.js";
 import chroma from "chroma-js";
 
-import Icon from "./Icon.vue";
+import AppIcon from "./AppIcon.vue";
 import "../utilities/chartjs-plugins";
 import { isEmptyObject } from "../utilities/utilities";
 
@@ -22,7 +22,7 @@ export default {
   name: "BarChart",
 
   components: {
-    Icon,
+    AppIcon,
   },
 
   props: {

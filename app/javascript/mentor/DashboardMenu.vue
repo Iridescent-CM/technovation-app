@@ -24,7 +24,7 @@
     >
       Build your Team
       <div v-if="teamPagesActive" slot="subnav" class="tabs-menu__child-menu">
-        <team-menu />
+        <mentor-team />
       </div>
     </tab-link>
 
@@ -77,7 +77,7 @@ const { mapGetters } = createNamespacedHelpers("authenticated");
 import TabLink from "tabs/components/TabLink";
 
 import RegistrationMenu from "registration/DashboardMenu";
-import TeamMenu from "./menus/Team";
+import MentorTeam from "./menus/MentorTeam";
 
 export default {
   name: "DashboardMenu",
@@ -85,7 +85,7 @@ export default {
   components: {
     TabLink,
     RegistrationMenu,
-    TeamMenu,
+    MentorTeam,
   },
 
   mixins: [menuMixin, tooltipsMixin],

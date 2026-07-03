@@ -2,7 +2,7 @@
   <div>
     <EnergeticContainer heading="Overview">
       <div v-if="!submission.id" class="loading">
-        <icon name="spinner" class-name="spin" />
+        <app-icon name="spinner" class-name="spin" />
         <div>Loading the submission... Happy Judging!</div>
       </div>
       <div v-else>
@@ -14,21 +14,20 @@
 
 <script>
 import { mapState } from "vuex";
-import Icon from "../../../components/Icon";
+import AppIcon from "../../../components/AppIcon";
 
 import EnergeticContainer from "../../../components/rebrand/EnergeticContainer";
 import SubmissionOverview from "../SubmissionOverview";
-import JudgeRecusalPopup from "../JudgeRecusalPopup";
 
 export default {
-  computed: {
-    ...mapState(["team", "score", "submission"]),
-  },
+  name: "OverviewSection",
   components: {
-    Icon,
+    AppIcon,
     EnergeticContainer,
     SubmissionOverview,
-    JudgeRecusalPopup,
+  },
+  computed: {
+    ...mapState(["team", "score", "submission"]),
   },
 };
 </script>

@@ -16,7 +16,7 @@
         v-sticky-sidebar="stickySidebarClasses"
         class="tabs-menu__child-menu"
       >
-        <team-menu />
+        <mentor-team />
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
 
 <script>
 import StickySidebar from "directives/sticky-sidebar";
-import TeamMenu from "mentor/menus/Team";
+import MentorTeam from "mentor/menus/MentorTeam";
 
 export default {
   name: "TeamBuilding",
@@ -34,7 +34,7 @@ export default {
   },
 
   components: {
-    TeamMenu,
+    MentorTeam,
   },
 
   props: {

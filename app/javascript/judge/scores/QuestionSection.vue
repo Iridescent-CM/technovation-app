@@ -78,27 +78,36 @@ import ScoreEntry from "./ScoreEntry";
 export default {
   name: "QuestionSection",
 
+  components: {
+    ScoreEntry,
+  },
+
+  props: {
+    nextSection: {
+      type: String,
+      default: null,
+    },
+
+    prevSection: {
+      type: String,
+      default: null,
+    },
+
+    section: {
+      type: String,
+      required: true,
+    },
+
+    solo: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
   data() {
     return {
       commentInitiated: false,
     };
-  },
-
-  watch: {
-    commentText() {
-      this.$nextTick(() => {
-        this.$store.commit("setComment", {
-          sectionName: this.section,
-          word_count: this.wordCount,
-        });
-
-        this.debouncedCommentWatcher();
-      });
-    },
-
-    commentStorageKey() {
-      this.initiateComment();
-    },
   },
 
   computed: {
@@ -176,20 +185,31 @@ export default {
     },
   },
 
-  components: {
-    ScoreEntry,
-  },
+  watch: {
+    commentText() {
+      this.$nextTick(() => {
+        this.$store.commit("setComment", {
+          sectionName: this.section,
+          word_count: this.wordCount,
+        });
 
-  props: ["nextSection", "prevSection", "section", "solo"],
+        this.debouncedCommentWatcher();
+      });
+    },
 
-  mounted() {
-    if (this.submission.id) this.initiateComment();
+    commentStorageKey() {
+      this.initiateComment();
+    },
   },
 
   created() {
     this.debouncedCommentWatcher = debounce(() => {
       this.handleCommentChange();
     }, 500);
+  },
+
+  mounted() {
+    if (this.submission.id) this.initiateComment();
   },
 
   methods: {

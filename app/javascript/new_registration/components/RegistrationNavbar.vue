@@ -127,7 +127,7 @@
 
 <script>
 export default {
-  name: "Navbar",
+  name: "RegistrationNavbar",
   methods: {
     toggleMenu() {
       const menu = document.querySelector(".mobile-menu");

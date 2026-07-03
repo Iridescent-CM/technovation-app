@@ -45,14 +45,14 @@
     </div>
 
     <p class="notice info hint">
-      <icon name="exclamation-circle" :size="16" color="00529B" />
+      <app-icon name="exclamation-circle" :size="16" color="00529B" />
       Please note that when the "Forming teams allowed" box is checked, students
       can invite people to register and join their team even if registration is
       closed.
     </p>
 
     <div v-if="judgingEnabled" class="notice info hint user-notice">
-      <icon name="exclamation-circle" :size="16" color="00529B" />
+      <app-icon name="exclamation-circle" :size="16" color="00529B" />
       When judging is enabled, teams cannot be formed
     </div>
 
@@ -79,7 +79,7 @@
     </p>
 
     <div v-if="judgingEnabled" class="notice info hint user-notice">
-      <icon name="exclamation-circle" :size="16" color="00529B" />
+      <app-icon name="exclamation-circle" :size="16" color="00529B" />
       When judging is enabled, submissions cannot be edited
     </div>
   </div>
@@ -88,13 +88,13 @@
 <script>
 import { mapGetters } from "vuex";
 
-import Icon from "components/Icon.vue";
+import AppIcon from "components/AppIcon.vue";
 
 export default {
   name: "TeamsAndSubmissionsSection",
 
   components: {
-    Icon,
+    AppIcon,
   },
 
   computed: {

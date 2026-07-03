@@ -3,16 +3,8 @@
 </template>
 
 <script>
-import BarChart from "@appjs/components/BarChart";
-import PieChart from "@appjs/components/PieChart";
-
 export default {
   name: "DashboardSection",
-
-  components: {
-    BarChart,
-    PieChart,
-  },
 
   props: {
     chartEndpoints: {

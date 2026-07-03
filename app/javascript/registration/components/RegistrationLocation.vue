@@ -19,16 +19,10 @@ import LocationForm from "location/components/LocationForm";
 const { mapActions, mapState } = createNamespacedHelpers("registration");
 
 export default {
-  name: "Location",
+  name: "RegistrationLocation",
 
   components: {
     LocationForm,
-  },
-
-  created() {
-    this.debouncedLocationUpdate = debounce((newLocation) => {
-      this.updateLocation(newLocation);
-    }, 500);
   },
 
   computed: {
@@ -45,6 +39,22 @@ export default {
     },
   },
 
+  watch: {
+    locationData(newLocation, oldLocation) {
+      const locationChanged = Object.keys(newLocation).some((key) => {
+        return newLocation[key] !== oldLocation[key];
+      });
+
+      if (locationChanged) this.debouncedLocationUpdate(newLocation);
+    },
+  },
+
+  created() {
+    this.debouncedLocationUpdate = debounce((newLocation) => {
+      this.updateLocation(newLocation);
+    }, 500);
+  },
+
   methods: {
     ...mapActions(["updateLocation"]),
 
@@ -54,16 +64,6 @@ export default {
 
     handleConfirm() {
       this.$router.push({ name: "age" });
-    },
-  },
-
-  watch: {
-    locationData(newLocation, oldLocation) {
-      const locationChanged = Object.keys(newLocation).some((key) => {
-        return newLocation[key] !== oldLocation[key];
-      });
-
-      if (locationChanged) this.debouncedLocationUpdate(newLocation);
     },
   },
 };

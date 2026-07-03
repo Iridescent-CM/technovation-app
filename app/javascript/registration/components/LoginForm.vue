@@ -32,7 +32,7 @@ import PasswordInput from "./PasswordInput";
 const { mapState, mapGetters } = createNamespacedHelpers("registration");
 
 export default {
-  name: "Login",
+  name: "LoginForm",
 
   components: {
     EmailInput,

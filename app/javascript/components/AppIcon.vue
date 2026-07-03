@@ -10,13 +10,37 @@
 
 <script>
 export default {
+  name: "AppIcon",
   props: {
-    alt: String,
-    title: String,
-    className: String,
-    name: String,
-    color: String,
-    size: [String, Number],
+    alt: {
+      type: String,
+      default: "",
+    },
+
+    title: {
+      type: String,
+      default: "",
+    },
+
+    className: {
+      type: String,
+      default: "",
+    },
+
+    name: {
+      type: String,
+      default: "",
+    },
+
+    color: {
+      type: String,
+      default: "",
+    },
+
+    size: {
+      type: [String, Number],
+      default: "",
+    },
 
     handleClick: {
       type: Function,
