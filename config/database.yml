@@ -16,6 +16,8 @@
 #
 default: &default
   username: postgres
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") { "postgres" } %>
+  host: localhost
   adapter: postgresql
   encoding: unicode
   # https://devcenter.heroku.com/articles/postgres-logs-errors#ruby-activerecord-and-prepared-statements
@@ -23,6 +25,7 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("DB_POOL_SIZE") { 5 } %>
+  gssencmode: disable
 
 development:
   <<: *default
