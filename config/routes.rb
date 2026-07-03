@@ -406,11 +406,7 @@ Rails.application.routes.draw do
 
     resources :profile_locations, only: :edit
 
-    resources :teams, except: :destroy do
-      collection do
-        post :set_semifinalists
-      end
-    end
+    resources :teams, except: :destroy
     resources :team_submissions, except: :destroy do
       resource :judge_assignments, only: :create
       resources :screenshots, only: [:new, :create]
@@ -421,6 +417,7 @@ Rails.application.routes.draw do
       collection do
         get :bulk_publish
         patch :bulk_publish
+        post :set_semifinalists
       end
     end
 
