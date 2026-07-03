@@ -3,9 +3,22 @@ class ChapterAmbassadorsGrid
 
   attr_accessor :admin, :allow_state_search
 
+  INDEX_PRELOADS = [
+    :background_check,
+    :mentor_profile,
+    {current_chapter_assignments: {chapterable: [:program_information, {legal_contact: :documents}]}},
+    {chapterable_assignments: :chapterable},
+    {
+      chapter_ambassador_profile: [
+        :volunteer_agreement,
+        {community_connection: {community_connection_availability_slots: :availability_slot}}
+      ]
+    }
+  ].freeze
+
   scope do
     Account
-      .includes(:chapter_ambassador_profile, :chapterable_assignments, :chapters)
+      .joins(:chapter_ambassador_profile)
       .where.not(chapter_ambassador_profiles: {id: nil})
       .order(id: :desc)
   end
@@ -41,7 +54,7 @@ class ChapterAmbassadorsGrid
   end
 
   column :seasons_assigned_to_a_chapter do |account|
-    account.chapterable_assignments.pluck(:season).uniq.sort.join(", ")
+    account.chapterable_assignments.map(&:season).uniq.sort.join(", ")
   end
 
   column :gender, header: "Gender Identity" do
@@ -81,9 +94,9 @@ class ChapterAmbassadorsGrid
   end
 
   column :availability do
-    availability_slots = chapter_ambassador_profile.community_connection&.community_connection_availability_slots
-    if availability_slots&.any?
-      availability_slots.joins(:availability_slot).pluck(:time).join(", ")
+    slots = chapter_ambassador_profile.community_connection&.community_connection_availability_slots
+    if slots&.any?
+      slots.filter_map { |slot| slot.availability_slot&.time }.join(", ")
     else
       "-"
     end
@@ -100,7 +113,7 @@ class ChapterAmbassadorsGrid
   column :remaining_chapter_ambassador_onboarding_tasks,
     preload: [
       chapter_ambassador_profile: [
-        :chapter_volunteer_agreement
+        :volunteer_agreement
       ]
     ] do
     chapter_ambassador_profile.incomplete_onboarding_tasks.to_sentence
@@ -118,7 +131,7 @@ class ChapterAmbassadorsGrid
     preload: [
       :background_check,
       chapter_ambassador_profile: [
-        :chapter_volunteer_agreement
+        :volunteer_agreement
       ]
     ] do
     chapter_ambassador_profile.complete_onboarding_tasks.to_sentence
@@ -352,4 +365,11 @@ class ChapterAmbassadorsGrid
     filter_group: "more-columns",
     multiple: true
   )
+
+  protected
+
+  def append_column_preload(relation)
+    relation = super(relation)
+    relation.preload(*INDEX_PRELOADS)
+  end
 end

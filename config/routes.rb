@@ -417,6 +417,7 @@ Rails.application.routes.draw do
       collection do
         get :bulk_publish
         patch :bulk_publish
+        post :set_semifinalists
       end
     end
 

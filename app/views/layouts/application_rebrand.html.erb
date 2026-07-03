@@ -17,14 +17,18 @@
 
     <%= render 'favicons' %>
 
+    <%= render "application/rebrand_async_fonts" %>
+
     <%= stylesheet_link_tag determine_manifest %>
 
     <%#= stylesheet_pack_tag "application" %>
 
     <%= yield :additional_css %>
 
-    <%= filestack_js_include_tag %>
-    <%= filestack_js_init_tag %>
+    <% if needs_filestack? %>
+      <%= filestack_js_include_tag %>
+      <%= filestack_js_init_tag %>
+    <% end %>
 
     <%= javascript_include_tag determine_manifest,
       'data-turbo-track' => true %>

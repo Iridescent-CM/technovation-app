@@ -73,6 +73,19 @@ module Admin
         success: "You have returned the submission back to the judging pool."
     end
 
+    def set_semifinalists
+      result = Judging::SetContestRankFromCsv.new(
+        csv_file: params[:csv_file],
+        rank: :semifinalist
+      ).call
+
+      redirect_to admin_team_submissions_path,
+        success: "Updated #{result.updated_count} submissions to semifinalist."
+    rescue Judging::SetContestRankFromCsv::MissingSubmissionIdColumn
+      redirect_to admin_team_submissions_path,
+        error: 'Please ensure your CSV file contains a "Submission ID" header.'
+    end
+
     private
 
     def grid_params

@@ -1,6 +1,13 @@
 require "rails_helper"
 
 RSpec.feature "background checks", js: true do
+  def create_mentor_at_age(age, *traits, **options)
+    mentor = FactoryBot.create(:mentor, *traits, **options.except(:date_of_birth))
+    mentor.account.update_column(:date_of_birth, age.years.ago.to_date)
+    mentor.account.reload
+    mentor
+  end
+
   scenario "mentors not located in the US, India, or Canada do not see a link to submit a background check" do
     mentor = FactoryBot.create(
       :mentor,
@@ -14,10 +21,9 @@ RSpec.feature "background checks", js: true do
 
   [16, 17].each do |age|
     scenario "mentors age #{age} do not need to complete one" do
-      mentor = FactoryBot.create(
-        :mentor,
+      mentor = create_mentor_at_age(
+        age,
         :geocoded,
-        date_of_birth: age.years.ago,
         meets_minimum_age_requirement: true
       )
 
@@ -27,11 +33,10 @@ RSpec.feature "background checks", js: true do
     end
 
     scenario "mentors age #{age} does not become searchable" do
-      mentor = FactoryBot.create(
-        :mentor,
+      mentor = create_mentor_at_age(
+        age,
         :geocoded,
         not_onboarded: true,
-        date_of_birth: age.years.ago,
         meets_minimum_age_requirement: false,
         bio: ""
       )

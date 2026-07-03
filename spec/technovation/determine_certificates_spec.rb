@@ -98,7 +98,12 @@ RSpec.describe DetermineCertificates do
 
     it "does not award student certs for past student" do
       mentor = FactoryBot.create(:mentor, number_of_teams: 1)
-      FactoryBot.create(:student, :quarterfinalist, account: mentor.account)
+      FactoryBot.create(
+        :student,
+        :quarterfinalist,
+        account: mentor.account,
+        date_of_birth: mentor.account.date_of_birth
+      )
 
       expect(DetermineCertificates.new(mentor.account).eligible_types).to include("mentor")
       expect(DetermineCertificates.new(mentor.account).eligible_types).not_to include(*CertificateTypes::STUDENT_CERTIFICATE_TYPES.keys.map(&:to_s))

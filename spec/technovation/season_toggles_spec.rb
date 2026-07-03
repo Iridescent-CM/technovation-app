@@ -206,6 +206,49 @@ RSpec.describe SeasonToggles do
           expect(SeasonToggles.survey_link_available?(scope)).to be false
         end
       end
+
+      it "returns false for an account when the link is not configured without geocoding" do
+        account = FactoryBot.create(scope).account
+
+        expect(Geocoder).not_to receive(:search)
+
+        expect(SeasonToggles.survey_link_available?(scope, account)).to be false
+      end
+
+      it "returns true for an account with a valid address when the link is configured" do
+        SeasonToggles.set_survey_link(scope, "Survey", "https://example.com/survey")
+
+        account = FactoryBot.create(scope).account
+
+        expect(SeasonToggles.survey_link_available?(scope, account)).to be true
+      end
+
+      it "returns false when the account already took the program survey" do
+        SeasonToggles.set_survey_link(scope, "Survey", "https://example.com/survey")
+
+        account = FactoryBot.create(scope).account
+        account.took_program_survey!
+
+        expect(SeasonToggles.survey_link_available?(scope, account)).to be false
+      end
+
+      it "returns false when the account does not have a valid address" do
+        SeasonToggles.set_survey_link(scope, "Survey", "https://example.com/survey")
+
+        account = FactoryBot.create(scope).account
+        account.update_columns(city: nil, country: nil)
+
+        expect(SeasonToggles.survey_link_available?(scope, account)).to be false
+      end
+
+      it "does not call address_details on the account" do
+        SeasonToggles.set_survey_link(scope, "Survey", "https://example.com/survey")
+
+        account = FactoryBot.create(scope).account
+        allow(account).to receive(:address_details).and_raise("address_details should not be called")
+
+        expect(SeasonToggles.survey_link_available?(scope, account)).to be true
+      end
     end
   end
 

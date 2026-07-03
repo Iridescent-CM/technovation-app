@@ -654,7 +654,7 @@ class Account < ActiveRecord::Base
   validates :date_of_birth, presence: true, if: -> { !is_a_judge? && !is_a_mentor? && !is_chapter_ambassador? && !club_ambassador? }
   validates :date_of_birth, presence: true, if: -> { is_a_judge? }
   validates :meets_minimum_age_requirement, inclusion: [true], if: -> { (is_a_judge? || is_a_mentor? || is_chapter_ambassador? || club_ambassador?) && new_record? }
-  validate :must_meet_minimum_age_requirement, if: -> { (is_a_judge? || is_chapter_ambassador? || club_ambassador?) && date_of_birth.present? }
+  validate :must_meet_minimum_age_requirement, if: :validate_minimum_age_on_date_of_birth?
   validates :gender, presence: true, if: -> { not_student? }
 
   validate -> {
@@ -1139,7 +1139,7 @@ class Account < ActiveRecord::Base
   end
 
   def current_primary_chapter
-    current_chapter_assignments.find_by(primary: true)&.chapterable
+    primary_chapterable_assignment_from(current_chapter_assignments)&.chapterable
   end
 
   def assigned_to_club?
@@ -1151,7 +1151,7 @@ class Account < ActiveRecord::Base
   end
 
   def current_primary_club
-    current_club_assignments.find_by(primary: true)&.chapterable
+    primary_chapterable_assignment_from(current_club_assignments)&.chapterable
   end
 
   def current_chapterable_assignment
@@ -1159,7 +1159,8 @@ class Account < ActiveRecord::Base
   end
 
   def current_primary_chapterable_assignment
-    current_chapterable_assignments.find_by(primary: true) || ::NullChapterableAccountAssignment.new
+    primary_chapterable_assignment_from(current_chapterable_assignments) ||
+      ::NullChapterableAccountAssignment.new
   end
 
   def last_seasons_primary_chapterable_assignment
@@ -1206,6 +1207,14 @@ class Account < ActiveRecord::Base
 
   private
 
+  def primary_chapterable_assignment_from(assignments)
+    if assignments.loaded?
+      assignments.find(&:primary?)
+    else
+      assignments.find_by(primary: true)
+    end
+  end
+
   def self.survey_reminder_max_times
     2
   end
@@ -1230,6 +1239,13 @@ class Account < ActiveRecord::Base
 
   def not_student?
     !student_profile.present?
+  end
+
+  def validate_minimum_age_on_date_of_birth?
+    return false unless date_of_birth.present?
+    return true if is_a_judge? || is_chapter_ambassador? || club_ambassador?
+
+    is_a_mentor? && date_of_birth_changed?
   end
 
   def must_meet_minimum_age_requirement

@@ -253,7 +253,7 @@ class MentorProfile < ActiveRecord::Base
   end
 
   def youngest_birth_year
-    Date.today.year - 15
+    Date.today.year - 18
   end
 
   def expertise_names

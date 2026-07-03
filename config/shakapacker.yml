@@ -66,3 +66,10 @@ production:
   cache_manifest: true
   early_hints:
     enabled: false
+
+perf:
+  <<: *default
+  compile: false
+  cache_manifest: true
+  early_hints:
+    enabled: false

@@ -7,10 +7,10 @@ module Admin
     use_datagrid with: AccountsGrid
 
     def show
-      @account = Account.find(params.fetch(:id))
+      @account = load_participant_for_show
       @teams = Team.current
-      @scores = submission_score
-      @recused_scores = recused_scores
+      @scores = submission_score.includes(team_submission: :team)
+      @recused_scores = recused_scores.includes(team_submission: :team)
       @season_flag = SeasonFlag.new(@account)
       @certificates = @account.current_certificates
       @needed_certificates = DetermineCertificates.new(@account).needed
@@ -123,6 +123,33 @@ module Admin
       else
         false
       end
+    end
+
+    def load_participant_for_show
+      Account
+        .preload(
+          :division,
+          :background_check,
+          :consent_waiver,
+          :current_certificates,
+          :certificates,
+          {chapterable_assignments: [:chapterable, :assignment_by]},
+          {
+            student_profile: [:parental_consent, :media_consent, :parental_consents, :current_teams],
+            mentor_profile: [
+              :expertises,
+              {mentor_profile_mentor_types: :mentor_type},
+              :current_teams
+            ],
+            judge_profile: [
+              {judge_profile_judge_types: :judge_type},
+              {judge_profile_technical_skills: :technical_skill}
+            ]
+          },
+          :chapter_ambassador_profile,
+          :club_ambassador_profile
+        )
+        .find(params.fetch(:id))
     end
 
     def submission_score

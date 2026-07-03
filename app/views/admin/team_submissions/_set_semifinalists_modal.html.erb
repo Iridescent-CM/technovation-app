@@ -1,0 +1,75 @@
+<%= content_tag :div,
+  class: "modal",
+  id: "set_semifinalists_csv",
+  data: {
+    heading: "Set Semifinalists from CSV",
+    width: "600px"
+  } do %>
+  <div class="modal-content">
+    <p style="text-align: left;">
+      Multiple submissions can be marked as semifinalists via bulk upload using the
+      submission ID number. To find the submission ID:
+    </p>
+
+    <ul style="text-align: left;">
+      <li>On this page, add "Submission ID" as an additional column</li>
+
+      <ul>
+        <li>Apply any other filters to limit the search results to the submissions
+          you wish to mark as semifinalist</li>
+      </ul>
+
+      <li>Click "Export current results to CSV"</li>
+
+      <ul>
+        <li>This CSV can then be uploaded below</li>
+      </ul>
+    </ul>
+
+    <p style="margin-bottom: 20px; text-align: left;">
+      <strong>Only CSVs that include a column with the header "Submission ID" can be uploaded.</strong>
+    </p>
+
+    <%= form_with(
+      url: set_semifinalists_admin_team_submissions_path,
+      local: true,
+      data: { turbo: false },
+      html: {
+        method: :post,
+        style: "background-color: #e5e5e5; padding: 20px 18px;"
+      }
+    ) do |form| %>
+      <div>
+        <%= form.file_field :csv_file,
+          required: true,
+          accept: ".csv",
+          style: "width: 100%; background-color: #fff; padding: 8px; border: 1px solid oklch(87.2% 0.01 258.338); border-radius: 0.15rem; font-size: 1.2rem;"
+        %>
+      </div>
+
+      <div style="margin-top: 12px;">
+        <%= form.submit "Upload CSV", class: "button" %>
+        or
+        <%= link_to "cancel", "#", class: "close" %>
+      </div>
+    <% end %>
+
+    <p class="hint" style="margin-top: 24px; text-align: left;">
+      For a submission to be updated to semifinalist:
+    </p>
+
+    <ul>
+      <li class="hint hint--above">It must be part of the current season</li>
+      <li class="hint hint--above">It must be listed in the uploaded CSV</li>
+    </ul>
+
+    <p class="hint" style="margin-top: 24px; text-align: left;">
+      After uploading, use the
+      <%= link_to "semifinalist snippet",
+        admin_semifinalist_snippet_path(format: :text),
+        target: "_blank",
+        rel: "noopener" %>
+      for blog post copy.
+    </p>
+  </div>
+<% end %>

@@ -84,3 +84,7 @@ test:
 production:
   <<: *default
   database: technovation-app_production
+
+perf:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
