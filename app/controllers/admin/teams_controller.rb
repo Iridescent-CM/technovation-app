@@ -5,19 +5,6 @@ module Admin
 
     use_datagrid with: TeamsGrid
 
-    def set_semifinalists
-      result = Judging::SetContestRankFromCsv.new(
-        csv_file: params[:csv_file],
-        rank: :semifinalist
-      ).call
-
-      redirect_to admin_teams_path,
-        success: "Updated #{result.updated_count} submissions to semifinalist."
-    rescue Judging::SetContestRankFromCsv::MissingSubmissionIdColumn
-      redirect_to admin_teams_path,
-        error: 'Please ensure your CSV file contains a "Submission ID" header.'
-    end
-
     def show
       @team = Team.find(params[:id])
     end

@@ -1,8 +1,26 @@
 <% provide :title, "Team Submissions" %>
 
+<% if current_scope == "admin" %>
+  <p style="margin-bottom: 16px;">
+    <%= link_to "Set Semifinalists from CSV", "#",
+      data: { opens_modal: "set_semifinalists_csv" },
+      class: "button secondary small" %>
+
+    <%= link_to "View semifinalist snippet",
+      admin_semifinalist_snippet_path(format: :text),
+      class: "button secondary small",
+      target: "_blank",
+      rel: "noopener" %>
+  </p>
+<% end %>
+
 <%= render "datagrid/datagrid",
   grid: @submissions_grid,
   form_url: send("#{current_scope}_team_submissions_path"),
   model_name: "team_submission",
   scope: current_scope.to_sym
 %>
+
+<% if current_scope == "admin" %>
+  <%= render "admin/team_submissions/set_semifinalists_modal" %>
+<% end %>
