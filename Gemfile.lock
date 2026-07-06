@@ -601,7 +601,8 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
-    smarter_csv (1.15.2)
+    smarter_csv (1.18.1)
+      bigdecimal
     spring (4.4.2)
     spring-watcher-listen (2.1.0)
       listen (>= 2.7, < 4.0)
@@ -781,7 +782,7 @@ DEPENDENCIES
   sidekiq (~> 7.0)
   simple_form (~> 5.0)
   simplecov
-  smarter_csv (~> 1.0)
+  smarter_csv (~> 1.18.0)
   spring (~> 4.4)
   spring-watcher-listen (~> 2.1)
   sprockets (= 3.7.2)
