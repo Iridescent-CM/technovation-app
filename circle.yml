@@ -286,13 +286,6 @@ jobs:
             fi
           when: on_success
 
-      - run:
-          name: Deploy Production to Heroku
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "production" ]; then
-              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/technovation.git qa:master
-            fi
-
 general:
   branches:
     ignore:
@@ -309,8 +302,3 @@ deployment:
     branch: qa
     heroku:
       appname: technovation-qa
-
-  prod:
-    branch: production
-    heroku:
-      appname: technovation
