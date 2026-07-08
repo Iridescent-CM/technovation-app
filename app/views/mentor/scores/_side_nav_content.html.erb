@@ -12,4 +12,10 @@
          is_active_item: al(mentor_certificates_path).present?
       %>
     </ol>
+
+    <%= render "application/templates/tw_thick_rule" %>
+
+    <div class="tw-tab-content">
+      <a id="previous-certificates-tab" href="<%= mentor_certificates_path(anchor: "previous-certificates-tab-content") %>" data-heading="Previous Certificates">Previous Certificates</a>
+    </div>
   </nav>

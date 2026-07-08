@@ -71,4 +71,31 @@ RSpec.feature "Mentor certificates" do
 
     expect(page).to have_link("Open your certificate", count: 2)
   end
+
+  scenario "mentor can view their previous mentor certificates" do
+    mentor = FactoryBot.create(:mentor, :onboarded)
+    previous_certificate = FactoryBot.create(:certificate, :past, account: mentor.account, cert_type: :mentor)
+
+    sign_in(mentor)
+
+    click_link "Scores & Certificates"
+    click_link "Previous Certificates"
+
+    expect(page).to have_content(previous_certificate.season)
+    expect(page).to have_content(previous_certificate.cert_type.titleize)
+    expect(page).to have_link("Download your certificate")
+  end
+
+  scenario "no previous mentor certificates are displayed when mentor has none" do
+    mentor = FactoryBot.create(:mentor, :onboarded)
+
+    sign_in(mentor)
+
+    click_link "Scores & Certificates"
+    click_link "Previous Certificates"
+
+    expect(page).to have_content(
+      "If you participated in past seasons, this is where you can view and download your certificates."
+    )
+  end
 end
