@@ -34,13 +34,14 @@ class Certificate < ApplicationRecord
 
   def self.highest_awarded_student_certs_for_previous_seasons
     past
+      .preload(:team)
       .student_certs_ordered_by_highest_awarded
       .group_by { |cert| cert.season }
       .map { |_, certs| certs.first }
   end
 
   def self.highest_awarded_student_cert_for_current_season
-    current.student_certs_ordered_by_highest_awarded.first
+    current.preload(:team).student_certs_ordered_by_highest_awarded.first
   end
 
   def self.student_certs_ordered_by_highest_awarded

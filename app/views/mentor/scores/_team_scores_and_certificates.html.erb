@@ -13,7 +13,13 @@
       </div>
 
       <div class="mt-8">
-        <% scores = team.submission.submission_scores.complete %>
+        <% scores = if team.submission.association(:submission_scores).loaded?
+             team.submission.submission_scores.select { |score|
+               score.completed_at.present? && !score.judge_recusal?
+             }
+           else
+             team.submission.submission_scores.complete
+           end %>
 
         <% if scores.any?  %>
           <%= render "scores/finished_scores", team: team, scores: scores %>

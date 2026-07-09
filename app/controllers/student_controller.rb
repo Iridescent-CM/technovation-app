@@ -19,11 +19,11 @@ class StudentController < ApplicationController
   end
 
   def current_team
-    current_student.team
+    @current_team ||= current_student.team
   end
 
   def current_submission
-    current_team.submission
+    @current_submission ||= current_team.submission
   end
 
   private
