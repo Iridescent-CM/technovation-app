@@ -19,7 +19,7 @@ on:
         description: Explicit version, e.g. 7.21.0 (overrides version_bump)
         type: string
       dry_run:
-        description: Run all checks but skip Heroku push, verify, tag, release, and branch pointer
+        description: Run all checks but skip Heroku push, verify, tag, and GitHub Release
         type: boolean
         default: false
 
@@ -237,16 +237,3 @@ jobs:
       - name: Rollback notice
         if: ${{ needs.guard.outputs.existing_tag != '' }}
         run: echo "Redeployed existing release ${{ needs.guard.outputs.existing_tag }}; no new tag created."
-
-      - name: Update production branch pointer
-        env:
-          SHA: ${{ needs.guard.outputs.sha }}
-          ROLLBACK: ${{ needs.guard.outputs.existing_tag }}
-        run: |
-          set -euo pipefail
-          if [ -n "$ROLLBACK" ]; then
-            # Rollback moves the pointer backwards; a plain push would be rejected as non-fast-forward.
-            git push --force origin "$SHA:refs/heads/production"
-          else
-            git push origin "$SHA:refs/heads/production"
-          fi
