@@ -4,7 +4,6 @@ module Student
       @all_scores = SubmissionScore.none
       @quarterfinals_scores = SubmissionScore.none
       @semifinals_scores = SubmissionScore.none
-      @deleted_online_scores = SubmissionScore.none
 
       if current_team.submission.present? && SeasonToggles.display_scores?
         @all_scores = current_team.submission.submission_scores.complete
@@ -18,13 +17,6 @@ module Student
 
           @semifinals_scores = @all_scores.semifinals
         end
-
-        @deleted_online_scores = current_team.submission.submission_scores
-          .with_deleted
-          .virtual
-          .complete
-          .where.not(deleted_at: nil)
-          .where(dropped_at: nil)
       end
 
       @certificates = Certificate.none
