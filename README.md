@@ -215,3 +215,23 @@ Technovation uses RSpec, and you can run the entire test suite just by entering 
 ```
 rake
 ```
+
+### JavaScript tests
+
+Plain JS modules and Vue components are tested with [Vitest](https://vitest.dev/) and [@vue/test-utils](https://v1.test-utils.vuejs.org/) (Vue 2 line). Tests live in `spec/javascript/`, mirroring the structure of `app/javascript/`.
+
+```bash
+yarn test          # run once (CI mode)
+yarn test:watch    # watch mode for local development
+```
+
+The test tooling is intentionally pinned to Vue 2.6-compatible versions (`vitest@0.34.6`, `vite@4`, `vite-plugin-vue2`) as devDependencies only — production dependencies (including `vue@2.6.11`) are unchanged.
+
+Current coverage focuses on critical-path business logic:
+
+- Age/division cutoff helpers (`utilities/age-helpers`)
+- Judge scoring completeness rules (Vuex getters/actions)
+- Registration readiness and profile validation (Vuex getters)
+- Key Vue components: `ScoreEntry`, `QuestionSection`, `BasicProfile`, `LocationForm`
+
+JS unit tests run in CircleCI on parallel node 0, after ESLint and before the database setup step.
