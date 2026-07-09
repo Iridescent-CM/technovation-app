@@ -6,8 +6,11 @@ module Student
       @semifinals_scores = SubmissionScore.none
 
       if current_team.submission.present? && SeasonToggles.display_scores?
-        @all_scores = current_team.submission.submission_scores.complete
-        @quarterfinals_scores = @all_scores.quarterfinals
+        @all_scores = current_team.submission.submission_scores
+          .complete
+          .preload(judge_profile: :account)
+          .to_a
+        @quarterfinals_scores = @all_scores.select(&:quarterfinals?)
 
         if current_team.submission.semifinalist? ||
             current_team.submission.regional_honoree? ||
@@ -15,7 +18,7 @@ module Student
             current_team.submission.finalist? ||
             current_team.submission.grand_prize_winner?
 
-          @semifinals_scores = @all_scores.semifinals
+          @semifinals_scores = @all_scores.select(&:semifinals?)
         end
       end
 

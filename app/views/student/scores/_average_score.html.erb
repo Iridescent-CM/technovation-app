@@ -1,6 +1,11 @@
+<% score = Array.wrap(scores).first %>
 <h3 class="text-xl text-white">
     Average <%= String(round).titlecase %> Score:
   <span class="text-white">
-      <%= scores.average_score(round) %>/<%= scores.total_possible %>
+      <% if score %>
+        <%= score.team_submission.public_send("#{round}_average_score") %>/<%= score.total_possible %>
+      <% else %>
+        0.0/0.0
+      <% end %>
   </span>
 </h3>

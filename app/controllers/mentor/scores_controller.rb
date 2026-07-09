@@ -2,7 +2,9 @@ module Mentor
   class ScoresController < MentorController
 
     def index
-      @current_teams = current_mentor.teams.current.order("teams.name")
+      @current_teams = current_mentor.teams.current
+        .order("teams.name")
+        .preload(submission: {submission_scores: {judge_profile: :account}})
     end
 
     def show
