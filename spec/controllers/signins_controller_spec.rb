@@ -57,6 +57,83 @@ RSpec.describe SigninsController do
       expect(response).to redirect_to(student_dashboard_path)
     end
 
+    it "increments failed attempts for a wrong password" do
+      student = FactoryBot.create(:student)
+
+      expect {
+        post :create, params: {
+          account: {
+            email: student.email,
+            password: "wrong-password"
+          }
+        }
+      }.to change { student.account.reload.failed_attempts }.by(1)
+
+      expect(response).to render_template(:new)
+      expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.error"))
+    end
+
+    it "does not increment failed attempts for an unknown email" do
+      post :create, params: {
+        account: {
+          email: "unknown@example.com",
+          password: "wrong-password"
+        }
+      }
+
+      expect(response).to render_template(:new)
+      expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.error"))
+    end
+
+    it "locks the account after too many failed attempts" do
+      student = FactoryBot.create(:student)
+      student.account.update!(failed_attempts: Account::MAX_FAILED_ATTEMPTS - 1)
+
+      post :create, params: {
+        account: {
+          email: student.email,
+          password: "wrong-password"
+        }
+      }
+
+      expect(student.account.reload.locked?).to be(true)
+      expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.error"))
+    end
+
+    it "rejects sign-in for a locked account" do
+      student = FactoryBot.create(:student)
+      student.account.update!(
+        failed_attempts: Account::MAX_FAILED_ATTEMPTS,
+        locked_at: 5.minutes.ago
+      )
+
+      post :create, params: {
+        account: {
+          email: student.email,
+          password: "secret1234"
+        }
+      }
+
+      expect(response).to render_template(:new)
+      expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.locked"))
+      expect(student.account.reload.failed_attempts).to eq(Account::MAX_FAILED_ATTEMPTS)
+    end
+
+    it "resets failed attempts after a successful sign-in" do
+      student = FactoryBot.create(:student)
+      student.account.update!(failed_attempts: 3, locked_at: nil)
+
+      post :create, params: {
+        account: {
+          email: student.email,
+          password: "secret1234"
+        }
+      }
+
+      expect(student.account.reload.failed_attempts).to eq(0)
+      expect(student.account.locked_at).to be_nil
+    end
+
     context "REDIRECTED_FROM cookie" do
       it "ignores a stale JSON redirect and routes to the judge dashboard" do
         judge = FactoryBot.create(:judge)

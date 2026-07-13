@@ -162,7 +162,9 @@ CREATE TABLE public.accounts (
     phone_number character varying,
     no_chapterable_selected boolean,
     no_chapterables_available boolean,
-    force_chapterable_selection boolean DEFAULT false
+    force_chapterable_selection boolean DEFAULT false,
+    failed_attempts integer DEFAULT 0 NOT NULL,
+    locked_at timestamp(6) without time zone
 );
 
 
@@ -5098,6 +5100,7 @@ ALTER TABLE ONLY public.program_information
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260713160000'),
 ('20260402233018'),
 ('20260331220350'),
 ('20260323193301'),

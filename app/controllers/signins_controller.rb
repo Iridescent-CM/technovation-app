@@ -12,10 +12,18 @@ class SigninsController < ApplicationController
       signin_params.fetch(:email).strip.downcase.delete(".")
     ).first
 
+    if @signin&.locked?
+      flash.now[:error] = t("controllers.signins.create.locked")
+      render :new
+      return
+    end
+
     if !!@signin && !!@signin.authenticate(signin_params.fetch(:password))
       SignIn.call(@signin, self, permanent: params[:remember_me] == "1")
     else
+      account_for_failure = @signin
       @signin = Account.new
+      account_for_failure&.register_failed_attempt!
       flash.now[:error] = t("controllers.signins.create.error")
       render :new
     end
