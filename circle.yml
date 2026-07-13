@@ -240,6 +240,17 @@ jobs:
           command: yarn lint
 
       - run:
+          name: Run JS unit tests
+          command: |
+            if [ "$CIRCLE_NODE_INDEX" = "0" ]; then
+              mkdir -p ~/vitest
+              yarn test --reporter=default --reporter=junit --outputFile=$HOME/vitest/vitest.xml
+            fi
+
+      - store_test_results:
+          path: ~/vitest
+
+      - run:
           name: Setup database
           command: |
             bundle exec rails db:create
