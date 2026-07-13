@@ -7,7 +7,7 @@ RSpec.feature "Edit account spec" do
       account: FactoryBot.create(
         :account,
         email: "original@email.com",
-        password: "secret1234"
+        password: PasswordHelpers::VALID_PASSWORD
       )
     ))
     visit student_profile_path

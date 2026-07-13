@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :account do
     sequence(:email) { |n| "account-#{n}@example.com" }
-    password { "secret1234" }
+    password { PasswordHelpers::VALID_PASSWORD }
     email_confirmed_at { Time.current }
 
     date_of_birth { Date.today - 31.years }

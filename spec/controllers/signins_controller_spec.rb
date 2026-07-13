@@ -11,7 +11,7 @@ RSpec.describe SigninsController do
         post :create, params: {
           account: {
             email: student.email,
-            password: "secret1234"
+            password: PasswordHelpers::VALID_PASSWORD
           }
         }
 
@@ -31,7 +31,7 @@ RSpec.describe SigninsController do
       post :create, params: {
         account: {
           email: "capitalletters@gmail.com",
-          password: "secret1234"
+          password: PasswordHelpers::VALID_PASSWORD
         }
       }
 
@@ -50,7 +50,7 @@ RSpec.describe SigninsController do
       post :create, params: {
         account: {
           email: "dotsigno.red@gmail.com",
-          password: "secret1234"
+          password: PasswordHelpers::VALID_PASSWORD
         }
       }
 
@@ -142,7 +142,7 @@ RSpec.describe SigninsController do
         post :create, params: {
           account: {
             email: judge.account.email,
-            password: "secret1234"
+            password: PasswordHelpers::VALID_PASSWORD
           }
         }
 
@@ -156,7 +156,7 @@ RSpec.describe SigninsController do
         post :create, params: {
           account: {
             email: student.email,
-            password: "secret1234"
+            password: PasswordHelpers::VALID_PASSWORD
           }
         }
 
@@ -170,7 +170,7 @@ RSpec.describe SigninsController do
         parent_guardian_email: "parent2@parent2.com",
         account: FactoryBot.create(
           :account,
-          password: "secret1234"
+          password: PasswordHelpers::VALID_PASSWORD
         )
       )
 
@@ -182,7 +182,7 @@ RSpec.describe SigninsController do
       post :create, params: {
         account: {
           email: student.email,
-          password: "secret1234"
+          password: PasswordHelpers::VALID_PASSWORD
         }
       }
 
