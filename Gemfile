@@ -89,6 +89,7 @@ gem "carmen", "~> 1.1"
 
 gem "indefinite_article", "~> 0.2"
 
+gem "rack-attack", "~> 6.7"
 gem "rack-rewrite", "~> 1.5", require: "rack/rewrite"
 
 gem "browser", "~> 2.5"

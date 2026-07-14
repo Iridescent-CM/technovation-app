@@ -66,10 +66,14 @@ es:
       new:
         link: "Olvidé mi contraseña"
 
+    rack_attack:
+      throttled: "Demasiadas solicitudes. Inténtalo de nuevo más tarde."
+
     signins:
       create:
         success: "¡Hola! ¡Bienvenido!"
         error: "Lo sentimos, no reconocemos ese nombre y contraseña."
+        locked: "Demasiados intentos fallidos de inicio de sesión. Inténtalo de nuevo en 30 minutos."
       destroy:
         success: "Has cerrado sesión. ¡Nos vemos la próxima vez!"
 

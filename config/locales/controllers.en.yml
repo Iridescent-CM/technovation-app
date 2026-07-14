@@ -128,10 +128,14 @@ en:
         link: "Reset your password"
         text: "Trouble signing in?"
 
+    rack_attack:
+      throttled: "Too many requests. Please try again later."
+
     signins:
       create:
         success: "Hey! Welcome back!"
         error: "Sorry, we didn't recognize that name and password"
+        locked: "Too many failed sign-in attempts. Try again in 30 minutes."
       destroy:
         success: "You're signed out. See you next time!"
       new:

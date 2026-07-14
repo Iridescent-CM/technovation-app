@@ -433,6 +433,8 @@ GEM
       activesupport (>= 3.0.0)
     racc (1.8.1)
     rack (2.2.23)
+    rack-attack (6.8.0)
+      rack (>= 1.0, < 4)
     rack-proxy (0.7.7)
       rack
     rack-rewrite (1.5.1)
@@ -763,6 +765,7 @@ DEPENDENCIES
   public_activity (~> 3.0)
   puma (~> 5.6.9)
   pundit (~> 2.0)
+  rack-attack (~> 6.7)
   rack-rewrite (~> 1.5)
   rack-timeout (~> 0.5)
   rails (= 7.2.3.1)

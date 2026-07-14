@@ -1,5 +1,7 @@
 module SignIn
   def self.call(signin, context, options = {})
+    signin.reset_failed_attempts!
+
     signin_options = {
       message: I18n.translate("controllers.signins.create.success"),
       redirect_to: after_signin_path(signin, context),

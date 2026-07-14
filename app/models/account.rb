@@ -590,6 +590,33 @@ class Account < ActiveRecord::Base
   has_secure_token :admin_invitation_token
   has_secure_password
 
+  MAX_FAILED_ATTEMPTS = 10
+  LOCKOUT_PERIOD = 30.minutes
+
+  def locked?
+    return false if locked_at.blank?
+
+    if locked_at <= LOCKOUT_PERIOD.ago
+      reset_failed_attempts!
+      return false
+    end
+
+    true
+  end
+
+  def register_failed_attempt!
+    new_count = failed_attempts + 1
+    attrs = {failed_attempts: new_count}
+    attrs[:locked_at] = Time.current if new_count >= MAX_FAILED_ATTEMPTS
+    update!(attrs)
+  end
+
+  def reset_failed_attempts!
+    return unless failed_attempts.positive? || locked_at.present?
+
+    update!(failed_attempts: 0, locked_at: nil)
+  end
+
   before_validation -> {
     self.email = email.to_s.strip.downcase
 
