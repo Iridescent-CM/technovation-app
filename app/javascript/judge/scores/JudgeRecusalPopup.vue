@@ -13,6 +13,7 @@
 <script>
 import Swal from "sweetalert2";
 import { mapState } from "vuex";
+import { notifyApiError } from "utilities/apiErrorHandler";
 
 export default {
   props: {
@@ -205,19 +206,28 @@ export default {
       });
 
       if (formValues) {
-        await window.axios.patch(
-          `/judge/scores/${this.score.id}/judge_recusal`,
-          {
-            submission_score: {
-              judge_recusal_reason: formValues.judgeRecusalReason,
-              judge_recusal_comment: formValues.judgeRecusalComment,
-              judge_recusal_flagged_contents_attributes:
-                formValues.judgeRecusalFlaggedContents,
-            },
-          }
-        );
+        try {
+          await window.axios.patch(
+            `/judge/scores/${this.score.id}/judge_recusal`,
+            {
+              submission_score: {
+                judge_recusal_reason: formValues.judgeRecusalReason,
+                judge_recusal_comment: formValues.judgeRecusalComment,
+                judge_recusal_flagged_contents_attributes:
+                  formValues.judgeRecusalFlaggedContents,
+              },
+            }
+          );
 
-        window.location.href = "/judge/dashboard";
+          window.location.href = "/judge/dashboard";
+        } catch (error) {
+          notifyApiError({
+            error,
+            context: "[JUDGING] Error submitting judge recusal",
+            userMessage:
+              "We couldn't submit your recusal. Please try again, and contact us if the problem continues.",
+          });
+        }
       }
     },
   },
