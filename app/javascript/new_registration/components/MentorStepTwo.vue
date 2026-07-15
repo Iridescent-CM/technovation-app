@@ -202,7 +202,7 @@
 import axios from "axios";
 import { DateTime } from "luxon";
 
-import { airbrake } from "utilities/utilities";
+import { notifyApiError } from "utilities/apiErrorHandler";
 import ContainerHeader from "./ContainerHeader";
 import ReferredBy from "./ReferredBy";
 import PreviousButton from "./PreviousButton";
@@ -288,8 +288,9 @@ export default {
           });
         });
       } catch (error) {
-        airbrake.notify({
-          error: `[REGISTRATION] Error getting mentor expertises - ${error.response.data}`,
+        notifyApiError({
+          error,
+          context: "[REGISTRATION] Error getting mentor expertises",
         });
       }
     },
@@ -304,8 +305,9 @@ export default {
           });
         });
       } catch (error) {
-        airbrake.notify({
-          error: `[REGISTRATION] Error getting mentor types - ${error.response.data}`,
+        notifyApiError({
+          error,
+          context: "[REGISTRATION] Error getting mentor types",
         });
       }
     },

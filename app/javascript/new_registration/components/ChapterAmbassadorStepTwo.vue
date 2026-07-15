@@ -126,7 +126,7 @@
 <script>
 import axios from "axios";
 
-import { airbrake } from "utilities/utilities";
+import { notifyApiError } from "utilities/apiErrorHandler";
 import ContainerHeader from "./ContainerHeader";
 import ReferredBy from "./ReferredBy";
 import PreviousButton from "./PreviousButton";
@@ -175,8 +175,9 @@ export default {
         document.getElementById("chapterOrganizationName").value =
           response.data.chapterOrganizationName;
       } catch (error) {
-        airbrake.notify({
-          error: `[REGISTRATION] Error getting chapter organization name - ${error.response.data}`,
+        notifyApiError({
+          error,
+          context: "[REGISTRATION] Error getting chapter organization name",
         });
       }
     },
