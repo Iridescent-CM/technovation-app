@@ -1,3 +1,5 @@
+import { notifyApiError } from "utilities/apiErrorHandler";
+
 export default {
   initWizard({ commit, getters }, attempt) {
     commit("wizardToken", attempt.wizardToken);
@@ -45,7 +47,9 @@ export default {
           wizardToken: state.wizardToken,
         },
       })
-      .catch((err) => console.error(err));
+      .catch((error) =>
+        notifyApiError({ error, context: "[REGISTRATION] Error saving email" })
+      );
   },
 
   updateBirthdate({ commit, state, getters }, { year, month, day }) {
@@ -76,7 +80,12 @@ export default {
           commit("birthDate", getters.getBirthdateAttributes(attributes));
         }
       )
-      .catch((err) => console.error(err));
+      .catch((error) =>
+        notifyApiError({
+          error,
+          context: "[REGISTRATION] Error saving birthdate",
+        })
+      );
   },
 
   updateProfileChoice({ commit, state }, choice) {
@@ -96,7 +105,12 @@ export default {
           commit("profileChoice", attributes.profileChoice);
         }
       )
-      .catch((err) => console.error(err));
+      .catch((error) =>
+        notifyApiError({
+          error,
+          context: "[REGISTRATION] Error saving profile choice",
+        })
+      );
   },
 
   updateLocation({ commit, state }, attrs) {
@@ -128,7 +142,12 @@ export default {
           commit("location", attributes);
         }
       )
-      .catch((err) => console.error(err));
+      .catch((error) =>
+        notifyApiError({
+          error,
+          context: "[REGISTRATION] Error saving location",
+        })
+      );
   },
 
   updateBasicProfile({ state }, attrs) {
@@ -154,6 +173,11 @@ export default {
         ...data,
         wizardToken: state.wizardToken,
       },
-    }).catch((err) => console.error(err));
+    }).catch((error) =>
+      notifyApiError({
+        error,
+        context: "[REGISTRATION] Error saving basic profile",
+      })
+    );
   },
 };

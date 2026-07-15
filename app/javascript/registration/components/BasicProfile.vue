@@ -128,6 +128,7 @@ import { createNamespacedHelpers } from "vuex";
 import VueSelect from "vue-select";
 
 import { debounce } from "utilities/utilities";
+import { notifyApiError } from "utilities/apiErrorHandler";
 
 const { mapState, mapGetters, mapActions } =
   createNamespacedHelpers("registration");
@@ -399,7 +400,12 @@ export default {
               });
             });
           })
-          .catch((err) => console.error(err));
+          .catch((error) =>
+            notifyApiError({
+              error,
+              context: "[REGISTRATION] Error getting expertise options",
+            })
+          );
       }
     },
 
