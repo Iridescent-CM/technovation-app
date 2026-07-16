@@ -22,6 +22,8 @@ Counters are stored in `Rails.cache` (Memcached in production). Localhost is saf
 
 After 10 failed password attempts on `POST /signins`, the account is locked. Locked accounts cannot sign in until the lockout window expires. A successful sign-in (via password or any path that calls `SignIn.call`) resets the counter and clears lockout.
 
+Failed attempts that do not yet lock the account show how many attempts remain and highlight the password-reset link. Blank passwords do not increment the failure counter. The Sign In button stays disabled until a password is entered.
+
 Unknown email addresses still receive the generic sign-in error and do not increment any counter.
 
 ## Configuration

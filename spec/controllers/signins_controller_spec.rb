@@ -57,7 +57,7 @@ RSpec.describe SigninsController do
       expect(response).to redirect_to(student_dashboard_path)
     end
 
-    it "increments failed attempts for a wrong password" do
+    it "increments failed attempts for a wrong password and shows attempts remaining" do
       student = FactoryBot.create(:student)
 
       expect {
@@ -69,8 +69,14 @@ RSpec.describe SigninsController do
         }
       }.to change { student.account.reload.failed_attempts }.by(1)
 
+      remaining = Account::MAX_FAILED_ATTEMPTS - student.account.failed_attempts
       expect(response).to render_template(:new)
-      expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.error"))
+      expect(flash.now[:error]).to eq(
+        I18n.t("controllers.signins.create.error_with_attempts", count: remaining)
+      )
+      expect(assigns(:highlight_password_reset)).to be(true)
+      expect(assigns(:signin)).to be_a_new(Account)
+      expect(assigns(:signin).email).to eq(student.email)
     end
 
     it "does not increment failed attempts for an unknown email" do
@@ -83,9 +89,26 @@ RSpec.describe SigninsController do
 
       expect(response).to render_template(:new)
       expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.error"))
+      expect(assigns(:highlight_password_reset)).to be_falsey
     end
 
-    it "locks the account after too many failed attempts" do
+    it "does not increment failed attempts for a blank password" do
+      student = FactoryBot.create(:student)
+
+      expect {
+        post :create, params: {
+          account: {
+            email: student.email,
+            password: ""
+          }
+        }
+      }.not_to change { student.account.reload.failed_attempts }
+
+      expect(response).to render_template(:new)
+      expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.error"))
+    end
+
+    it "locks the account after too many failed attempts and stays on sign-in" do
       student = FactoryBot.create(:student)
       student.account.update!(failed_attempts: Account::MAX_FAILED_ATTEMPTS - 1)
 
@@ -97,10 +120,13 @@ RSpec.describe SigninsController do
       }
 
       expect(student.account.reload.locked?).to be(true)
-      expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.error"))
+      expect(response).to render_template(:new)
+      expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.locked"))
+      expect(assigns(:highlight_password_reset)).to be(true)
+      expect(assigns(:signin)).to be_a_new(Account)
     end
 
-    it "rejects sign-in for a locked account" do
+    it "rejects sign-in for a locked account and renders a new Account form" do
       student = FactoryBot.create(:student)
       student.account.update!(
         failed_attempts: Account::MAX_FAILED_ATTEMPTS,
@@ -117,6 +143,9 @@ RSpec.describe SigninsController do
       expect(response).to render_template(:new)
       expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.locked"))
       expect(student.account.reload.failed_attempts).to eq(Account::MAX_FAILED_ATTEMPTS)
+      expect(assigns(:signin)).to be_a_new(Account)
+      expect(assigns(:signin).email).to eq(student.email)
+      expect(assigns(:highlight_password_reset)).to be(true)
     end
 
     it "resets failed attempts after a successful sign-in" do

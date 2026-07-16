@@ -73,7 +73,10 @@ es:
       create:
         success: "¡Hola! ¡Bienvenido!"
         error: "Lo sentimos, no reconocemos ese nombre y contraseña."
-        locked: "Demasiados intentos fallidos de inicio de sesión. Inténtalo de nuevo en 30 minutos."
+        error_with_attempts:
+          one: "Lo sentimos, no reconocemos ese nombre y contraseña. Te queda 1 intento antes de que tu cuenta se bloquee durante 30 minutos."
+          other: "Lo sentimos, no reconocemos ese nombre y contraseña. Te quedan %{count} intentos antes de que tu cuenta se bloquee durante 30 minutos."
+        locked: "Demasiados intentos fallidos de inicio de sesión. Inténtalo de nuevo en 30 minutos, o restablece tu contraseña a continuación."
       destroy:
         success: "Has cerrado sesión. ¡Nos vemos la próxima vez!"
 
