@@ -110,7 +110,7 @@ RSpec.describe SigninsController do
       post :create, params: {
         account: {
           email: student.email,
-          password: "secret1234"
+          password: PasswordHelpers::VALID_PASSWORD
         }
       }
 
@@ -126,7 +126,7 @@ RSpec.describe SigninsController do
       post :create, params: {
         account: {
           email: student.email,
-          password: "secret1234"
+          password: PasswordHelpers::VALID_PASSWORD
         }
       }
 
