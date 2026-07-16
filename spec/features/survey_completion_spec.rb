@@ -9,7 +9,7 @@ RSpec.feature "Survey completion" do
 
       # redirect to sign in
       fill_in "Email", with: user.account.email
-      fill_in "Password", with: "secret1234"
+      fill_in_signin_password("secret1234")
       click_button "Sign in"
 
       expect(current_path).to eq(send("#{scope}_dashboard_path"))

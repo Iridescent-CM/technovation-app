@@ -1,4 +1,20 @@
 module SigninHelper
+  # Capybara fill_in does not always fire `input`, so under JS drivers Stimulus
+  # may leave Sign In disabled. Dispatch the event so the button can enable.
+  # Under rack_test, Stimulus does not run and the button stays enabled.
+  def fill_in_signin_password(password)
+    fill_in "Password", with: password
+
+    page.execute_script(<<~JS)
+      const field = document.querySelector('[data-signin-form-target="password"]');
+      if (field) {
+        field.dispatchEvent(new Event("input", { bubbles: true }));
+      }
+    JS
+  rescue Capybara::NotSupportedByDriverError
+    nil
+  end
+
   def sign_in(profile, *traits)
     visit signout_path
     signin = case profile
@@ -12,7 +28,7 @@ module SigninHelper
 
     within "#new_account" do
       fill_in "Email", with: signin.email
-      fill_in "Password", with: signin.account.password || "secret1234"
+      fill_in_signin_password(signin.account.password || "secret1234")
 
       click_button "Sign in"
     end
