@@ -1,3 +1,7 @@
+<% content_for :notifications do %>
+  <%= render "application/pardon_our_dust_banner" %>
+<% end %>
+
 <% if current_chapter.present? &&
   ( !current_ambassador.onboarded? || !current_chapter.onboarded? ) %>
     <%= render "chapter_ambassador/profiles/welcome_message_with_required_steps" %>
