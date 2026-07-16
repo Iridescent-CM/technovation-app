@@ -32,7 +32,7 @@ RSpec.feature "Mentors registering", :js do
     expect(page).to have_content("Set your email and password")
 
     fill_in "Email Address", with: "cheer@test.com"
-    fill_in "Password", with: "secret12345"
+    fill_in "Password", with: "Secret12345"
     click_button "Submit this form"
   end
 end

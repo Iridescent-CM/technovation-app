@@ -7,7 +7,7 @@ module RequestSigninHelper
       profile
     end
 
-    post "/signins", params: {account: {email: signin.email, password: "secret1234"}}
+    post "/signins", params: {account: {email: signin.email, password: PasswordHelpers::VALID_PASSWORD}}
 
     sleep 2
   end

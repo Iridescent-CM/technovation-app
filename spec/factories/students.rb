@@ -14,7 +14,7 @@ FactoryBot.define do
       country { "US" }
       date_of_birth { Division.cutoff_date - (Division::SENIOR_DIVISION_AGE - 1).years }
       sequence(:email) { |n| "factory-student-#{n}@example.com" }
-      password { "secret1234" }
+      password { PasswordHelpers::VALID_PASSWORD }
       not_onboarded { false }
     end
 

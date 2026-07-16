@@ -37,7 +37,7 @@ RSpec.feature "Manage admin accounts" do
     new_admin = Account.temporary_password.last
     visit admin_signup_path(token: new_admin.admin_invitation_token)
 
-    password = SecureRandom.hex(10)
+    password = PasswordHelpers::VALID_ADMIN_PASSWORD
     fill_in "Password", with: password
 
     click_button "Save"

@@ -9,7 +9,7 @@ es-MX:
       geocoded: "Código postal ó ciudad y estado/provincia"
       gender: "Género"
       password: "Crear una contraseña"
-      password_hint: "Utiliza al menos 8 caracteres"
+      password_hint: "Utiliza al menos 8 caracteres con mayúsculas, minúsculas y un número"
       referred_by: "¿Cómo te enteraste de Technovation?"
       referred_by_other: "Por favor indica cómo"
       state_province: "Estado / Provincia"

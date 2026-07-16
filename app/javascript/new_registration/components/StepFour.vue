@@ -57,7 +57,7 @@
           name="password"
           type="password"
           label="Password"
-          placeholder="At least 8 characters"
+          placeholder="8+ chars with upper, lower, and a number"
           validation="required|min:8,length"
           @keydown="checkValidation"
           @keyup="checkValidation"
@@ -84,6 +84,7 @@
 <script>
 import ContainerHeader from "./ContainerHeader";
 import PreviousButton from "./PreviousButton";
+import { passwordMeetsComplexity } from "../../helpers/passwordComplexity";
 
 export default {
   name: "StepFour",
@@ -137,7 +138,10 @@ export default {
 
       if (
         document.getElementById("email").value.length === 0 ||
-        document.getElementById("password").value.length < 8 ||
+        !passwordMeetsComplexity(
+          document.getElementById("password").value,
+          document.getElementById("email").value
+        ) ||
         validationErrorMessages.some((message) => {
           return (
             message.indexOf("is not a valid email address") >= 0 ||
