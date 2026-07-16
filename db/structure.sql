@@ -1,7 +1,6 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -429,7 +428,7 @@ CREATE TABLE public.chapter_ambassador_profiles (
     secondary_regions character varying[] DEFAULT '{}'::character varying[],
     program_name character varying,
     organization_status public.chapter_ambassador_organization_status,
-    viewed_community_connections boolean DEFAULT false CONSTRAINT chapter_ambassador_profiles_viewed_community_connectio_not_null NOT NULL,
+    viewed_community_connections boolean DEFAULT false NOT NULL,
     training_completed_at timestamp without time zone,
     onboarded boolean DEFAULT false,
     national_view boolean DEFAULT false
@@ -1157,9 +1156,9 @@ CREATE TABLE public.judge_profiles (
     semifinals_scores_count integer DEFAULT 0,
     suspended boolean DEFAULT false,
     recusal_scores_count integer DEFAULT 0 NOT NULL,
+    deleted_scores_count integer DEFAULT 0 NOT NULL,
     technical_experience_opt_in boolean,
-    ai_experience boolean,
-    deleted_scores_count integer DEFAULT 0 NOT NULL
+    ai_experience boolean
 );
 
 
@@ -2238,6 +2237,7 @@ CREATE SEQUENCE public.screenshots_id_seq
 ALTER SEQUENCE public.screenshots_id_seq OWNED BY public.screenshots.id;
 
 
+
 --
 -- Name: security_events; Type: TABLE; Schema: public; Owner: -
 --
@@ -2271,6 +2271,7 @@ CREATE SEQUENCE public.security_events_id_seq
 --
 
 ALTER SEQUENCE public.security_events_id_seq OWNED BY public.security_events.id;
+
 
 
 --
@@ -2501,15 +2502,15 @@ CREATE TABLE public.team_submissions (
     quarterfinals_average_score numeric(5,2) DEFAULT 0.0 NOT NULL,
     average_unofficial_score numeric(5,2) DEFAULT 0.0 NOT NULL,
     contest_rank integer DEFAULT 0 NOT NULL,
-    complete_semifinals_submission_scores_count integer DEFAULT 0 CONSTRAINT team_submissions_complete_semifinals_submission_scores_not_null NOT NULL,
-    complete_quarterfinals_submission_scores_count integer DEFAULT 0 CONSTRAINT team_submissions_complete_quarterfinals_submission_sco_not_null NOT NULL,
+    complete_semifinals_submission_scores_count integer DEFAULT 0 NOT NULL,
+    complete_quarterfinals_submission_scores_count integer DEFAULT 0 NOT NULL,
     semifinals_average_score numeric(5,2) DEFAULT 0.0 NOT NULL,
-    complete_semifinals_official_submission_scores_count integer DEFAULT 0 CONSTRAINT team_submissions_complete_semifinals_official_submissi_not_null NOT NULL,
-    complete_quarterfinals_official_submission_scores_count integer DEFAULT 0 CONSTRAINT team_submissions_complete_quarterfinals_official_submi_not_null NOT NULL,
-    pending_semifinals_submission_scores_count integer DEFAULT 0 CONSTRAINT team_submissions_pending_semifinals_submission_scores__not_null NOT NULL,
-    pending_quarterfinals_submission_scores_count integer DEFAULT 0 CONSTRAINT team_submissions_pending_quarterfinals_submission_scor_not_null NOT NULL,
-    pending_semifinals_official_submission_scores_count integer DEFAULT 0 CONSTRAINT team_submissions_pending_semifinals_official_submissio_not_null NOT NULL,
-    pending_quarterfinals_official_submission_scores_count integer DEFAULT 0 CONSTRAINT team_submissions_pending_quarterfinals_official_submis_not_null NOT NULL,
+    complete_semifinals_official_submission_scores_count integer DEFAULT 0 NOT NULL,
+    complete_quarterfinals_official_submission_scores_count integer DEFAULT 0 NOT NULL,
+    pending_semifinals_submission_scores_count integer DEFAULT 0 NOT NULL,
+    pending_quarterfinals_submission_scores_count integer DEFAULT 0 NOT NULL,
+    pending_semifinals_official_submission_scores_count integer DEFAULT 0 NOT NULL,
+    pending_quarterfinals_official_submission_scores_count integer DEFAULT 0 NOT NULL,
     deleted_at timestamp without time zone,
     percent_complete integer DEFAULT 0 NOT NULL,
     seasons text[] DEFAULT '{}'::text[],
@@ -3242,6 +3243,7 @@ ALTER TABLE ONLY public.saved_searches ALTER COLUMN id SET DEFAULT nextval('publ
 ALTER TABLE ONLY public.screenshots ALTER COLUMN id SET DEFAULT nextval('public.screenshots_id_seq'::regclass);
 
 
+
 --
 -- Name: security_events id; Type: DEFAULT; Schema: public; Owner: -
 --
@@ -3811,6 +3813,7 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.screenshots
     ADD CONSTRAINT screenshots_pkey PRIMARY KEY (id);
+
 
 
 --
@@ -4421,6 +4424,7 @@ CREATE INDEX index_saved_searches_on_searcher_type_and_searcher_id ON public.sav
 CREATE INDEX index_screenshots_on_team_submission_id ON public.screenshots USING btree (team_submission_id);
 
 
+
 --
 -- Name: index_security_events_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
@@ -4748,6 +4752,7 @@ ALTER TABLE ONLY public.judge_profiles
     ADD CONSTRAINT fk_rails_185397937b FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
 
 
+
 --
 -- Name: security_events fk_rails_1caeb58970; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
@@ -4778,6 +4783,7 @@ ALTER TABLE ONLY public.judge_profile_judge_types
 
 ALTER TABLE ONLY public.regional_pitch_events_teams
     ADD CONSTRAINT fk_rails_24f0c96e18 FOREIGN KEY (team_id) REFERENCES public.teams(id);
+
 
 
 --
