@@ -1836,4 +1836,18 @@ RSpec.describe Account do
       end
     end
   end
+
+  describe "timezone normalization" do
+    it "stores a canonical timezone when saving a deprecated identifier" do
+      account = FactoryBot.create(:account, timezone: "Europe/Kiev")
+
+      expect(account.reload.timezone).to eq("Europe/Kyiv")
+    end
+
+    it "leaves a valid timezone unchanged" do
+      account = FactoryBot.create(:account, timezone: "America/Chicago")
+
+      expect(account.reload.timezone).to eq("America/Chicago")
+    end
+  end
 end

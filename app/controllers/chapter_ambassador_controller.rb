@@ -27,7 +27,7 @@ class ChapterAmbassadorController < ApplicationController
   private
 
   def set_time_zone(&block)
-    Time.use_zone(current_ambassador.timezone, &block)
+    Time.use_zone(TimeZoneNormalization.normalize(current_ambassador.timezone), &block)
   end
 
   def current_profile
