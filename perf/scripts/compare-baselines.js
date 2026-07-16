@@ -18,6 +18,7 @@ console.log("")
 
 compareRoleFiles(baselineA, baselineB)
 compareBundles(baselineA, baselineB)
+compareLayouts(baselineA, baselineB)
 
 function compareRoleFiles(dirA, dirB) {
   const roles = [
@@ -77,6 +78,46 @@ function compareBundles(dirA, dirB) {
   for (const pack of packs) {
     printDelta("  ", pack, "KB", a[pack] ?? 0, b[pack] ?? 0, true)
   }
+}
+
+function compareLayouts(dirA, dirB) {
+  const fileA = path.join(dirA, "bundles.json")
+  const fileB = path.join(dirB, "bundles.json")
+  if (!fs.existsSync(fileA) || !fs.existsSync(fileB)) {
+    console.log("[layouts] missing bundles.json in one baseline — skip")
+    return
+  }
+
+  const layoutsA = JSON.parse(fs.readFileSync(fileA, "utf8")).layouts
+  const layoutsB = JSON.parse(fs.readFileSync(fileB, "utf8")).layouts
+
+  if (!layoutsA || !layoutsB) {
+    console.log("[layouts] missing layouts in one baseline — skip")
+    return
+  }
+
+  const layouts = [...new Set([...Object.keys(layoutsA), ...Object.keys(layoutsB)])].sort()
+
+  console.log("[layouts] transferred gzip KB")
+  for (const layout of layouts) {
+    printDelta(
+      "  ",
+      layout,
+      "gzip KB",
+      layoutsA[layout]?.total_gzip_kb ?? 0,
+      layoutsB[layout]?.total_gzip_kb ?? 0,
+      true
+    )
+    printDelta(
+      "  ",
+      layout,
+      "raw KB",
+      layoutsA[layout]?.total_kb ?? 0,
+      layoutsB[layout]?.total_kb ?? 0,
+      true
+    )
+  }
+  console.log("")
 }
 
 function printDelta(prefix, label, metric, before, after, lowerIsBetter = false) {
