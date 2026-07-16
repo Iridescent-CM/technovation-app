@@ -42,6 +42,13 @@ class Account < ActiveRecord::Base
   has_one :chapter_ambassador_profile, dependent: :destroy
   has_one :club_ambassador_profile, dependent: :destroy
 
+  has_many :security_events, dependent: :nullify
+  has_many :acted_security_events,
+    class_name: "SecurityEvent",
+    foreign_key: :actor_account_id,
+    dependent: :nullify,
+    inverse_of: :actor_account
+
   accepts_nested_attributes_for :chapter_ambassador_profile, :mentor_profile, :judge_profile
 
   ChapterAmbassadorProfile.statuses.keys.each do |status|
@@ -604,11 +611,20 @@ class Account < ActiveRecord::Base
     true
   end
 
-  def register_failed_attempt!
+  def register_failed_attempt!(request: nil)
     new_count = failed_attempts + 1
     attrs = {failed_attempts: new_count}
-    attrs[:locked_at] = Time.current if new_count >= MAX_FAILED_ATTEMPTS
+    locking = new_count >= MAX_FAILED_ATTEMPTS
+    attrs[:locked_at] = Time.current if locking
     update!(attrs)
+
+    if locking
+      SecurityEventLogger.log(
+        event_type: "login.lockout",
+        account: self,
+        request: request
+      )
+    end
   end
 
   def reset_failed_attempts!

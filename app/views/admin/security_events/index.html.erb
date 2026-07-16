@@ -1,0 +1,7 @@
+<% provide :title, "Admin • Security Events" %>
+
+<%= render 'datagrid/datagrid',
+  grid: @security_events_grid,
+  form_url: admin_security_events_path,
+  model_name: "security events",
+  scope: :admin %>

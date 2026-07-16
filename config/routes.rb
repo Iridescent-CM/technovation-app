@@ -434,6 +434,8 @@ Rails.application.routes.draw do
       patch :void
     end
 
+    resources :security_events, only: :index
+
     resources :events,
       controller: :regional_pitch_events,
       only: [:index, :show, :edit, :update] do
