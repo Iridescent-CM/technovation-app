@@ -11,7 +11,11 @@ class Password
   attr_reader :account
 
   validates :email, exists: true
-  validate :valid_password
+  validates :password,
+    length: {minimum: 8, if: :resetting}
+  validates :password,
+    password_complexity: {if: :resetting}
+  validate :password_confirmation_matches, if: :resetting
   validate :not_expired
 
   def initialize(attrs = {})
@@ -50,10 +54,8 @@ class Password
     end
   end
 
-  def valid_password
-    if !!resetting and password.to_s.length < 8
-      errors.add(:password, :too_short, count: 8)
-    elsif !!resetting and password != password_confirmation
+  def password_confirmation_matches
+    if password != password_confirmation
       errors.add(:password_confirmation, :doesnt_match)
     end
   end

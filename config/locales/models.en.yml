@@ -13,7 +13,7 @@ en:
       geocoded: "Postal code -OR- City & State/Province"
       gender: "Gender identity"
       password: "Create a password"
-      password_hint: "Use 8 characters or more"
+      password_hint: "Use 8+ characters with uppercase, lowercase, and a number"
       phone_number: "Phone Number"
       referred_by: "How did you hear about Technovation?"
       referred_by_other: "Please specify"

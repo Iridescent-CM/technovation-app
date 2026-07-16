@@ -651,6 +651,11 @@ class Account < ActiveRecord::Base
       if: -> { not_admin? && public_registration? }
     }
 
+  validates :password,
+    password_complexity: true,
+    on: :create,
+    if: -> { not_admin? && public_registration? && !inviting_new_admin }
+
   validates :terms_agreed_at,
     presence: true,
     on: :create,
@@ -664,11 +669,21 @@ class Account < ActiveRecord::Base
     }
 
   validates :password,
+    password_complexity: true,
+    on: :update,
+    if: -> { not_admin? && changing_password_or_temporary_password? && !inviting_new_admin }
+
+  validates :password,
     length: {
       minimum: 20,
       on: :update,
       if: -> { !full_admin? && !not_admin? }
     }
+
+  validates :password,
+    password_complexity: true,
+    on: :update,
+    if: -> { !full_admin? && !not_admin? && !inviting_new_admin }
 
   validates :first_name, :last_name,
     presence: true,

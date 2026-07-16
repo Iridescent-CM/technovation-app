@@ -12,7 +12,7 @@ module SigninHelper
 
     within "#new_account" do
       fill_in "Email", with: signin.email
-      fill_in "Password", with: signin.account.password || "secret1234"
+      fill_in "Password", with: signin.account.password || PasswordHelpers::VALID_PASSWORD
 
       click_button "Sign in"
     end

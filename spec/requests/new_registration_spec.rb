@@ -11,7 +11,7 @@ RSpec.describe "New registration", type: :request do
         dateOfBirth: date_of_birth,
         gender: "Non-binary",
         email: "personxyz@example.com",
-        password: "12345678",
+        password: PasswordHelpers::VALID_PASSWORD,
         dataTermsAgreedTo: true,
         studentParentGuardianName: "Mursmiss Parentente",
         studentParentGuardianEmail: "mrmsparents@example.com",

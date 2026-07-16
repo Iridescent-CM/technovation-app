@@ -6,7 +6,7 @@
       id="password"
       v-model="password"
       autocomplete="new-password"
-      placeholder="Use at least 8 characters"
+      placeholder="8+ chars with upper, lower, and a number"
       name="account[password]"
       :toggle="true"
       :secure-length="8"
@@ -21,6 +21,8 @@
 
 <script>
 import Password from "vue-password-strength-meter";
+
+import { passwordMeetsComplexity } from "../../helpers/passwordComplexity";
 
 export default {
   name: "PasswordValidation",
@@ -45,7 +47,7 @@ export default {
 
   computed: {
     nextStepEnabled() {
-      return this.password.length >= 8;
+      return passwordMeetsComplexity(this.password);
     },
 
     strengthNextStepMsg() {
