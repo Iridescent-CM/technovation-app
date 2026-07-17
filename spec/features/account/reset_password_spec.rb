@@ -119,7 +119,7 @@ RSpec.feature "Reset your forgotten password" do
     visit signin_path
 
     fill_in "Email", with: account.email
-    fill_in "Password", with: "GreatNewSecret1"
+    fill_in_signin_password("GreatNewSecret1")
     click_button "Sign in"
     expect(current_path).to eq(
       send("#{account.scope_name.sub(/^\w+_chapter_ambassador/, "chapter_ambassador")}_dashboard_path")

@@ -22,6 +22,9 @@ application.register("modal", ModalController);
 import SearchController from "./search_controller";
 application.register("search", SearchController);
 
+import SigninFormController from "./signin_form_controller";
+application.register("signin-form", SigninFormController);
+
 import Students__ParentalConsentContactToggleController from "./students/parental_consent_contact_toggle_controller";
 application.register(
   "students--parental-consent-contact-toggle",
