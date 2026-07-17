@@ -201,6 +201,7 @@
 import LocationResult from "../models/LocationResult";
 import HttpStatusCodes from "../../constants/HttpStatusCodes";
 import Swal from "sweetalert2";
+import { notifyApiError } from "utilities/apiErrorHandler";
 
 export default {
   props: {
@@ -453,11 +454,19 @@ export default {
       this.state = this.value.state;
       this.country = this.value.country;
     } else {
-      window.axios.get(this.getCurrentLocationEndpoint).then(({ data }) => {
-        this.city = data.city;
-        this.state = data.state;
-        this.country = data.country;
-      });
+      window.axios
+        .get(this.getCurrentLocationEndpoint)
+        .then(({ data }) => {
+          this.city = data.city;
+          this.state = data.state;
+          this.country = data.country;
+        })
+        .catch((error) =>
+          notifyApiError({
+            error,
+            context: "[REGISTRATION] Error loading current location",
+          })
+        );
     }
   },
 
@@ -500,8 +509,11 @@ export default {
         .then(() => {
           this.handleConfirm();
         })
-        .catch((err) => {
-          console.error(err);
+        .catch((error) => {
+          notifyApiError({
+            error,
+            context: "[REGISTRATION] Error saving location",
+          });
         });
     },
 

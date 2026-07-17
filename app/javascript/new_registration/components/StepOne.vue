@@ -62,7 +62,7 @@
 <script>
 import axios from "axios";
 
-import { airbrake } from "utilities/utilities";
+import { notifyApiError } from "utilities/apiErrorHandler";
 import ContainerHeader from "./ContainerHeader";
 import NextButton from "./NextButton";
 import { divisionCutoffDateFormatted } from "../../utilities/technovation-dates.js";
@@ -137,8 +137,9 @@ export default {
         this.successMessage = response.data.successMessage;
         this.errorMessage = response.data.errorMessage;
       } catch (error) {
-        airbrake.notify({
-          error: `[REGISTRATION] Error getting registration settings - ${error.response.data}`,
+        notifyApiError({
+          error,
+          context: "[REGISTRATION] Error getting registration settings",
         });
       }
     },
@@ -210,8 +211,9 @@ export default {
         // eslint-disable-next-line vue/no-mutating-props
         this.formValues.email = response.data.email;
       } catch (error) {
-        airbrake.notify({
-          error: `[REGISTRATION] Error getting user invitation email - ${error.response.data}`,
+        notifyApiError({
+          error,
+          context: "[REGISTRATION] Error getting user invitation email",
         });
       }
     },

@@ -1,3 +1,5 @@
+import Chart from "chart.js";
+
 Chart.defaults.global.defaultFontFamily = "sans-serif";
 
 Chart.plugins.register({

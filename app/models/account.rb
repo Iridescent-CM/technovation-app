@@ -626,6 +626,8 @@ class Account < ActiveRecord::Base
     end
   }
 
+  before_save :normalize_timezone, if: :will_save_change_to_timezone?
+
   before_create do
     self.email_confirmed_at = Time.current
     self.icon_path = ActionController::Base.helpers.asset_path("placeholders/avatars/#{rand(1..24)}.svg")
@@ -1343,5 +1345,10 @@ class Account < ActiveRecord::Base
 
       AccountMailer.chapterable_assigned(self).deliver_later
     end
+  end
+
+  def normalize_timezone
+    normalized = TimeZoneNormalization.normalize(timezone)
+    self.timezone = normalized if normalized.present?
   end
 end

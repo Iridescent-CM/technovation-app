@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import * as filestack from "filestack-js";
 export default {
   name: "ScreenshotUploader",
 
@@ -127,7 +126,10 @@ export default {
   },
 
   methods: {
-    uploadFile() {
+    async uploadFile() {
+      const filestack = await import(
+        /* webpackChunkName: "filestack" */ "filestack-js"
+      );
       const client = filestack.init(process.env.FILESTACK_API_KEY);
       const TWO_MB_FILE_SIZE = 2 * 1024 * 1024;
 
