@@ -1,4 +1,4 @@
-import { airbrake } from "utilities/utilities";
+import { notifyApiError } from "utilities/apiErrorHandler";
 
 export const setComment = (state, commentData) => {
   const originalComment = state.score.comments[commentData.sectionName];
@@ -41,10 +41,13 @@ export const saveComment = (state, sectionName) => {
     success: (_resp) => {
       // Verify the resp here
     },
-    error: (jqXHR, textStatus, errorThrown) => {
-      airbrake.notify({
+    error: (jqXHR, _textStatus, errorThrown) => {
+      notifyApiError({
         error: errorThrown,
-        params: { jqXHR, textStatus, errorThrown },
+        jqXHR,
+        context: "[JUDGING] Error saving score comment",
+        userMessage:
+          "We couldn't save your comment. Please check your connection and try again.",
       });
     },
   });
@@ -70,10 +73,13 @@ export const updateScores = (state, qData) => {
       question.score = qData.score;
     },
 
-    error: (jqXHR, textStatus, errorThrown) => {
-      airbrake.notify({
+    error: (jqXHR, _textStatus, errorThrown) => {
+      notifyApiError({
         error: errorThrown,
-        params: { jqXHR, textStatus, errorThrown },
+        jqXHR,
+        context: "[JUDGING] Error saving score",
+        userMessage:
+          "We couldn't save your score. Please check your connection and try again.",
       });
     },
   });

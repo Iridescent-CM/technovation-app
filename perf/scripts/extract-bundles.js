@@ -132,15 +132,24 @@ function computeLayouts(stats, assetSizeByName, outputDir) {
 }
 
 function gzipSizeForAsset(assetName, outputDir) {
-  const filePath = path.join(outputDir, assetName)
-  if (!fs.existsSync(filePath)) return 0
+  // Webpack emits packs under public/packs/js|css/; fixtures may use a flat dir.
+  const candidates = [
+    path.join(outputDir, assetName),
+    path.join(outputDir, "js", assetName),
+    path.join(outputDir, "css", assetName)
+  ]
 
-  try {
-    const content = fs.readFileSync(filePath)
-    return zlib.gzipSync(content).length
-  } catch {
-    return 0
+  for (const filePath of candidates) {
+    if (!fs.existsSync(filePath)) continue
+
+    try {
+      return zlib.gzipSync(fs.readFileSync(filePath)).length
+    } catch {
+      return 0
+    }
   }
+
+  return 0
 }
 
 function packFromAssetName(name) {

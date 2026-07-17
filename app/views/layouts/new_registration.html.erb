@@ -27,6 +27,15 @@
   </head>
 
   <body>
+    <div id="flash">
+      <% flash.each do |type, message| %>
+        <div class="flash flash--<%= type %>">
+          <span><%= message.html_safe %></span>
+          <span class="icon-close"></span>
+        </div>
+      <% end %>
+    </div>
+
     <%= yield %>
 
     <% if ENV.fetch("GOOGLE_ANALYTICS_ID", nil).present? && cookies[CookieNames::CONSENTED_TO_ALL_COOKIES] == "true" %>

@@ -1,3 +1,7 @@
+<% content_for :notifications do %>
+  <%= render "application/pardon_our_dust_banner" %>
+<% end %>
+
 <% if !current_judge.email_confirmed? %>
   <%= render "completion_steps/rebrand/confirm_changed_email", profile: current_judge %>
 <% else %>

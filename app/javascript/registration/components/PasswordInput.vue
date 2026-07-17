@@ -20,15 +20,16 @@
 </template>
 
 <script>
-import Password from "vue-password-strength-meter";
-
 import { passwordMeetsComplexity } from "../../helpers/passwordComplexity";
 
 export default {
   name: "PasswordValidation",
 
   components: {
-    Password,
+    Password: () =>
+      import(
+        /* webpackChunkName: "password-meter" */ "vue-password-strength-meter"
+      ),
   },
 
   props: {

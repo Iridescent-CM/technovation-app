@@ -57,6 +57,23 @@ RSpec.describe RegionalPitchEvent do
     end
   end
 
+  describe "date and time formatting with deprecated ambassador timezone" do
+    let(:rpe) { FactoryBot.create(:rpe) }
+
+    before do
+      rpe.ambassador.account.update_column(:timezone, "America/Buenos_Aires")
+      allow(Time).to receive(:find_zone).and_call_original
+      allow(Time).to receive(:find_zone).with("America/Buenos_Aires").and_return(nil)
+    end
+
+    it "does not raise when formatting event dates" do
+      expect { rpe.date_time }.not_to raise_error
+      expect { rpe.day }.not_to raise_error
+      expect { rpe.date }.not_to raise_error
+      expect { rpe.time }.not_to raise_error
+    end
+  end
+
   describe "regioning" do
     it "works with primary region searches" do
       chapter_ambassador = FactoryBot.create(:ambassador, :chicago)

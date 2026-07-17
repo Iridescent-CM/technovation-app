@@ -7,6 +7,9 @@ import { application } from "./application";
 import DateFieldsController from "./date_fields_controller";
 application.register("date-fields", DateFieldsController);
 
+import DismissibleBannerController from "./dismissible_banner_controller";
+application.register("dismissible-banner", DismissibleBannerController);
+
 import LanguageSelectorController from "./language_selector_controller";
 application.register("language-selector", LanguageSelectorController);
 
@@ -18,6 +21,9 @@ application.register("modal", ModalController);
 
 import SearchController from "./search_controller";
 application.register("search", SearchController);
+
+import SigninFormController from "./signin_form_controller";
+application.register("signin-form", SigninFormController);
 
 import Students__ParentalConsentContactToggleController from "./students/parental_consent_contact_toggle_controller";
 application.register(

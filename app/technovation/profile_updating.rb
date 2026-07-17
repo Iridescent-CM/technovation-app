@@ -64,14 +64,16 @@ class ProfileUpdating
   def perform_chapter_ambassador_updates
     if account.timezone.blank? && account.valid_coordinates?
       timezone_name = Timezone.lookup(*account.coordinates).name
-      account.update_column(:timezone, timezone_name)
+      normalized = TimeZoneNormalization.normalize(timezone_name)
+      account.update_column(:timezone, normalized) if normalized.present?
     end
   end
 
   def perform_club_ambassador_updates
     if account.timezone.blank? && account.valid_coordinates?
       timezone_name = Timezone.lookup(*account.coordinates).name
-      account.update_column(:timezone, timezone_name)
+      normalized = TimeZoneNormalization.normalize(timezone_name)
+      account.update_column(:timezone, normalized) if normalized.present?
     end
   end
 
