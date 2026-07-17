@@ -170,6 +170,15 @@ RSpec.describe SigninsController do
       expect(student.account.reload.locked_at).to be_nil
     end
 
+    it "records a logout security event" do
+      student = FactoryBot.create(:student)
+      sign_in(student)
+
+      expect {
+        delete :destroy
+      }.to change { SecurityEvent.where(event_type: "logout").count }.by(1)
+    end
+
     context "REDIRECTED_FROM cookie" do
       it "ignores a stale JSON redirect and routes to the judge dashboard" do
         judge = FactoryBot.create(:judge)
