@@ -11,11 +11,7 @@
 </template>
 
 <script>
-import Chart from "chart.js";
-import chroma from "chroma-js";
-
 import AppIcon from "./AppIcon.vue";
-import "../utilities/chartjs-plugins";
 import { isEmptyObject } from "../utilities/utilities";
 
 export default {
@@ -81,17 +77,33 @@ export default {
   },
 
   mounted() {
-    if (this.url !== "" && this.isEmptyObject(this.chartData)) {
-      window.axios.get(this.url).then((response) => {
-        this.initializeChart(response.data.data.attributes);
-      });
-    } else {
-      this.initializeChart(this.chartData);
-    }
+    this.loadChartLibraries().then(() => {
+      if (this.url !== "" && this.isEmptyObject(this.chartData)) {
+        window.axios.get(this.url).then((response) => {
+          this.initializeChart(response.data.data.attributes);
+        });
+      } else {
+        this.initializeChart(this.chartData);
+      }
+    });
   },
 
   methods: {
     isEmptyObject,
+
+    async loadChartLibraries() {
+      const [chartModule, chromaModule] = await Promise.all([
+        import(/* webpackChunkName: "chartjs" */ "chart.js"),
+        import(/* webpackChunkName: "chartjs" */ "chroma-js"),
+      ]);
+
+      await import(
+        /* webpackChunkName: "chartjs" */ "../utilities/chartjs-plugins"
+      );
+
+      this.Chart = chartModule.default;
+      this.chroma = chromaModule.default;
+    },
 
     initializeChart(chartData) {
       if (this.chart !== null) {
@@ -105,7 +117,7 @@ export default {
 
       const extendedChartData = Object.assign({}, chartData, backgroundColors);
 
-      this.chart = new Chart(chartContext, {
+      this.chart = new this.Chart(chartContext, {
         type: "pie",
         data: {
           labels: extendedChartData.labels,
@@ -151,7 +163,7 @@ export default {
     },
 
     generateBackgroundColors(numberOfColors) {
-      const colorScale = chroma
+      const colorScale = this.chroma
         .scale([this.colorRange.start, this.colorRange.end])
         .mode("hsv")
         .colors(numberOfColors);
@@ -162,13 +174,13 @@ export default {
       };
 
       colorScale.forEach((color) => {
-        const hoverColorString = `rgba(${chroma(color)
+        const hoverColorString = `rgba(${this.chroma(color)
           .alpha(1)
           .rgba()
           .join(",")})`;
         backgroundColors.hoverBackgroundColor.push(hoverColorString);
 
-        const colorString = `rgba(${chroma(color)
+        const colorString = `rgba(${this.chroma(color)
           .alpha(0.7)
           .rgba()
           .join(",")})`;
