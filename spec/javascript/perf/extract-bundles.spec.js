@@ -125,6 +125,21 @@ describe("extract-bundles", () => {
     expect(application.js_gzip_kb).toBeLessThan(application.js_kb);
   });
 
+  it("resolves gzip sizes from public/packs/js and css subdirectories", () => {
+    tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "extract-bundles-"));
+    const repeated = "console.log('bundle optimization measurement');\n".repeat(
+      200
+    );
+    writeAsset("js/application.js", repeated);
+    writeAsset("js/vendors-abc123.js", repeated);
+
+    const output = runExtract();
+    const application = output.layouts.application;
+
+    expect(application.total_gzip_kb).toBeGreaterThan(0);
+    expect(application.total_gzip_kb).toBeLessThan(application.total_kb);
+  });
+
   it("writes bundles.json when outputPath is provided", () => {
     tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "extract-bundles-"));
     const outPath = path.join(tempDir, "bundles.json");
