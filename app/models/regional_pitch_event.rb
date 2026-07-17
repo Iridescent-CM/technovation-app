@@ -179,25 +179,25 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   def date_time
-    [starts_at.in_time_zone(timezone).strftime("%a %b %e, %-I:%M%P"),
+    [starts_at.in_time_zone(safe_timezone).strftime("%a %b %e, %-I:%M%P"),
       "-",
-      ends_at.in_time_zone(timezone).strftime("%-I:%M%P"),
+      ends_at.in_time_zone(safe_timezone).strftime("%-I:%M%P"),
       "TZ:",
       ambassador.timezone].join(" ")
   end
 
   def day
-    starts_at.in_time_zone(timezone).strftime("%A")
+    starts_at.in_time_zone(safe_timezone).strftime("%A")
   end
 
   def date
-    starts_at.in_time_zone(timezone).strftime("%B %e")
+    starts_at.in_time_zone(safe_timezone).strftime("%B %e")
   end
 
   def time
-    [starts_at.in_time_zone(timezone).strftime("%-k:%M"),
+    [starts_at.in_time_zone(safe_timezone).strftime("%-k:%M"),
       "-",
-      ends_at.in_time_zone(timezone).strftime("%-k:%M")].join(" ")
+      ends_at.in_time_zone(safe_timezone).strftime("%-k:%M")].join(" ")
   end
 
   def live?
@@ -238,6 +238,10 @@ class RegionalPitchEvent < ActiveRecord::Base
   end
 
   private
+
+  def safe_timezone
+    TimeZoneNormalization.normalize(timezone) || Rails.configuration.time_zone
+  end
 
   def starts_at_within_rpe_date_range
     rpe_start_date = ImportantDates.rpe_start_date.strftime("%B %e")

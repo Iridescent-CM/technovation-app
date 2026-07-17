@@ -30,7 +30,7 @@ class AmbassadorController < ApplicationController
   private
 
   def set_time_zone(&)
-    Time.use_zone(current_ambassador.timezone, &)
+    Time.use_zone(TimeZoneNormalization.normalize(current_ambassador.timezone), &)
   end
 
   def current_ambassador
