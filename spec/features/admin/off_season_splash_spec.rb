@@ -16,5 +16,16 @@ RSpec.feature "Off-season splash page" do
     visit root_path
     expect(page).not_to have_css("#registration-landing")
     expect(page).to have_content("Registration is currently closed")
+    expect(page).to have_content("Thanks for your interest in Technovation Challenge!")
+    expect(page).to have_content("Registration for Technovation Challenge will open again by October")
+    expect(page).to have_link("sign up", href: "https://eepurl.com/hZMS2n")
+    expect(page).to have_link(
+      "curriculum",
+      href: "https://technovationchallenge.org/curriculum-intro/registered/new/"
+    )
+    expect(page).to have_content("Join our community:")
+    expect(page).to have_link("Facebook", href: "https://www.facebook.com/technovationglobal")
+    expect(page).to have_content("Let's build a better world together!")
+    expect(page).not_to have_content("July 12 and Sept 1")
   end
 end

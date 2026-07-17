@@ -27,7 +27,7 @@ If you also have copies in `~/.cursor/skills/`, the repo bundle is the team sour
 | `code-review` | 6 | Reviews the diff (StandardRB, Brakeman, RSpec) |
 | `verify-fix-evidence` | 7 | Captures before/after screenshots and action GIFs per AC |
 | `commit-issue` | 9 | Commits with Conventional Commits messages |
-| `push-pr-issue` | 10 | Pushes the branch and opens a PR |
+| `push-pr-issue` | 10 | Pushes the branch, opens a PR, embeds verification screenshots by default |
 
 ```mermaid
 flowchart LR
@@ -47,6 +47,7 @@ Install these before running `ship #N`:
 |---|---|---|
 | **Cursor** with Agent mode | Yes | — |
 | **`gh` CLI** (authenticated) | Yes | `brew install gh && gh auth login` |
+| **`gh-image` extension** | For PR proof embeds | `gh extension install drogers0/gh-image` |
 | **Rails dev env** (bundle, RSpec) | Yes | `bundle install` |
 | **Local app running** | For UI fixes | `bin/rails server` (default port 3000) |
 | **`gifski` or `ffmpeg`** | Optional | `brew install gifski` or `brew install ffmpeg` |
