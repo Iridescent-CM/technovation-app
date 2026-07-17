@@ -21,7 +21,7 @@ RSpec.describe "New registration validation", type: :request do
   end
   let(:profile_type) { "student" }
   let(:date_of_birth) { (Division.cutoff_date - 15.years).to_s }
-  let(:password) { "12345678" }
+  let(:password) { PasswordHelpers::VALID_PASSWORD }
   let(:data_terms_agreed_to) { true }
 
   before do
@@ -91,6 +91,17 @@ RSpec.describe "New registration validation", type: :request do
 
     context "with a password shorter than 8 characters" do
       let(:password) { "short" }
+
+      it "returns unprocessable entity" do
+        register
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)["full_error_messages"].join).to match(/password/i)
+      end
+    end
+
+    context "with a password that does not meet complexity requirements" do
+      let(:password) { "12345678" }
 
       it "returns unprocessable entity" do
         register

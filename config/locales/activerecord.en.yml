@@ -8,6 +8,11 @@ en:
               not_found: "wasn't found in our database"
             expires_at:
               expired: "has expired"
+            password:
+              missing_uppercase: "must include at least one uppercase letter"
+              missing_lowercase: "must include at least one lowercase letter"
+              missing_digit: "must include at least one number"
+              contains_email_local_part: "cannot contain your email username"
             password_confirmation:
               doesnt_match: "does not match"
 
@@ -30,6 +35,11 @@ en:
             existing_password:
               blank: "is required to change your email address or password"
               invalid: "is incorrect"
+            password:
+              missing_uppercase: "must include at least one uppercase letter"
+              missing_lowercase: "must include at least one lowercase letter"
+              missing_digit: "must include at least one number"
+              contains_email_local_part: "cannot contain your email username"
 
         mentor_invite:
           attributes:

@@ -6,7 +6,7 @@ FactoryBot.define do
     trait :inviting do
       admin_status { :temporary_password }
       skip_existing_password { true }
-      password { SecureRandom.hex(10) }
+      password { PasswordHelpers::VALID_ADMIN_PASSWORD }
     end
 
     trait :super_admin do

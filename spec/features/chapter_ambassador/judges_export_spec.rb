@@ -10,7 +10,7 @@ RSpec.describe "/chapter_ambassador/judges", type: :request do
       post "/signins", params: {
         account: {
           email: chapter_ambassador.email,
-          password: "secret1234"
+          password: PasswordHelpers::VALID_PASSWORD
         }
       }
 
@@ -65,7 +65,7 @@ RSpec.describe "/chapter_ambassador/judges", type: :request do
       post "/signins", params: {
         account: {
           email: chapter_ambassador.email,
-          password: "secret1234"
+          password: PasswordHelpers::VALID_PASSWORD
         }
       }
 

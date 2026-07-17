@@ -10,7 +10,7 @@ RSpec.describe "/admin/judges", type: :request do
       post "/signins", params: {
         account: {
           email: admin.email,
-          password: "secret1234"
+          password: PasswordHelpers::VALID_PASSWORD
         }
       }
 
@@ -47,7 +47,7 @@ RSpec.describe "/admin/judges", type: :request do
       post "/signins", params: {
         account: {
           email: admin.email,
-          password: "secret1234"
+          password: PasswordHelpers::VALID_PASSWORD
         }
       }
 

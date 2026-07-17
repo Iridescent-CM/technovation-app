@@ -626,6 +626,8 @@ class Account < ActiveRecord::Base
     end
   }
 
+  before_save :normalize_timezone, if: :will_save_change_to_timezone?
+
   before_create do
     self.email_confirmed_at = Time.current
     self.icon_path = ActionController::Base.helpers.asset_path("placeholders/avatars/#{rand(1..24)}.svg")
@@ -651,6 +653,11 @@ class Account < ActiveRecord::Base
       if: -> { not_admin? && public_registration? }
     }
 
+  validates :password,
+    password_complexity: true,
+    on: :create,
+    if: -> { not_admin? && public_registration? && !inviting_new_admin }
+
   validates :terms_agreed_at,
     presence: true,
     on: :create,
@@ -664,11 +671,21 @@ class Account < ActiveRecord::Base
     }
 
   validates :password,
+    password_complexity: true,
+    on: :update,
+    if: -> { not_admin? && changing_password_or_temporary_password? && !inviting_new_admin }
+
+  validates :password,
     length: {
       minimum: 20,
       on: :update,
       if: -> { !full_admin? && !not_admin? }
     }
+
+  validates :password,
+    password_complexity: true,
+    on: :update,
+    if: -> { !full_admin? && !not_admin? && !inviting_new_admin }
 
   validates :first_name, :last_name,
     presence: true,
@@ -1328,5 +1345,10 @@ class Account < ActiveRecord::Base
 
       AccountMailer.chapterable_assigned(self).deliver_later
     end
+  end
+
+  def normalize_timezone
+    normalized = TimeZoneNormalization.normalize(timezone)
+    self.timezone = normalized if normalized.present?
   end
 end

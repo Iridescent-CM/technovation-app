@@ -28,7 +28,7 @@ RSpec.describe NewRegistrationController do
             chapterAmbassadorJobTitle: "Curator",
             chapterAmbassadorBio: "We live inside a treehouse at the center of the museum, we have been protecting the museum's secrets for generations. We making sure that everyone is safe and happy – without the outside world learning about the museum's secrets.",
             dataTermsAgreedTo: true,
-            password: "123abc*&^"
+            password: PasswordHelpers::VALID_PASSWORD
           }
         }
       end
@@ -66,7 +66,7 @@ RSpec.describe NewRegistrationController do
             meetsMinimumAgeRequirement: true,
             clubAmbassadorJobTitle: "Chef",
             dataTermsAgreedTo: true,
-            password: "123abc*&^"
+            password: PasswordHelpers::VALID_PASSWORD
           }
         }
       end

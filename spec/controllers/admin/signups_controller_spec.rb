@@ -23,7 +23,7 @@ RSpec.describe Admin::SignupsController do
 
       sign_in(student)
 
-      patch :update, params: {account: {password: SecureRandom.hex(10)}}
+      patch :update, params: {account: {password: PasswordHelpers::VALID_ADMIN_PASSWORD}}
       expect(response).to redirect_to(root_path)
     end
 
@@ -33,11 +33,11 @@ RSpec.describe Admin::SignupsController do
 
       sign_in(admin)
 
-      patch :update, params: {account: {password: SecureRandom.hex(9)}}
+      patch :update, params: {account: {password: "abcdefghijabcdefghij"}}
       expect(response).to render_template("admin/signups/new")
       expect(admin.reload.password_digest).to eq(password_digest)
 
-      patch :update, params: {account: {password: SecureRandom.hex(10)}}
+      patch :update, params: {account: {password: PasswordHelpers::VALID_ADMIN_PASSWORD}}
       expect(response).to redirect_to(admin_dashboard_path)
       expect(admin.reload.password_digest).not_to eq(password_digest)
     end
@@ -47,10 +47,10 @@ RSpec.describe Admin::SignupsController do
 
       sign_in(admin)
 
-      patch :update, params: {account: {password: SecureRandom.hex(9)}}
+      patch :update, params: {account: {password: "abcdefghijabcdefghij"}}
       expect(admin.reload.account).not_to be_full_admin
 
-      patch :update, params: {account: {password: SecureRandom.hex(10)}}
+      patch :update, params: {account: {password: PasswordHelpers::VALID_ADMIN_PASSWORD}}
       expect(response).to redirect_to(admin_dashboard_path)
       expect(admin.reload.account).to be_full_admin
     end
@@ -61,10 +61,10 @@ RSpec.describe Admin::SignupsController do
 
       sign_in(admin)
 
-      patch :update, params: {account: {password: SecureRandom.hex(9)}}
+      patch :update, params: {account: {password: "abcdefghijabcdefghij"}}
       expect(admin.reload.admin_invitation_token).to eq(invite_token)
 
-      patch :update, params: {account: {password: SecureRandom.hex(10)}}
+      patch :update, params: {account: {password: PasswordHelpers::VALID_ADMIN_PASSWORD}}
       expect(response).to redirect_to(admin_dashboard_path)
       expect(admin.reload.admin_invitation_token).not_to eq(invite_token)
     end

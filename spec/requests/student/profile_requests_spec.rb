@@ -104,7 +104,7 @@ RSpec.describe "Student Profile Requests", type: :request do
           student_profile: {
             account_attributes: {id: student_account.id,
                                  email: parent_guardian_email_address,
-                                 existing_password: "secret1234"}
+                                 existing_password: PasswordHelpers::VALID_PASSWORD}
           }
         }
       end
