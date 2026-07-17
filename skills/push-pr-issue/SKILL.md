@@ -15,7 +15,7 @@ When verification evidence exists locally, **embed proofs in the PR body by defa
 - There is at least one local commit to publish.
 - `gh` CLI is installed and authenticated.
 - Working tree is clean before pushing.
-- **`gh-image` extension** (for embedded screenshots/GIFs): `gh extension install drogers0/gh-image`. If missing, install once before Step 2; if install or upload fails, fall back to the release-asset method in Step 2 or note the gap in the PR body.
+- **`gh-image` extension** (for embedded screenshots/GIFs): `gh extension install drogers0/gh-image`. If missing, install once before Step 2; if install or upload fails, note the gap in the PR body (do not create GitHub releases for evidence).
 
 ## Inputs
 
@@ -83,7 +83,7 @@ git diff --stat origin/<base>...HEAD
 
 **Upload proofs for GitHub rendering** (local `tmp/` paths are not viewable in PR descriptions):
 
-Preferred in interactive dev (browser logged into GitHub) — `gh-image` (produces `user-attachments` URLs, same as drag-and-drop):
+Use `gh-image` only (produces `user-attachments` URLs, same as drag-and-drop). Do **not** create GitHub releases or release assets for evidence.
 
 ```bash
 gh extension install drogers0/gh-image   # once per machine
@@ -92,16 +92,7 @@ BEFORE_MD=$(gh image tmp/issue-<N>-<slug>/01-<context>-before.png)
 AFTER_MD=$(gh image tmp/issue-<N>-<slug>/01-<context>-after.png)
 ```
 
-If `gh image` hangs or errors (common without a browser session cookie), use the **release-asset fallback** instead — works with standard `gh auth login`:
-
-```bash
-TAG="pr-<N>-evidence-$(date +%s)"
-gh release create "$TAG" tmp/issue-<N>-<slug>/*.{png,gif} \
-  --title "PR #<N> verification evidence" \
-  --notes "Auto-generated evidence for PR review." \
-  --prerelease
-# Build markdown from .assets[].browser_download_url via gh api
-```
+If `gh-image` is unavailable or upload fails, omit embedded images and note that evidence exists locally under `tmp/issue-<N>-*/` but could not be uploaded. Never use `gh release create` for PR screenshots/GIFs.
 
 If no evidence directory exists, omit `## Evidence` — do not invent placeholders.
 
@@ -202,5 +193,6 @@ Mention how many proof images/GIFs were embedded.
 - Never use `--force`, `--force-with-lease`, or `--no-verify`.
 - Never rewrite git history.
 - Never create more than one PR per invocation.
-- **Never put bare `tmp/issue-...` paths in the PR body when uploadable PNG/GIF files exist** — embed via `gh image` or release-asset URLs.
+- **Never put bare `tmp/issue-...` paths in the PR body when uploadable PNG/GIF files exist** — embed via `gh image`.
+- **Never create GitHub releases or release assets for verification evidence.**
 - Do not commit evidence files to the repo solely for PR rendering unless the user explicitly requests that approach.
