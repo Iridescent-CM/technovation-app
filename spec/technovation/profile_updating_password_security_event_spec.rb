@@ -15,7 +15,7 @@ RSpec.describe ProfileUpdating do
           {
             account_attributes: {
               id: account.id,
-              existing_password: "secret1234",
+              existing_password: PasswordHelpers::VALID_PASSWORD,
               password: "AnotherSecret9"
             }
           },
