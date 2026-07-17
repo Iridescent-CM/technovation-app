@@ -14,6 +14,24 @@ vi.mock("axios", () => ({
   },
 }));
 
+const notifyApiError = vi.fn();
+
+vi.mock("utilities/apiErrorHandler", () => ({
+  notifyApiError: (...args) => notifyApiError(...args),
+}));
+
+const judgeStepTwoStubs = {
+  ContainerHeader: { template: "<h1><slot /></h1>" },
+  ReferredBy: true,
+  PreviousButton: { template: "<button type='button'>Back</button>" },
+  NextButton: {
+    props: ["disabled"],
+    template:
+      '<button type="button" class="next-button" :disabled="disabled">Next</button>',
+  },
+  FormulateInput: formulateInputStub,
+};
+
 async function mountJudgeStepTwo() {
   axios.get.mockResolvedValue({
     data: [{ id: 1, name: "Industry professional" }],
@@ -65,6 +83,7 @@ describe("JudgeStepTwo", () => {
   beforeEach(() => {
     document.body.innerHTML = "";
     vi.clearAllMocks();
+    notifyApiError.mockClear();
   });
 
   afterEach(() => {
@@ -76,6 +95,26 @@ describe("JudgeStepTwo", () => {
 
     expect(axios.get).toHaveBeenCalledWith("/api/registration/judge_types");
     expect(wrapper.vm.judgeTypeOptions).toHaveLength(1);
+  });
+
+  it("surfaces feedback and notifies Airbrake when judge types fail to load", async () => {
+    axios.get.mockRejectedValue(new Error("judge types unavailable"));
+
+    mountWithAttachTo(JudgeStepTwo, {
+      propsData: {
+        formValues: { profileType: "judge", email: "" },
+      },
+      stubs: judgeStepTwoStubs,
+    });
+
+    await Vue.nextTick();
+    await Vue.nextTick();
+
+    expect(notifyApiError).toHaveBeenCalledWith(
+      expect.objectContaining({
+        context: expect.stringMatching(/judge types/i),
+      })
+    );
   });
 
   it("keeps next disabled until required judge fields are complete", async () => {

@@ -64,6 +64,7 @@ import { createNamespacedHelpers } from "vuex";
 
 import AppIcon from "../../components/AppIcon";
 import debounce from "lodash/debounce";
+import { notifyApiError } from "utilities/apiErrorHandler";
 
 const { mapActions } = createNamespacedHelpers("registration");
 
@@ -174,8 +175,11 @@ export default {
             this.mailboxVerification = resp.mailboxVerification;
             this.emailIsTaken = resp.isTaken;
           })
-          .catch((err) => {
-            console.error(err);
+          .catch((error) => {
+            notifyApiError({
+              error,
+              context: "[REGISTRATION] Error validating email address",
+            });
           });
       });
     },
