@@ -135,7 +135,10 @@ en:
       create:
         success: "Hey! Welcome back!"
         error: "Sorry, we didn't recognize that name and password"
-        locked: "Too many failed sign-in attempts. Try again in 30 minutes."
+        error_with_attempts:
+          one: "Sorry, we didn't recognize that name and password. You have 1 attempt left before your account is locked for 30 minutes."
+          other: "Sorry, we didn't recognize that name and password. You have %{count} attempts left before your account is locked for 30 minutes."
+        locked: "Too many failed sign-in attempts. Try again in 30 minutes, or reset your password below."
       destroy:
         success: "You're signed out. See you next time!"
       new:

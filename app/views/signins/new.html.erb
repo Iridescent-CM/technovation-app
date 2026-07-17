@@ -6,10 +6,22 @@
 
 <div class="w-11/12 lg:w-1/2 mx-auto">
   <%= render layout: 'application/templates/dashboards/energetic_container', locals: { heading: t('views.signins.new.title')} do %>
-    <%= simple_form_for @signin, url: signins_path do |f| %>
+    <%= simple_form_for @signin,
+                        url: signins_path,
+                        html: {
+                          method: :post,
+                          data: { controller: "signin-form" }
+                        } do |f| %>
 
       <%= f.input :email, label_html: {class: 'tw-label'} %>
-      <%= f.input :password,label_html: {class: 'tw-label'} %>
+      <%= f.input :password,
+                  label_html: {class: 'tw-label'},
+                  input_html: {
+                    data: {
+                      signin_form_target: "password",
+                      action: "input->signin-form#syncSubmitState"
+                    }
+                  } %>
 
       <p>
         <%= check_box_tag :remember_me, '1', true %>
@@ -18,8 +30,11 @@
 
       <%= f.button :submit,
                    t('views.signins.form.signin'),
-                    data: { turbo: false },
-                   class: "tw-green-btn my-8 cursor-pointer" %>
+                   data: {
+                     turbo: false,
+                     signin_form_target: "submit"
+                   },
+                   class: "tw-green-btn my-8 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" %>
 
       <p>
         <%= t("controllers.signins.new.no_account") %>
@@ -28,7 +43,7 @@
                     class: "tw-link" %>
       </p>
 
-      <p>
+      <p class="<%= @highlight_password_reset ? 'rounded-md bg-yellow-50 border border-yellow-300 px-3 py-2 font-semibold' : nil %>">
         <%= t("controllers.password_resets.new.text") %>
         <%= link_to t("controllers.password_resets.new.link"),
                     new_password_reset_path,

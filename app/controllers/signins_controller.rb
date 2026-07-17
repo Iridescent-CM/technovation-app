@@ -7,26 +7,44 @@ class SigninsController < ApplicationController
   end
 
   def create
+    submitted_email = signin_params.fetch(:email)
+    submitted_password = signin_params.fetch(:password)
+
     @signin = Account.where(
       "lower(trim(both ' ' from replace(accounts.email, '.', ''))) = ?",
-      signin_params.fetch(:email).strip.downcase.delete(".")
+      submitted_email.strip.downcase.delete(".")
     ).first
 
     if @signin&.locked?
-      flash.now[:error] = t("controllers.signins.create.locked")
-      render :new
+      render_locked(submitted_email)
       return
     end
 
-    if !!@signin && !!@signin.authenticate(signin_params.fetch(:password))
+    if @signin.present? && submitted_password.present? && @signin.authenticate(submitted_password)
       SignIn.call(@signin, self, permanent: params[:remember_me] == "1")
-    else
-      account_for_failure = @signin
-      @signin = Account.new
-      account_for_failure&.register_failed_attempt!
-      flash.now[:error] = t("controllers.signins.create.error")
-      render :new
+      return
     end
+
+    if @signin.present? && submitted_password.present?
+      @signin.register_failed_attempt!
+
+      if @signin.locked?
+        render_locked(submitted_email)
+        return
+      end
+
+      remaining = Account::MAX_FAILED_ATTEMPTS - @signin.failed_attempts
+      flash.now[:error] = t(
+        "controllers.signins.create.error_with_attempts",
+        count: remaining
+      )
+      @highlight_password_reset = true
+    else
+      flash.now[:error] = t("controllers.signins.create.error")
+    end
+
+    @signin = Account.new(email: submitted_email)
+    render :new
   end
 
   def destroy
@@ -38,6 +56,13 @@ class SigninsController < ApplicationController
   end
 
   private
+
+  def render_locked(email)
+    flash.now[:error] = t("controllers.signins.create.locked")
+    @highlight_password_reset = true
+    @signin = Account.new(email: email)
+    render :new
+  end
 
   def signin_params
     params.require(:account).permit(:email, :password)

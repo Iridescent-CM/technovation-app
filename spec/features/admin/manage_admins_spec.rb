@@ -49,7 +49,7 @@ RSpec.feature "Manage admin accounts" do
     visit signin_path
 
     fill_in "Email", with: "joe@iridescentlearning.org"
-    fill_in "Password", with: password
+    fill_in_signin_password(password)
 
     click_button "Sign in"
 
