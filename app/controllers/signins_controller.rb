@@ -9,6 +9,7 @@ class SigninsController < ApplicationController
   def create
     submitted_email = signin_params.fetch(:email)
     submitted_password = signin_params.fetch(:password)
+    attempted_email = submitted_email.to_s.strip.downcase
 
     @signin = Account.where(
       "lower(trim(both ' ' from replace(accounts.email, '.', ''))) = ?",
@@ -26,20 +27,33 @@ class SigninsController < ApplicationController
     end
 
     if @signin.present? && submitted_password.present?
-      @signin.register_failed_attempt!
+      account_for_failure = @signin
+      account_for_failure.register_failed_attempt!(request: request)
+      SecurityEventLogger.log(
+        event_type: "login.failure",
+        account: account_for_failure,
+        request: request,
+        metadata: {email: attempted_email}
+      )
 
-      if @signin.locked?
+      if account_for_failure.locked?
         render_locked(submitted_email)
         return
       end
 
-      remaining = Account::MAX_FAILED_ATTEMPTS - @signin.failed_attempts
+      remaining = Account::MAX_FAILED_ATTEMPTS - account_for_failure.failed_attempts
       flash.now[:error] = t(
         "controllers.signins.create.error_with_attempts",
         count: remaining
       )
       @highlight_password_reset = true
     else
+      SecurityEventLogger.log(
+        event_type: "login.failure",
+        account: @signin,
+        request: request,
+        metadata: {email: attempted_email}
+      )
       flash.now[:error] = t("controllers.signins.create.error")
     end
 
@@ -48,6 +62,16 @@ class SigninsController < ApplicationController
   end
 
   def destroy
+    account = current_account
+    if account.present?
+      SecurityEventLogger.log(
+        event_type: "logout",
+        account: account,
+        actor: account,
+        request: request
+      )
+    end
+
     remove_cookie(CookieNames::AUTH_TOKEN)
     remove_cookie(CookieNames::SESSION_TOKEN)
     session.delete(:admin_account_id_performing_impersonation)

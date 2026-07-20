@@ -20,6 +20,12 @@ module Admin
       end
 
       if current_account.update(admin_password_params)
+        SecurityEventLogger.log(
+          event_type: "password.changed",
+          account: current_account,
+          actor: current_account,
+          request: request
+        )
         current_account.full_admin!
         current_account.regenerate_admin_invitation_token
         redirect_to admin_dashboard_path, success: "Welcome to Technovation Admin"

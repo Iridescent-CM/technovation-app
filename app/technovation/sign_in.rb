@@ -2,6 +2,13 @@ module SignIn
   def self.call(signin, context, options = {})
     signin.reset_failed_attempts!
 
+    SecurityEventLogger.log(
+      event_type: "login.success",
+      account: signin,
+      actor: signin,
+      request: context.request
+    )
+
     signin_options = {
       message: I18n.translate("controllers.signins.create.success"),
       redirect_to: after_signin_path(signin, context),

@@ -1,17 +1,19 @@
 class ProfileUpdating
-  def initialize(profile, scope = nil, account_performing_update: profile.account)
+  def initialize(profile, scope = nil, account_performing_update: profile.account, request: nil)
     @profile = profile
     @account = profile.account
     @scope = (scope || account.scope_name).to_s.sub(/^\w+_chapter_ambassador/, "chapter_ambassador")
     @account_performing_update = account_performing_update
+    @request = request
   end
 
-  def self.execute(profile, scope = nil, attrs, account_performing_update: profile.account)
-    new(profile, scope, account_performing_update: account_performing_update).update(attrs)
+  def self.execute(profile, scope = nil, attrs, account_performing_update: profile.account, request: nil)
+    new(profile, scope, account_performing_update: account_performing_update, request: request).update(attrs)
   end
 
   def update(attributes)
     if profile.update(attributes)
+      password_changed = account.saved_change_to_password_digest?
 
       profile.account.create_activity(
         key: "account.update",
@@ -24,6 +26,16 @@ class ProfileUpdating
       )
 
       perform_callbacks
+
+      if password_changed
+        SecurityEventLogger.log(
+          event_type: "password.changed",
+          account: account,
+          actor: account_performing_update,
+          request: request
+        )
+      end
+
       true
     else
       false
@@ -119,5 +131,5 @@ class ProfileUpdating
 
   private
 
-  attr_reader :profile, :account, :scope, :account_performing_update
+  attr_reader :profile, :account, :scope, :account_performing_update, :request
 end
