@@ -10,6 +10,8 @@ module Judge
       if SeasonToggles.display_scores?
         certificate = current_account.current_judge_certificates.last
         @certificate_file_url = certificate&.file_url
+        letter = current_account.current_judge_letter_certificates.last
+        @letter_file_url = letter&.file_url
       end
     end
 

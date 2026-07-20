@@ -66,11 +66,12 @@ RSpec.describe DetermineCertificates do
     it "awards a mentor appreciation certificate" do
       mentor = FactoryBot.create(:mentor, :complete_submission, number_of_teams: 1)
       expect(DetermineCertificates.new(mentor.account).needed).to contain_exactly(
-        CertificateRecipient.new(:mentor, mentor.account, team: mentor.current_teams.last)
+        CertificateRecipient.new(:mentor, mentor.account, team: mentor.current_teams.last),
+        CertificateRecipient.new(:mentor_letter, mentor.account)
       )
     end
 
-    it "awards many mentor appreciations" do
+    it "awards many mentor appreciations and one mentor letter" do
       mentor = FactoryBot.create(:mentor, :complete_submission, number_of_teams: 5)
       team_submissions = mentor.current_teams.select do |team|
         team.submission.complete?
@@ -78,8 +79,19 @@ RSpec.describe DetermineCertificates do
 
       expected = team_submissions.map do |team|
         CertificateRecipient.new(:mentor, mentor.account, team: team)
-      end
+      end + [CertificateRecipient.new(:mentor_letter, mentor.account)]
       expect(DetermineCertificates.new(mentor.account).needed).to match_array(expected)
+    end
+
+    it "does not re-award a mentor letter when one already exists" do
+      mentor = FactoryBot.create(:mentor, :complete_submission, number_of_teams: 1)
+      FactoryBot.create(:certificate,
+        account: mentor.account,
+        cert_type: :mentor_letter)
+
+      expect(DetermineCertificates.new(mentor.account).needed).to contain_exactly(
+        CertificateRecipient.new(:mentor, mentor.account, team: mentor.current_teams.last)
+      )
     end
   end
 
@@ -117,7 +129,7 @@ RSpec.describe DetermineCertificates do
         FactoryBot.create(:score, :complete, judge_profile: user.account.judge_profile)
       end
 
-      expect(DetermineCertificates.new(user.account).eligible_types).to match_array(%w[mentor bronze_judge])
+      expect(DetermineCertificates.new(user.account).eligible_types).to match_array(%w[mentor bronze_judge bronze_judge_letter])
     end
   end
 
@@ -141,7 +153,8 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:bronze_judge, judge.account)
+        CertificateRecipient.new(:bronze_judge, judge.account),
+        CertificateRecipient.new(:bronze_judge_letter, judge.account)
       )
     end
 
@@ -164,7 +177,8 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:bronze_judge, judge.account)
+        CertificateRecipient.new(:bronze_judge, judge.account),
+        CertificateRecipient.new(:bronze_judge_letter, judge.account)
       )
     end
 
@@ -188,7 +202,8 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:silver_judge, judge.account)
+        CertificateRecipient.new(:silver_judge, judge.account),
+        CertificateRecipient.new(:silver_judge_letter, judge.account)
       )
     end
 
@@ -212,7 +227,8 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:silver_judge, judge.account)
+        CertificateRecipient.new(:silver_judge, judge.account),
+        CertificateRecipient.new(:silver_judge_letter, judge.account)
       )
     end
 
@@ -236,7 +252,8 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:gold_judge, judge.account)
+        CertificateRecipient.new(:gold_judge, judge.account),
+        CertificateRecipient.new(:gold_judge_letter, judge.account)
       )
     end
 
@@ -266,14 +283,33 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:bronze_judge, judge.account)
+        CertificateRecipient.new(:bronze_judge, judge.account),
+        CertificateRecipient.new(:bronze_judge_letter, judge.account)
       )
 
       FactoryBot.create(:certificate,
         account: judge.account,
         cert_type: :silver_judge)
 
-      expect(DetermineCertificates.new(judge.account).needed).to be_empty
+      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
+        CertificateRecipient.new(:bronze_judge_letter, judge.account)
+      )
+    end
+
+    it "does not re-award a judge letter when one already exists" do
+      judge = FactoryBot.create(:judge)
+
+      5.times do
+        FactoryBot.create(:score, :complete, judge_profile: judge)
+      end
+
+      FactoryBot.create(:certificate,
+        account: judge.account,
+        cert_type: :bronze_judge_letter)
+
+      expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
+        CertificateRecipient.new(:bronze_judge, judge.account)
+      )
     end
   end
 
@@ -287,7 +323,8 @@ RSpec.describe DetermineCertificates do
       judge = FactoryBot.create(:judge, account: account)
 
       expect(DetermineCertificates.new(account).needed).to contain_exactly(
-        CertificateRecipient.new(:gold_judge, account)
+        CertificateRecipient.new(:gold_judge, account),
+        CertificateRecipient.new(:gold_judge_letter, account)
       )
     end
 
@@ -299,9 +336,10 @@ RSpec.describe DetermineCertificates do
         FactoryBot.create(:score, :complete, judge_profile: judge)
       end
 
-      expect(DetermineCertificates.new(account).eligible_types).to contain_exactly("silver_judge")
+      expect(DetermineCertificates.new(account).eligible_types).to contain_exactly("silver_judge", "silver_judge_letter")
       expect(DetermineCertificates.new(account).needed).to contain_exactly(
-        CertificateRecipient.new(:silver_judge, account)
+        CertificateRecipient.new(:silver_judge, account),
+        CertificateRecipient.new(:silver_judge_letter, account)
       )
     end
 
@@ -313,7 +351,8 @@ RSpec.describe DetermineCertificates do
       end
 
       expect(DetermineCertificates.new(judge.account).needed).to contain_exactly(
-        CertificateRecipient.new(:bronze_judge, judge.account)
+        CertificateRecipient.new(:bronze_judge, judge.account),
+        CertificateRecipient.new(:bronze_judge_letter, judge.account)
       )
     end
 
@@ -357,7 +396,8 @@ RSpec.describe DetermineCertificates do
       ambassador = make_fully_onboarded_chapter_ambassador
 
       expect(DetermineCertificates.new(ambassador.account).needed).to contain_exactly(
-        CertificateRecipient.new(:ambassador_appreciation, ambassador.account)
+        CertificateRecipient.new(:ambassador_appreciation, ambassador.account),
+        CertificateRecipient.new(:ambassador_letter, ambassador.account)
       )
     end
 
@@ -365,7 +405,8 @@ RSpec.describe DetermineCertificates do
       ambassador = make_fully_onboarded_club_ambassador
 
       expect(DetermineCertificates.new(ambassador.account).needed).to contain_exactly(
-        CertificateRecipient.new(:ambassador_appreciation, ambassador.account)
+        CertificateRecipient.new(:ambassador_appreciation, ambassador.account),
+        CertificateRecipient.new(:ambassador_letter, ambassador.account)
       )
     end
 
@@ -405,7 +446,21 @@ RSpec.describe DetermineCertificates do
         account: ambassador.account,
         cert_type: :ambassador_appreciation)
 
-      expect(DetermineCertificates.new(ambassador.account).needed).to be_empty
+      expect(DetermineCertificates.new(ambassador.account).needed).to contain_exactly(
+        CertificateRecipient.new(:ambassador_letter, ambassador.account)
+      )
+    end
+
+    it "does not re-award if an ambassador letter already exists" do
+      ambassador = make_fully_onboarded_club_ambassador
+
+      FactoryBot.create(:certificate,
+        account: ambassador.account,
+        cert_type: :ambassador_letter)
+
+      expect(DetermineCertificates.new(ambassador.account).needed).to contain_exactly(
+        CertificateRecipient.new(:ambassador_appreciation, ambassador.account)
+      )
     end
   end
 end

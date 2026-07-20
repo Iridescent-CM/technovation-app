@@ -15,6 +15,14 @@
               class: "tw-green-btn shadow-md",
               target: :_blank %>
           </div>
+          <% if @current_letter.present? %>
+            <div class="my-8 text-center">
+              <%= link_to "View your letter of recognition",
+                @current_letter.file_url,
+                class: "tw-green-btn shadow-md",
+                target: :_blank %>
+            </div>
+          <% end %>
         </div>
       <% else %>
         <p>

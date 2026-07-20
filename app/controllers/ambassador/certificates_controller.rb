@@ -6,6 +6,7 @@ module Ambassador
 
     def index
       @current_certificates = current_account.current_ambassador_appreciation_certificates
+      @current_letter = current_account.current_ambassador_letter_certificates.last
     end
   end
 end

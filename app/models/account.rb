@@ -180,6 +180,42 @@ class Account < ActiveRecord::Base
   has_many :current_ambassador_appreciation_certificates, -> { current.ambassador_appreciation },
     class_name: "Certificate"
 
+  has_many :mentor_letter_certificates, -> { mentor_letter },
+    class_name: "Certificate"
+
+  has_many :current_mentor_letter_certificates, -> { current.mentor_letter },
+    class_name: "Certificate"
+
+  has_many :ambassador_letter_certificates, -> { ambassador_letter },
+    class_name: "Certificate"
+
+  has_many :current_ambassador_letter_certificates, -> { current.ambassador_letter },
+    class_name: "Certificate"
+
+  has_many :bronze_judge_letter_certificates, -> { bronze_judge_letter },
+    class_name: "Certificate"
+
+  has_many :current_bronze_judge_letter_certificates, -> { current.bronze_judge_letter },
+    class_name: "Certificate"
+
+  has_many :silver_judge_letter_certificates, -> { silver_judge_letter },
+    class_name: "Certificate"
+
+  has_many :current_silver_judge_letter_certificates, -> { current.silver_judge_letter },
+    class_name: "Certificate"
+
+  has_many :gold_judge_letter_certificates, -> { gold_judge_letter },
+    class_name: "Certificate"
+
+  has_many :current_gold_judge_letter_certificates, -> { current.gold_judge_letter },
+    class_name: "Certificate"
+
+  has_many :judge_letter_certificates, -> { judge_letter_types },
+    class_name: "Certificate"
+
+  has_many :current_judge_letter_certificates, -> { current.judge_letter_types },
+    class_name: "Certificate"
+
   has_many :void_consent_waivers,
     -> { void },
     class_name: "ConsentWaiver",

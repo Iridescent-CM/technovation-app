@@ -38,6 +38,14 @@ module CertificateTypes
     ambassador_appreciation: 13
   }
 
+  LETTER_OF_RECOGNITION_TYPES = {
+    mentor_letter: 21,
+    ambassador_letter: 22,
+    bronze_judge_letter: 23,
+    silver_judge_letter: 24,
+    gold_judge_letter: 25
+  }
+
   MANUAL_ONLY_CERTIFICATE_TYPES = %i[
     coach
     break_the_scroll_prize
@@ -53,6 +61,7 @@ module CertificateTypes
     **JUDGE_CERTIFICATE_TYPES,
     **OFF_PLATFORM_CERTIFICATE_TYPES,
     **PAST_CERTIFICATE_TYPES,
-    **AMBASSADOR_CERTIFICATE_TYPES
+    **AMBASSADOR_CERTIFICATE_TYPES,
+    **LETTER_OF_RECOGNITION_TYPES
   )
 end

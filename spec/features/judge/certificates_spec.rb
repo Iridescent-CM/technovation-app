@@ -209,6 +209,10 @@ RSpec.feature "Judge certificates" do
       "View your certificate",
       href: judge.current_bronze_judge_certificates.last.file_url
     )
+    expect(page).to have_link(
+      "View your letter of recognition",
+      href: judge.current_bronze_judge_letter_certificates.last.file_url
+    )
   end
 
   Array(6..10).each do |n|

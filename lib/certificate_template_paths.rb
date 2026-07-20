@@ -18,6 +18,8 @@ module CertificateTemplatePaths
     case type.to_sym
     when :ambassador_appreciation
       ambassador_filename(recipient)
+    when :ambassador_letter
+      ambassador_letter_filename(recipient)
     when :mentor
       "mentor.pdf"
     when :quarterfinalist
@@ -26,6 +28,14 @@ module CertificateTemplatePaths
       grand_prize_filename(recipient)
     else
       "#{type}.pdf"
+    end
+  end
+
+  def ambassador_letter_filename(recipient)
+    if recipient.account.chapter_ambassador?
+      "chapter_ambassador_letter.pdf"
+    else
+      "club_ambassador_letter.pdf"
     end
   end
 

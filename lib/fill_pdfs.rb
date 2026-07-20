@@ -110,7 +110,16 @@ module FillPdfs
   end
 
   def get_value(recipient, field_name)
-    if description_field?(field_name)
+    # 2026 letter-of-recognition AcroForms use "Text Field N" for the recipient
+    # name (not description copy). Check before description_field?, which also
+    # matches that pattern for certificate templates.
+    if letter_of_recognition? && letter_recipient_name_field?(field_name)
+      recipient.full_name
+    elsif country_field?(field_name)
+      country_field_value(recipient)
+    elsif hours_field?(field_name)
+      "" # mentor letter has "Number of Hourse"; no hours source yet
+    elsif description_field?(field_name)
       full_text
     elsif recipient_name_field?(field_name)
       recipient.full_name
@@ -119,6 +128,18 @@ module FillPdfs
     else
       recipient.public_send(field_name)
     end
+  end
+
+  def letter_of_recognition?
+    type.to_s.end_with?("_letter")
+  end
+
+  def letter_recipient_name_field?(field_name)
+    field_name.match?(/\AText Field \d+\z/)
+  end
+
+  def hours_field?(field_name)
+    field_name.match?(/\ANumber of Hour/i)
   end
 
   def description_field?(field_name)
@@ -133,6 +154,16 @@ module FillPdfs
       field_name.match?(/\ARecipientName( \d+)?\z/) ||
       field_name == "Recipient Name" ||
       field_name == "Name"
+  end
+
+  def country_field?(field_name)
+    field_name.match?(/\ACountry( \d+)?\z/i) ||
+      field_name.match?(/\ARegion( \d+)?\z/i) ||
+      field_name == "Location"
+  end
+
+  def country_field_value(recipient)
+    recipient.region.to_s.strip
   end
 
   def division_field?(field_name)

@@ -35,12 +35,19 @@ RSpec.feature "Ambassador certificates" do
     certificate = FactoryBot.create(:certificate,
       account: ambassador.account,
       cert_type: :ambassador_appreciation)
+    FactoryBot.create(:certificate,
+      account: ambassador.account,
+      cert_type: :ambassador_letter,
+      team: nil)
+
+    expect(ambassador.account.current_ambassador_letter_certificates).to exist
 
     sign_in(ambassador)
     visit chapter_ambassador_certificates_path
 
     expect(page).to have_css("#ambassador-certificate")
     expect(page).to have_link("View your certificate")
+    expect(page).to have_link("View your letter of recognition")
     expect(certificate).to be_persisted
   end
 
@@ -65,12 +72,19 @@ RSpec.feature "Ambassador certificates" do
     certificate = FactoryBot.create(:certificate,
       account: ambassador.account,
       cert_type: :ambassador_appreciation)
+    FactoryBot.create(:certificate,
+      account: ambassador.account,
+      cert_type: :ambassador_letter,
+      team: nil)
+
+    expect(ambassador.account.current_ambassador_letter_certificates).to exist
 
     sign_in(ambassador)
     visit club_ambassador_certificates_path
 
     expect(page).to have_css("#ambassador-certificate")
     expect(page).to have_link("View your certificate")
+    expect(page).to have_link("View your letter of recognition")
     expect(certificate).to be_persisted
   end
 end
