@@ -111,6 +111,30 @@ RSpec.describe CertificateTemplatePaths do
 
         expect(path).to eq("./lib/certs/2026/climate_prize.pdf")
       end
+
+      it "resolves chapter ambassador letter templates" do
+        path = described_class.for(
+          recipient: instance_double(
+            CertificateRecipient,
+            account: instance_double(Account, chapter_ambassador?: true),
+            team: team
+          ),
+          type: :ambassador_letter,
+          season: 2026
+        )
+
+        expect(path).to eq("./lib/certs/2026/chapter_ambassador_letter.pdf")
+      end
+
+      it "resolves club ambassador letter templates" do
+        path = described_class.for(
+          recipient: recipient,
+          type: :ambassador_letter,
+          season: 2026
+        )
+
+        expect(path).to eq("./lib/certs/2026/club_ambassador_letter.pdf")
+      end
     end
   end
 end

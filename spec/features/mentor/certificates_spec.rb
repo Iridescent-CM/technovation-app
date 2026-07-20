@@ -9,8 +9,8 @@ RSpec.feature "Mentor certificates" do
     allow(Season).to receive(:next).and_return(next_season)
   end
 
-  let(:current_season) { instance_double(Season, year: 2020) }
-  let(:next_season) { instance_double(Season, year: 2021) }
+  let(:current_season) { instance_double(Season, year: 2026) }
+  let(:next_season) { instance_double(Season, year: 2027) }
 
   scenario "mentor without teams or certificates does not see a certificate link" do
     mentor = FactoryBot.create(:mentor, :onboarded)
@@ -70,6 +70,24 @@ RSpec.feature "Mentor certificates" do
     click_link "Certificates"
 
     expect(page).to have_link("Open your certificate", count: 2)
+    expect(page).to have_link("Open your letter of recognition")
+  end
+
+  scenario "mentor with a letter cannot access it before completing the post survey" do
+    mentor = FactoryBot.create(:mentor, :onboarded)
+    team_a = FactoryBot.create(:team)
+
+    TeamRosterManaging.add(team_a, mentor)
+    FactoryBot.create(:team_submission, :complete, team: team_a)
+
+    FillPdfs.call(mentor.account)
+
+    sign_in(mentor)
+
+    click_link "Scores & Certificates"
+    click_link "Certificates"
+
+    expect(page).not_to have_link("Open your letter of recognition")
   end
 
   scenario "mentor can view their previous mentor certificates" do
