@@ -246,4 +246,78 @@ class DetermineCertificates
       [CertificateRecipient.new(:ambassador_appreciation, @account)]
     end
   end
+
+  def gets_mentor_letter_certificate?
+    return false unless @account.mentor_profile.present?
+
+    @account.mentor_profile.teams.by_season(season).any? { |team|
+      team.submission.percent_complete > 50
+    }
+  end
+
+  def needed_mentor_letter_recipients
+    if @account.mentor_letter_certificates.by_season(season).any?
+      []
+    elsif gets_mentor_letter_certificate?
+      [CertificateRecipient.new(:mentor_letter, @account)]
+    else
+      []
+    end
+  end
+
+  def gets_ambassador_letter_certificate?
+    gets_ambassador_appreciation_certificate?
+  end
+
+  def needed_ambassador_letter_recipients
+    if @account.ambassador_letter_certificates.by_season(season).any?
+      []
+    elsif gets_ambassador_letter_certificate?
+      [CertificateRecipient.new(:ambassador_letter, @account)]
+    else
+      []
+    end
+  end
+
+  def gets_bronze_judge_letter_certificate?
+    gets_bronze_judge_certificate?
+  end
+
+  def needed_bronze_judge_letter_recipients
+    if @account.judge_letter_certificates.by_season(season).any?
+      []
+    elsif gets_bronze_judge_letter_certificate?
+      [CertificateRecipient.new(:bronze_judge_letter, @account)]
+    else
+      []
+    end
+  end
+
+  def gets_silver_judge_letter_certificate?
+    gets_silver_judge_certificate?
+  end
+
+  def needed_silver_judge_letter_recipients
+    if @account.judge_letter_certificates.by_season(season).any?
+      []
+    elsif gets_silver_judge_letter_certificate?
+      [CertificateRecipient.new(:silver_judge_letter, @account)]
+    else
+      []
+    end
+  end
+
+  def gets_gold_judge_letter_certificate?
+    gets_gold_judge_certificate?
+  end
+
+  def needed_gold_judge_letter_recipients
+    if @account.judge_letter_certificates.by_season(season).any?
+      []
+    elsif gets_gold_judge_letter_certificate?
+      [CertificateRecipient.new(:gold_judge_letter, @account)]
+    else
+      []
+    end
+  end
 end

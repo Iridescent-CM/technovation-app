@@ -114,6 +114,8 @@ module FillPdfs
       full_text
     elsif recipient_name_field?(field_name)
       recipient.full_name
+    elsif country_field?(field_name)
+      recipient.region
     elsif division_field?(field_name)
       recipient.division
     else
@@ -133,6 +135,12 @@ module FillPdfs
       field_name.match?(/\ARecipientName( \d+)?\z/) ||
       field_name == "Recipient Name" ||
       field_name == "Name"
+  end
+
+  def country_field?(field_name)
+    field_name.match?(/\ACountry( \d+)?\z/i) ||
+      field_name.match?(/\ARegion( \d+)?\z/i) ||
+      field_name == "Location"
   end
 
   def division_field?(field_name)
