@@ -28,7 +28,7 @@
 
     <% if needs_filestack? %>
       <%= filestack_js_include_tag %>
-      <%= filestack_js_init_tag %>
+      <%= filestack_js_deferred_init_tag %>
     <% end %>
 
     <%= javascript_include_tag determine_manifest,
