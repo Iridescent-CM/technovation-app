@@ -36,14 +36,19 @@ RSpec.describe FillPdfs do
     PDF::Reader.new(path).pages.map(&:text).join(" ").squish
   end
 
-  it "fills the recipient name on mentor letters" do
+  # Flattened letter form fields often extract without spaces between words.
+  def pdf_text_compact(path)
+    pdf_text(path).gsub(/\s+/, "")
+  end
+
+  it "fills the recipient name on mentor letters from the design Text Field" do
     mentor = FactoryBot.create(:mentor, :complete_submission, number_of_teams: 1)
     recipient = CertificateRecipient.new(:mentor_letter, mentor.account)
     tmp_path = "./tmp/#{season_2026.year}-mentor_letter-#{mentor.account.id}-.pdf"
 
     FillPdfs.fill(recipient)
 
-    expect(pdf_text(tmp_path)).to include(mentor.account.name)
+    expect(pdf_text_compact(tmp_path)).to include(mentor.account.name.gsub(/\s+/, ""))
     expect(mentor.account.current_mentor_letter_certificates).to exist
   end
 
@@ -56,13 +61,17 @@ RSpec.describe FillPdfs do
 
     FillPdfs.fill(recipient)
 
-    expect(pdf_text(tmp_path)).to include(ambassador.account.name)
-    expect(pdf_text(tmp_path)).to include(
-      FriendlyCountry.call(ambassador.account, prefix: false)
+    country = FriendlyCountry.call(ambassador.account, prefix: false).strip
+    compact = pdf_text_compact(tmp_path)
+
+    expect(compact).to include(ambassador.account.name.gsub(/\s+/, ""))
+    # PDF::Reader often drops spaces; assert country sits between "in" and "for the".
+    expect(compact).to match(
+      /in#{Regexp.escape(country.gsub(/\s+/, ""))}fortheTechnovationGirls/i
     )
   end
 
-  it "uses the club ambassador letter template for club ambassadors" do
+  it "uses the first Club Ambassador page (name + Country) for club ambassadors" do
     ambassador = FactoryBot.create(:club_ambassador)
     recipient = CertificateRecipient.new(:ambassador_letter, ambassador.account)
 
