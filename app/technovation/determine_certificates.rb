@@ -168,15 +168,18 @@ class DetermineCertificates
   end
 
   def gets_bronze_judge_certificate?
-    return false unless judge_certificate_base_eligible?
+    return @gets_bronze_judge_certificate if defined?(@gets_bronze_judge_certificate)
 
-    if (mapped = mapped_judge_certificate_type)
-      return mapped == :bronze_judge
-    end
-
-    !@account.judge_profile.events.any? &&
-      @account.judge_profile.completed_scores.by_season(season).any? &&
-      @account.judge_profile.completed_scores.by_season(season).count == BadgeLevels::NUMBER_OF_SCORES_FOR_BRONZE_JUDGE
+    @gets_bronze_judge_certificate =
+      if !judge_certificate_base_eligible?
+        false
+      elsif (mapped = mapped_judge_certificate_type)
+        mapped == :bronze_judge
+      else
+        !judge_has_events? &&
+          judge_has_completed_scores? &&
+          completed_scores_count_for_season == BadgeLevels::NUMBER_OF_SCORES_FOR_BRONZE_JUDGE
+      end
   end
 
   def needed_bronze_judge_recipients
@@ -188,15 +191,18 @@ class DetermineCertificates
   end
 
   def gets_silver_judge_certificate?
-    return false unless judge_certificate_base_eligible?
+    return @gets_silver_judge_certificate if defined?(@gets_silver_judge_certificate)
 
-    if (mapped = mapped_judge_certificate_type)
-      return mapped == :silver_judge
-    end
-
-    @account.judge_profile.completed_scores.by_season(season).count <= BadgeLevels::MAXIMUM_SCORES_FOR_SILVER_JUDGE &&
-      (@account.judge_profile.events.any? ||
-       @account.judge_profile.completed_scores.by_season(season).count >= BadgeLevels::MINIMUM_SCORES_FOR_SILVER_JUDGE)
+    @gets_silver_judge_certificate =
+      if !judge_certificate_base_eligible?
+        false
+      elsif (mapped = mapped_judge_certificate_type)
+        mapped == :silver_judge
+      else
+        completed_scores_count_for_season <= BadgeLevels::MAXIMUM_SCORES_FOR_SILVER_JUDGE &&
+          (judge_has_events? ||
+           completed_scores_count_for_season >= BadgeLevels::MINIMUM_SCORES_FOR_SILVER_JUDGE)
+      end
   end
 
   def needed_silver_judge_recipients
@@ -208,13 +214,16 @@ class DetermineCertificates
   end
 
   def gets_gold_judge_certificate?
-    return false unless judge_certificate_base_eligible?
+    return @gets_gold_judge_certificate if defined?(@gets_gold_judge_certificate)
 
-    if (mapped = mapped_judge_certificate_type)
-      return mapped == :gold_judge
-    end
-
-    @account.judge_profile.completed_scores.by_season(season).count >= BadgeLevels::MINIMUM_SCORES_FOR_GOLD_JUDGE
+    @gets_gold_judge_certificate =
+      if !judge_certificate_base_eligible?
+        false
+      elsif (mapped = mapped_judge_certificate_type)
+        mapped == :gold_judge
+      else
+        completed_scores_count_for_season >= BadgeLevels::MINIMUM_SCORES_FOR_GOLD_JUDGE
+      end
   end
 
   def needed_gold_judge_recipients
@@ -223,6 +232,22 @@ class DetermineCertificates
     else
       [CertificateRecipient.new(:gold_judge, @account)]
     end
+  end
+
+  def judge_has_events?
+    return @judge_has_events if defined?(@judge_has_events)
+
+    @judge_has_events = @account.judge_profile.events.any?
+  end
+
+  def judge_has_completed_scores?
+    return @judge_has_completed_scores if defined?(@judge_has_completed_scores)
+
+    @judge_has_completed_scores = @account.judge_profile.completed_scores.by_season(season).any?
+  end
+
+  def completed_scores_count_for_season
+    @completed_scores_count_for_season ||= @account.judge_profile.completed_scores.by_season(season).count
   end
 
   def gets_rpe_winner_certificate?
@@ -258,10 +283,8 @@ class DetermineCertificates
   def needed_mentor_letter_recipients
     if @account.mentor_letter_certificates.by_season(season).any?
       []
-    elsif gets_mentor_letter_certificate?
-      [CertificateRecipient.new(:mentor_letter, @account)]
     else
-      []
+      [CertificateRecipient.new(:mentor_letter, @account)]
     end
   end
 
@@ -272,10 +295,8 @@ class DetermineCertificates
   def needed_ambassador_letter_recipients
     if @account.ambassador_letter_certificates.by_season(season).any?
       []
-    elsif gets_ambassador_letter_certificate?
-      [CertificateRecipient.new(:ambassador_letter, @account)]
     else
-      []
+      [CertificateRecipient.new(:ambassador_letter, @account)]
     end
   end
 
@@ -286,10 +307,8 @@ class DetermineCertificates
   def needed_bronze_judge_letter_recipients
     if @account.judge_letter_certificates.by_season(season).any?
       []
-    elsif gets_bronze_judge_letter_certificate?
-      [CertificateRecipient.new(:bronze_judge_letter, @account)]
     else
-      []
+      [CertificateRecipient.new(:bronze_judge_letter, @account)]
     end
   end
 
@@ -300,10 +319,8 @@ class DetermineCertificates
   def needed_silver_judge_letter_recipients
     if @account.judge_letter_certificates.by_season(season).any?
       []
-    elsif gets_silver_judge_letter_certificate?
-      [CertificateRecipient.new(:silver_judge_letter, @account)]
     else
-      []
+      [CertificateRecipient.new(:silver_judge_letter, @account)]
     end
   end
 
@@ -314,10 +331,8 @@ class DetermineCertificates
   def needed_gold_judge_letter_recipients
     if @account.judge_letter_certificates.by_season(season).any?
       []
-    elsif gets_gold_judge_letter_certificate?
-      [CertificateRecipient.new(:gold_judge_letter, @account)]
     else
-      []
+      [CertificateRecipient.new(:gold_judge_letter, @account)]
     end
   end
 end
