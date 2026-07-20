@@ -7,6 +7,14 @@
         <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
           <% if @current_certificates.any? %>
             <% if current_account.took_program_survey? %>
+              <% if @current_mentor_letter.present? %>
+                <div class="my-8 text-center">
+                  <%= link_to "Open your letter of recognition",
+                    @current_mentor_letter.file_url,
+                    target: "_blank",
+                    class: "tw-green-btn cursor-pointer" %>
+                </div>
+              <% end %>
               <%= render "mentor/certificates/certificates_table", certificates: @current_certificates %>
             <% else %>
               <%= render "mentor/certificates/survey_required", certificates: @current_certificates %>

@@ -11,6 +11,14 @@
           class: "tw-green-btn shadow-md",
           target: :_blank %>
       </div>
+      <% if @letter_file_url.present? %>
+        <div class="my-8 text-center">
+          <%= link_to 'View your letter of recognition',
+            @letter_file_url,
+            class: "tw-green-btn shadow-md",
+            target: :_blank %>
+        </div>
+      <% end %>
     <% else %>
       <p>
         You don't have a certificate for this season.
