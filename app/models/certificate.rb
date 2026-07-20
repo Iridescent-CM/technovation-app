@@ -24,6 +24,14 @@ class Certificate < ApplicationRecord
     where(cert_type: CertificateTypes::AMBASSADOR_CERTIFICATE_TYPES.keys)
   }
 
+  scope :letter_types, -> {
+    where(cert_type: CertificateTypes::LETTER_OF_RECOGNITION_TYPES.keys)
+  }
+
+  scope :judge_letter_types, -> {
+    where(cert_type: %i[bronze_judge_letter silver_judge_letter gold_judge_letter])
+  }
+
   scope :for_team, ->(team) {
     where(team: team)
   }
@@ -59,6 +67,30 @@ class Certificate < ApplicationRecord
   end
 
   def description
+    if letter_type?
+      letter_description
+    else
+      certificate_description
+    end
+  end
+
+  private
+
+  def letter_type?
+    CertificateTypes::LETTER_OF_RECOGNITION_TYPES.key?(cert_type.to_sym)
+  end
+
+  def letter_description
+    role = cert_type.sub("_letter", "").humanize.titleize
+
+    if team.present?
+      "Letter of Recognition (#{role}) for #{team.name}"
+    else
+      "Letter of Recognition (#{role})"
+    end
+  end
+
+  def certificate_description
     title = cert_type.humanize.titleize
 
     if team.present?
