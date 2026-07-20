@@ -16,7 +16,7 @@
     <%= csrf_meta_tags %>
 
     <%= filestack_js_include_tag %>
-    <%= filestack_js_init_tag %>
+    <%= filestack_js_deferred_init_tag %>
 
     <%= javascript_include_tag 'admin', 'data-turbo-track' => true %>
     <%= javascript_pack_tag("application", "admin", data: { turbo_track: :reload }) %>
