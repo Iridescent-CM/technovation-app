@@ -2237,6 +2237,43 @@ CREATE SEQUENCE public.screenshots_id_seq
 ALTER SEQUENCE public.screenshots_id_seq OWNED BY public.screenshots.id;
 
 
+
+--
+-- Name: security_events; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.security_events (
+    id bigint NOT NULL,
+    event_type character varying NOT NULL,
+    account_id bigint,
+    actor_account_id bigint,
+    ip_address character varying,
+    user_agent character varying,
+    metadata jsonb DEFAULT '{}'::jsonb NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: security_events_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.security_events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: security_events_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.security_events_id_seq OWNED BY public.security_events.id;
+
+
+
 --
 -- Name: student_profiles; Type: TABLE; Schema: public; Owner: -
 --
@@ -3206,6 +3243,14 @@ ALTER TABLE ONLY public.saved_searches ALTER COLUMN id SET DEFAULT nextval('publ
 ALTER TABLE ONLY public.screenshots ALTER COLUMN id SET DEFAULT nextval('public.screenshots_id_seq'::regclass);
 
 
+
+--
+-- Name: security_events id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.security_events ALTER COLUMN id SET DEFAULT nextval('public.security_events_id_seq'::regclass);
+
+
 --
 -- Name: student_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
@@ -3768,6 +3813,15 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.screenshots
     ADD CONSTRAINT screenshots_pkey PRIMARY KEY (id);
+
+
+
+--
+-- Name: security_events security_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.security_events
+    ADD CONSTRAINT security_events_pkey PRIMARY KEY (id);
 
 
 --
@@ -4370,6 +4424,35 @@ CREATE INDEX index_saved_searches_on_searcher_type_and_searcher_id ON public.sav
 CREATE INDEX index_screenshots_on_team_submission_id ON public.screenshots USING btree (team_submission_id);
 
 
+
+--
+-- Name: index_security_events_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_security_events_on_account_id ON public.security_events USING btree (account_id);
+
+
+--
+-- Name: index_security_events_on_actor_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_security_events_on_actor_account_id ON public.security_events USING btree (actor_account_id);
+
+
+--
+-- Name: index_security_events_on_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_security_events_on_created_at ON public.security_events USING btree (created_at);
+
+
+--
+-- Name: index_security_events_on_event_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_security_events_on_event_type ON public.security_events USING btree (event_type);
+
+
 --
 -- Name: index_student_profiles_on_deleted_at; Type: INDEX; Schema: public; Owner: -
 --
@@ -4669,6 +4752,15 @@ ALTER TABLE ONLY public.judge_profiles
     ADD CONSTRAINT fk_rails_185397937b FOREIGN KEY (user_invitation_id) REFERENCES public.user_invitations(id);
 
 
+
+--
+-- Name: security_events fk_rails_1caeb58970; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.security_events
+    ADD CONSTRAINT fk_rails_1caeb58970 FOREIGN KEY (actor_account_id) REFERENCES public.accounts(id);
+
+
 --
 -- Name: judge_assignments fk_rails_23ffe332fd; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
@@ -4691,6 +4783,15 @@ ALTER TABLE ONLY public.judge_profile_judge_types
 
 ALTER TABLE ONLY public.regional_pitch_events_teams
     ADD CONSTRAINT fk_rails_24f0c96e18 FOREIGN KEY (team_id) REFERENCES public.teams(id);
+
+
+
+--
+-- Name: security_events fk_rails_2ea9674550; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.security_events
+    ADD CONSTRAINT fk_rails_2ea9674550 FOREIGN KEY (account_id) REFERENCES public.accounts(id);
 
 
 --
@@ -5100,6 +5201,7 @@ ALTER TABLE ONLY public.program_information
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260714120000'),
 ('20260713160000'),
 ('20260402233018'),
 ('20260331220350'),

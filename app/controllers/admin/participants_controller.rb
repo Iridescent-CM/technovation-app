@@ -37,7 +37,8 @@ module Admin
         profile,
         @account.scope_name,
         profile_params,
-        account_performing_update: current_account
+        account_performing_update: current_account,
+        request: request
       )
         redirect_to admin_participant_path(@account),
           success: "You updated #{@account.full_name}'s account"

@@ -20,7 +20,8 @@ module ChapterAmbassador
       if ProfileUpdating.execute(
         @chapter_ambassador_profile,
         :chapter_ambassador,
-        chapter_ambassador_profile_params
+        chapter_ambassador_profile_params,
+        request: request
       )
 
         SignIn.call(@chapter_ambassador_profile.account, self, message: "Thank you! Welcome to Technovation!")

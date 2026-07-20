@@ -17,7 +17,7 @@ module ProfileController
         permitted_params[:account_attributes][:latitude].blank?
       profile.account.errors.add(:country, :blank)
       render "location_details/show"
-    elsif ProfileUpdating.execute(profile, permitted_params, account_performing_update: account_performing_update)
+    elsif ProfileUpdating.execute(profile, permitted_params, account_performing_update: account_performing_update, request: request)
       respond_to do |format|
         format.json {
           render json: {

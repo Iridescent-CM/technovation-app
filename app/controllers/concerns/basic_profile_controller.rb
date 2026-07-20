@@ -19,7 +19,7 @@ module BasicProfileController
   end
 
   def update
-    if ProfileUpdating.execute(profile, profile_params)
+    if ProfileUpdating.execute(profile, profile_params, request: request)
       render json: AccountSerializer.new(current_account).serialized_json
     else
       render json: {errors: profile.errors}, status: :unprocessessable_entity

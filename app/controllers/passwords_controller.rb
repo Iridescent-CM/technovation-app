@@ -12,6 +12,12 @@ class PasswordsController < ApplicationController
     @password = Password.new(password_params)
     if @password.valid?
       @password.perform
+      SecurityEventLogger.log(
+        event_type: "password.reset",
+        account: @password.account,
+        actor: @password.account,
+        request: request
+      )
       SignIn.call(@password.account, self, message: t("controllers.passwords.create.success"))
     else
       render :new

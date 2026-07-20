@@ -68,6 +68,7 @@ RSpec.describe SigninsController do
           }
         }
       }.to change { student.account.reload.failed_attempts }.by(1)
+        .and change { SecurityEvent.where(event_type: "login.failure").count }.by(1)
 
       remaining = Account::MAX_FAILED_ATTEMPTS - student.account.failed_attempts
       expect(response).to render_template(:new)
@@ -80,12 +81,14 @@ RSpec.describe SigninsController do
     end
 
     it "does not increment failed attempts for an unknown email" do
-      post :create, params: {
-        account: {
-          email: "unknown@example.com",
-          password: "wrong-password"
+      expect {
+        post :create, params: {
+          account: {
+            email: "unknown@example.com",
+            password: "wrong-password"
+          }
         }
-      }
+      }.to change { SecurityEvent.where(event_type: "login.failure", account_id: nil).count }.by(1)
 
       expect(response).to render_template(:new)
       expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.error"))
@@ -112,12 +115,14 @@ RSpec.describe SigninsController do
       student = FactoryBot.create(:student)
       student.account.update!(failed_attempts: Account::MAX_FAILED_ATTEMPTS - 1)
 
-      post :create, params: {
-        account: {
-          email: student.email,
-          password: "wrong-password"
+      expect {
+        post :create, params: {
+          account: {
+            email: student.email,
+            password: "wrong-password"
+          }
         }
-      }
+      }.to change { SecurityEvent.where(event_type: "login.lockout").count }.by(1)
 
       expect(student.account.reload.locked?).to be(true)
       expect(response).to render_template(:new)
@@ -152,15 +157,26 @@ RSpec.describe SigninsController do
       student = FactoryBot.create(:student)
       student.account.update!(failed_attempts: 3, locked_at: nil)
 
-      post :create, params: {
-        account: {
-          email: student.email,
-          password: PasswordHelpers::VALID_PASSWORD
+      expect {
+        post :create, params: {
+          account: {
+            email: student.email,
+            password: PasswordHelpers::VALID_PASSWORD
+          }
         }
-      }
+      }.to change { SecurityEvent.where(event_type: "login.success").count }.by(1)
+        .and change { student.account.reload.failed_attempts }.to(0)
 
-      expect(student.account.reload.failed_attempts).to eq(0)
-      expect(student.account.locked_at).to be_nil
+      expect(student.account.reload.locked_at).to be_nil
+    end
+
+    it "records a logout security event" do
+      student = FactoryBot.create(:student)
+      sign_in(student)
+
+      expect {
+        delete :destroy
+      }.to change { SecurityEvent.where(event_type: "logout").count }.by(1)
     end
 
     context "REDIRECTED_FROM cookie" do
