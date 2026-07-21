@@ -8,8 +8,8 @@
             <a href="/" class="flex items-center py-4 px-2">
               <img
                 id="tg-logo"
-                :src="require('tg-girls-logo.png')"
-                alt="Technovation Girls Logo"
+                :src="require('technovation-logo.png')"
+                alt="Technovation Logo"
               />
             </a>
           </div>
@@ -66,8 +66,8 @@
             <a href="/" class="flex items-center py-4 px-2">
               <img
                 id="tg-logo"
-                :src="require('tg-girls-logo.png')"
-                alt="Technovation Girls Logo"
+                :src="require('technovation-logo.png')"
+                alt="Technovation Logo"
               />
             </a>
           </div>
