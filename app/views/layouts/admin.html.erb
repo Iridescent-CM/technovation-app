@@ -9,6 +9,8 @@
         t("views.application.site_title_default") %>
     </title>
 
+    <%= render "favicons" %>
+
     <%= stylesheet_link_tag 'admin', media: 'all' %>
 
     <%= stylesheet_pack_tag("application", "admin", data: { turbo_track: :reload }) %>
