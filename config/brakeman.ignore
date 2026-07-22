@@ -1,0 +1,230 @@
+{
+  "ignored_warnings": [
+    {
+      "fingerprint": "0c4a844cadc8ffe4790df5b596188e32ffe865e5be7343df9c738e7004714b15",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium Mass Assignment in app/controllers/ambassador_controller.rb:9)"
+    },
+    {
+      "fingerprint": "11644f4bdceea68c7405e2348e1a97c6b758f28779ee173cb99be5d5f62e2931",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak SQL Injection in app/data_grids/judges_grid.rb:239)"
+    },
+    {
+      "fingerprint": "1acae22219e7a40bd8abcf9471733fb7b3fb61c72579114b4603df1e4e1a3166",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/show.html.erb:201)"
+    },
+    {
+      "fingerprint": "1d980a6e39d66f742cc9f446d3ed50fb895fb386426474781d1bdfcf0ea35260",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (High Cross-Site Scripting in app/views/image_upload_confirmations/show.en.html.erb:19)"
+    },
+    {
+      "fingerprint": "1eb25b50637f4d4d80aaedd2129e53b6baebad7213731a0703f3e74e6adffb0c",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (High SQL Injection in app/models/account.rb:294)"
+    },
+    {
+      "fingerprint": "1eb8cf36a789d5b0dcca3a2d5259106cc1b8d024eff80ea6a7467aa196c95527",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (High Format Validation in app/models/account.rb:744)"
+    },
+    {
+      "fingerprint": "2282dd65b760b6c44c2c0b4b44a17ad33c0dd180236e1b113555f34445e3646d",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium Mass Assignment in app/controllers/chapter_ambassador_controller.rb:9)"
+    },
+    {
+      "fingerprint": "258cfca0b240737a21f9ef43773bea39d22b3b86c04e27afd1e030c2a5fccf07",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/show.html.erb:195)"
+    },
+    {
+      "fingerprint": "2597db80cf1c561156f8c75c54e5877c510b69dd91558a6f72a04944183166fb",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (High Cross-Site Scripting in app/views/timeout_errors/show.en.html.erb:20)"
+    },
+    {
+      "fingerprint": "26299150d874e8df29d3bf40c6548128acd48cc9cc41a9ec4f12891d100fa0f1",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Dangerous Eval in app/views/admin/team_submissions/_additional_questions.html.erb:13)"
+    },
+    {
+      "fingerprint": "2a03611252dca3eb80047c155990b07a00c2bdae38c188257740836c9dc7fc7e",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/technovation/search_mentors.rb:10)"
+    },
+    {
+      "fingerprint": "3d23d648a5d9903c224fb24b5b7240223ae31403fe60bf755321dc78dcf3ffce",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/models/team.rb:182)"
+    },
+    {
+      "fingerprint": "44fb8c2c9ab5a368a0a7331d7b79c0dca4d7f6c8b1b790a3a260953c3857a830",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium File Access in app/jobs/export_event_attendees_job.rb:60)"
+    },
+    {
+      "fingerprint": "482c3db3d7e277d2c13f6a6bb71fa2587fc682328e4663a87c5dc3c1dfd286b7",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Dangerous Eval in app/views/chapter_ambassador/printable_scores/show.en.html.erb:92)"
+    },
+    {
+      "fingerprint": "52b5ec4056c9e99f5694c01e43f37effa969e39d2c646d55f3ec649c8fdd5761",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (High Format Validation in app/models/team_submission.rb:337)"
+    },
+    {
+      "fingerprint": "52b5ec4056c9e99f5694c01e43f37effa969e39d2c646d55f3ec649c8fdd5761",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (High Format Validation in app/models/team_submission.rb:343)"
+    },
+    {
+      "fingerprint": "53426880b01c9479bded579184e5a4033dceee291aa453262214f2ca5b6aee77",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/edit.html.erb:34)"
+    },
+    {
+      "fingerprint": "59c83274e166604628c9e51e0cae0e1730a000d8b5b928103b915f9a16ca7198",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/data_grids/legal_documents_grid.rb:28)"
+    },
+    {
+      "fingerprint": "5a92b5005d9d34ea348986d94a3531d5429874cc5d017521366ba45e6dae78e4",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Dangerous Eval in app/views/team_submissions/_view_completed_team_submission.html.erb:231)"
+    },
+    {
+      "fingerprint": "5cdd638353ba218f974e1cafd3230ea9e5cad20989ed215f9703126e0f541434",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/data_grids/legal_documents_grid.rb:23)"
+    },
+    {
+      "fingerprint": "63d855fb0d1c03b26253ae1f905f251968a6149d52dae4b24aa89a00d1be5a64",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/services/season_setup/chapter_affiliation_agreement_deactivator.rb:6)"
+    },
+    {
+      "fingerprint": "6435c6ca667a3803716351844b6929447319bcf8b761d8a6ce9c2ae08da81524",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/technovation/find_eligible_submission_id.rb:83)"
+    },
+    {
+      "fingerprint": "76ec8318d8c5173644eeb314f40b326de7beb0c9d558b4c160bc558ebfbcc3d5",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/technovation/search_teams.rb:10)"
+    },
+    {
+      "fingerprint": "7ea706cb3bc3bb395b11c5198d661d9b0ba9ff8c349d883e7f4e1bd08f8d925c",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/validators/exists_validator.rb:3)"
+    },
+    {
+      "fingerprint": "880d44ccf08ecbc9040edefeccc909c9755849073c93da65d5525f92064e3e3a",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak SQL Injection in app/data_grids/mentors_grid.rb:94)"
+    },
+    {
+      "fingerprint": "98b26f60d776fd41ee6f088c833725145be9aac2d7c5b33780241c273622db42",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium Unmaintained Dependency in Gemfile.lock:457)"
+    },
+    {
+      "fingerprint": "98efd71c9707994ad8b8a38e40d59bb20cd292cf569f3cd1d4eafcc8463d32a8",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/show.html.erb:107)"
+    },
+    {
+      "fingerprint": "9d9822b4ba5c02291a376db3a686eda5a68b4719ce7a2edb22270e12b9567f30",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak SQL Injection in app/data_grids/mentors_grid.rb:108)"
+    },
+    {
+      "fingerprint": "a13afc5a7fc50b5953c3254a98d33c52e4f7fa30adeef0040e65f174ec0cb926",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/models/team.rb:178)"
+    },
+    {
+      "fingerprint": "a3b467c9193e10ef9d3820a8bfe34b7afd4f9f42be90c4fc4d4e859928855856",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Dangerous Eval in app/views/chapter_ambassador/printable_scores/show.en.html.erb:56)"
+    },
+    {
+      "fingerprint": "a6f5c45409d0c58b49fa2fd66f554dbd41f29bd014bfb4546c0fb349f4b86d00",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/show.html.erb:119)"
+    },
+    {
+      "fingerprint": "adfc5d6abe70fd53e65c85a42daeec7430e1a1bc392bc689c652cb19e095e7c7",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/show.html.erb:242)"
+    },
+    {
+      "fingerprint": "b001643764bd3dfc2991609b181d822b173ab595945dcae80c32a71cc3b64bb9",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak SQL Injection in app/data_grids/chapter_ambassadors_grid.rb:166)"
+    },
+    {
+      "fingerprint": "b2162845550a7b0a0231a27491240882b8ab4305b8cf764ffbce89d0bce17d64",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/data_grids/club_ambassadors_grid.rb:139)"
+    },
+    {
+      "fingerprint": "b4ae6dabe71fa34ed6351f19fa44be021d5aaa6a1f29c0d6d8f871729483ea38",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/show.html.erb:143)"
+    },
+    {
+      "fingerprint": "b4ae6dabe71fa34ed6351f19fa44be021d5aaa6a1f29c0d6d8f871729483ea38",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/show.html.erb:158)"
+    },
+    {
+      "fingerprint": "b4cf2ab6c269ed3c266e4ef69168e59b4ad6e24d47635845d059fd99a531f13c",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/services/season_setup/club_activator.rb:7)"
+    },
+    {
+      "fingerprint": "b4e12309de41711ee416827a3b284085ecf75e0a2a5fb390e18c9cdf8064709c",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/services/season_setup/chapter_activator.rb:13)"
+    },
+    {
+      "fingerprint": "bb2d0c1e480ae4512f065cac90bfdb55affacd8fd2ad1707c0ed8d738e22793e",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (High Cross-Site Scripting in app/views/student/parental_consent_notices/_form.en.html.erb:14)"
+    },
+    {
+      "fingerprint": "bd0968096eab12d0bdc40a92e5c12d9f09fc61c3c984392905c84366ad69804e",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium Mass Assignment in app/controllers/admin_controller.rb:16)"
+    },
+    {
+      "fingerprint": "be3f5c9cac4a35cf8f8e9d0f9c9df7a4a0eb94d104307bcef12e039e13c73ea1",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/data_grids/chapter_ambassadors_grid.rb:222)"
+    },
+    {
+      "fingerprint": "c46255f59e0b13a8447dae9a08e26e5c5052400192487c3b2428d74493188923",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/show.html.erb:207)"
+    },
+    {
+      "fingerprint": "cab6e021ed5d8f8bbf03d53aceb6fb3516752488a7a14f94591b5ae4c2892c0a",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/data_grids/chapter_ambassadors_grid.rb:225)"
+    },
+    {
+      "fingerprint": "cc6502bbc51adf9424736cc090ca9d86ffef40803921478d1a9b1e8639b75e04",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak SQL Injection in app/data_grids/club_ambassadors_grid.rb:99)"
+    },
+    {
+      "fingerprint": "d1b0fcfa5232dc811d4d106d054be57208f33132a2bf4dd6c90dc71f7e4a7b66",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Dangerous Eval in app/views/team_submissions/_view_completed_team_submission.html.erb:234)"
+    },
+    {
+      "fingerprint": "d4e731c5d825455f91995c75ad6a754351448f91d891fedf921d96509ef478cf",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/models/user_invitation.rb:110)"
+    },
+    {
+      "fingerprint": "dc1aecbec5b99d619cd1ca15b875a2974de863c8287c20d755a0eabbc1eb32e1",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/certificates/show.html.erb:22)"
+    },
+    {
+      "fingerprint": "dd569cce5cfda9701e461cd9d7f96cd25996723fabc26f9429e3ad3613902959",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/data_grids/submissions_grid.rb:392)"
+    },
+    {
+      "fingerprint": "de44190cab35892909464998f8d5bac737da65de72a23c7e60f7df87d3a07713",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Dangerous Eval in app/views/admin/team_submissions/_additional_questions.html.erb:7)"
+    },
+    {
+      "fingerprint": "df1b7b8e03c2fa19eec708e8ff10bc832ba4292ddd5e16e2825a12b8dfd21203",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak SQL Injection in app/data_grids/judges_grid.rb:204)"
+    },
+    {
+      "fingerprint": "df534b4d62d2ef66c480e6c3882edcf6d99183a5fa4d2e8bc2ad92b9fc62509d",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/edit.html.erb:64)"
+    },
+    {
+      "fingerprint": "e105602aee1a45565121f0edb21a9b1e77604a7a0b05fa6ebdc77ffdbe673eb5",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/chapters/show.html.erb:50)"
+    },
+    {
+      "fingerprint": "e452cadabd15feac5a051946c4c1b30dc52ba55d8c6d3a6847bc7a5d35382aef",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (High Remote Code Execution in app/controllers/chapter_ambassador/event_judges_controller.rb:37)"
+    },
+    {
+      "fingerprint": "e4d7cbdb207835e17f1b1650cadeb9087467b2d95ef9ea4fbf9fe0b7b2124372",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak Cross-Site Scripting in app/views/admin/team_submissions/show.html.erb:173)"
+    },
+    {
+      "fingerprint": "ef93798cd6a6afb6033a2304b0147441668a656af2a0d0b41419f8ada279e754",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak SQL Injection in app/data_grids/accounts_grid.rb:510)"
+    },
+    {
+      "fingerprint": "effd75fb310fa6bee59c320506abc6d0aa061858c9b4c5c25efbf74be11ebe60",
+      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium SQL Injection in app/data_grids/club_ambassadors_grid.rb:136)"
+    }
+  ],
+  "updated": "2026-07-22T14:59:47Z",
+  "brakeman_version": "7.1.1"
+}
