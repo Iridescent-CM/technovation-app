@@ -18,7 +18,7 @@ RSpec.feature "Off-season splash page" do
     expect(page).to have_content("Registration is currently closed")
     expect(page).to have_content("Thanks for your interest in Technovation Challenge!")
     expect(page).to have_content("Registration for Technovation Challenge will open again by October")
-    expect(page).to have_link("sign up", href: "https://eepurl.com/hZMS2n")
+    expect(page).to have_link("sign up", href: "https://eepurl.com/jB3Rxc")
     expect(page).to have_link(
       "curriculum",
       href: "https://technovationchallenge.org/curriculum-intro/registered/new/"
