@@ -24,10 +24,12 @@ module Authenticated
   private
 
   def unauthorized!
-    redirect_to send(
-      "#{current_account.scope_name.sub(/^\w+_r/, "r")}_dashboard_path"
-    ),
+    redirect_to scoped_dashboard_path,
       error: t("controllers.application.unauthorized") and return
+  end
+
+  def scoped_dashboard_path
+    send("#{current_account.scope_name.sub(/^\w+_r/, "r")}_dashboard_path")
   end
 
   def attempt_tokenized_signin!

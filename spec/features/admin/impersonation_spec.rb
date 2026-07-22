@@ -13,6 +13,7 @@ RSpec.feature "Admins impersonating other accounts" do
 
     click_link "Login as #{student.full_name}"
     expect(current_path).to eq(student_team_submission_overview_path)
+    expect(page).not_to have_css(".flash--error", text: "You don't have permission to go there!")
 
     click_link "My Team"
     expect(current_path).to eq(student_team_path(student.team))
