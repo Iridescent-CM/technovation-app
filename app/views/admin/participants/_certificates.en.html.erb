@@ -129,4 +129,57 @@
       <div class="grid__col-1"></div>
     <% end %>
   </div>
+
+  <h5 class="reset">Manually award letters of recognition:</h5>
+
+  <div class="grid">
+    <% if account.mentor_profile.present? %>
+      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %>
+        <%= hidden_field_tag :account_id, account.id %>
+        <%= hidden_field_tag :certificate_type, :mentor_letter %>
+
+        <h6 class="reset">Mentor letter</h6>
+        <p>
+          <%= submit_tag 'Award', class: "button" %>
+        </p>
+      <% end %>
+      <div class="grid__col-1"></div>
+    <% end %>
+
+    <% if account.judge_profile.present? %>
+      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %>
+        <%= hidden_field_tag :account_id, account.id %>
+
+        <h6 class="reset">Judge letter</h6>
+        <p>
+          <%= select_tag :certificate_type,
+              options_for_select(CertificateTypes::LETTER_OF_RECOGNITION_TYPES.slice(
+                :bronze_judge_letter, :silver_judge_letter, :gold_judge_letter
+              ).keys.map { |t|
+                [t.to_s.sub("_letter", "").humanize.titleize, t]
+              }),
+              prompt: "Select type",
+              required: true,
+              class: "chosen" %>
+        </p>
+        <p>
+          <%= submit_tag 'Award', class: "button" %>
+        </p>
+      <% end %>
+      <div class="grid__col-1"></div>
+    <% end %>
+
+    <% if account.ambassador? %>
+      <%= form_tag(admin_certificates_path, class: 'grid__col-3') do %>
+        <%= hidden_field_tag :account_id, account.id %>
+        <%= hidden_field_tag :certificate_type, :ambassador_letter %>
+
+        <h6 class="reset">Ambassador letter</h6>
+        <p>
+          <%= submit_tag 'Award', class: "button" %>
+        </p>
+      <% end %>
+      <div class="grid__col-1"></div>
+    <% end %>
+  </div>
 </div>
