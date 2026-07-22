@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
     :current_session,
     :get_cookie,
     :chapter_ambassador,
+    :impersonating?,
     :needs_filestack?
 
   def needs_filestack!
@@ -70,6 +71,11 @@ class ApplicationController < ActionController::Base
     else
       ::NullAuth.new
     end
+  end
+
+  def impersonating?
+    session[:admin_account_id_performing_impersonation].present? &&
+      current_session.authenticated?
   end
 
   private

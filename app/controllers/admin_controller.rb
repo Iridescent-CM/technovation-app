@@ -27,7 +27,10 @@ class AdminController < ApplicationController
   private
 
   def require_current_admin
-    unauthorized! if current_admin.nil?
+    return if current_admin.present?
+    return redirect_to scoped_dashboard_path if impersonating?
+
+    unauthorized!
   end
 
   def current_admin
