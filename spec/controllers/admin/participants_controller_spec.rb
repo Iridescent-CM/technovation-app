@@ -68,7 +68,7 @@ RSpec.describe Admin::ParticipantsController do
     end
 
     context "while impersonating a non-admin participant (issue #6254)" do
-      it "redirects instead of raising NoMethodError when the active session is a non-admin" do
+      it "redirects with an unauthorized error flash when not impersonating" do
         student = FactoryBot.create(:student)
         student.account.regenerate_session_token
         controller.set_cookie(CookieNames::SESSION_TOKEN, student.account.session_token)
@@ -76,6 +76,19 @@ RSpec.describe Admin::ParticipantsController do
         get :index
 
         expect(response).to have_http_status(:redirect)
+        expect(flash[:error]).to be_present
+      end
+
+      it "redirects without an unauthorized error flash when impersonating" do
+        student = FactoryBot.create(:student)
+        student.account.regenerate_session_token
+        controller.set_cookie(CookieNames::SESSION_TOKEN, student.account.session_token)
+        session[:admin_account_id_performing_impersonation] = controller.current_account.id
+
+        get :index
+
+        expect(response).to have_http_status(:redirect)
+        expect(flash[:error]).to be_blank
       end
     end
   end
