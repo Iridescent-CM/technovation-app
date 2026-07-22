@@ -21,4 +21,12 @@ RSpec.describe CertificateRecipient do
 
     expect(a).to eq(b)
   end
+
+  it "describes letter types as letters of recognition" do
+    account = FactoryBot.create(:judge).account
+
+    recipient = CertificateRecipient.new(:bronze_judge_letter, account)
+
+    expect(recipient.description).to eq("Letter of Recognition (Bronze Judge)")
+  end
 end

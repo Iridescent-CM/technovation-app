@@ -50,6 +50,28 @@ class CertificateRecipient
   end
 
   def description
+    if letter_type?
+      letter_description
+    else
+      certificate_description
+    end
+  end
+
+  def letter_type?
+    CertificateTypes::LETTER_OF_RECOGNITION_TYPES.key?(@certificate_type.to_sym)
+  end
+
+  def letter_description
+    role = @certificate_type.to_s.sub("_letter", "").humanize.titleize
+
+    if @team.present?
+      "Letter of Recognition (#{role}) for #{@team.name}"
+    else
+      "Letter of Recognition (#{role})"
+    end
+  end
+
+  def certificate_description
     title = @certificate_type.to_s.humanize.titleize
 
     if @team.present?
