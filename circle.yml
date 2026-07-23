@@ -226,6 +226,13 @@ jobs:
             - vendor/bundle
 
       - run:
+          name: Run Brakeman
+          command: |
+            if [ "$CIRCLE_NODE_INDEX" = "0" ]; then
+              bundle exec brakeman -q --no-pager --exit-on-warn --exit-on-error
+            fi
+
+      - run:
           name: Install node packages
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
 
