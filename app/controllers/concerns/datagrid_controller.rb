@@ -8,6 +8,10 @@ module DatagridController
       :csv_export_supported?
 
     before_action -> {
+      # Keep an empty nest for first-load HTML (saved searches compare params[param_root]).
+      # Does not permit anything — only ensures the key is present.
+      params[param_root] ||= ActionController::Parameters.new
+
       @saved_searches = current_profile.saved_searches
         .for_param_root(param_root)
 
