@@ -39,7 +39,8 @@ module DataGrids::Ambassador
     private
 
     def grid_params
-      grid = (params[:submissions_grid] ||= {}).merge(
+      permitted = permitted_grid_params
+      grid = permitted.merge(
         admin: false,
         allow_state_search: current_ambassador.country_code != "US",
         country: [current_ambassador.country_code],
@@ -47,10 +48,10 @@ module DataGrids::Ambassador
           if current_ambassador.country_code == "US"
             [current_ambassador.state_province]
           else
-            Array(params[:submissions_grid][:state_province])
+            Array(permitted[:state_province])
           end
         ),
-        season: params[:submissions_grid][:season] || Season.current.year
+        season: permitted[:season] || Season.current.year
       )
 
       grid.merge(

@@ -12,6 +12,25 @@ RSpec.describe Admin::ParticipantsController do
   let(:senior_dob) { Division.cutoff_date - senior_division_age.years }
 
   describe "GET #index" do
+    context "scoped grid param permitting (issue #6314)" do
+      it "permits known accounts_grid filters and strips unknown nested keys" do
+        get :index, params: {
+          accounts_grid: {
+            first_name: "Ada",
+            country: ["US"],
+            not_a_real_filter: "should-be-stripped"
+          }
+        }
+
+        expect(response).to have_http_status(:ok)
+
+        permitted = controller.send(:permitted_grid_params)
+        expect(permitted[:first_name]).to eq("Ada")
+        expect(permitted[:country]).to eq(["US"])
+        expect(permitted.keys.map(&:to_s)).not_to include("not_a_real_filter")
+      end
+    end
+
     context "when arriving from a club's stats overview link (issue #6070)" do
       render_views
 

@@ -21,7 +21,8 @@ module ChapterAmbassador
     private
 
     def grid_params
-      grid = (params[:judges_grid] ||= {}).merge(
+      permitted = permitted_grid_params
+      grid = permitted.merge(
         current_account: current_ambassador.account,
         admin: false,
         allow_state_search: current_ambassador.country_code != "US",
@@ -30,7 +31,7 @@ module ChapterAmbassador
           if current_ambassador.country_code == "US"
             [current_ambassador.state_province]
           else
-            Array(params[:judges_grid][:state_province])
+            Array(permitted[:state_province])
           end
         )
       )

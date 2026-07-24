@@ -56,15 +56,16 @@ module Admin
     end
 
     def grid_params
-      grid = (params[:media_consents_grid] ||= {}).merge(
+      permitted = permitted_grid_params
+      grid = permitted.merge(
         admin: true,
-        season: params[:media_consents_grid][:season] || Season.current.year,
-        country: Array(params[:media_consents_grid][:country]),
-        state_province: Array(params[:media_consents_grid][:state_province])
+        season: permitted[:season] || Season.current.year,
+        country: Array(permitted[:country]),
+        state_province: Array(permitted[:state_province])
       )
 
       if request.format.html?
-        grid[:upload_approval_status] = params[:media_consents_grid][:upload_approval_status] || ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:pending]
+        grid[:upload_approval_status] = grid[:upload_approval_status] || ConsentForms::PAPER_CONSENT_UPLOAD_STATUSES[:pending]
       end
 
       grid.merge(

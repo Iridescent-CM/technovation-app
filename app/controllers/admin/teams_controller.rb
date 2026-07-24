@@ -37,11 +37,12 @@ module Admin
     end
 
     def grid_params
-      grid = (params[:teams_grid] ||= {}).merge(
+      permitted = permitted_grid_params
+      grid = permitted.merge(
         admin: true,
-        country: Array(params[:teams_grid][:country]),
-        state_province: Array(params[:teams_grid][:state_province]),
-        season: params[:teams_grid].present? ? params[:teams_grid][:season] : Season.current.year
+        country: Array(permitted[:country]),
+        state_province: Array(permitted[:state_province]),
+        season: params[:teams_grid].present? ? permitted[:season] : Season.current.year
       )
 
       grid.merge(

@@ -36,6 +36,21 @@ RSpec.describe DataGrids::Ambassador::ParticipantsController do
         expect(response.status).to eq(200)
       end
 
+      it "applies nested accounts_grid filters without global params.permit! (issue #6314)" do
+        get :index, params: {
+          accounts_grid: {
+            first_name: "Ada",
+            not_a_real_filter: "should-be-stripped"
+          }
+        }
+
+        expect(response).to have_http_status(:ok)
+
+        permitted = controller.send(:permitted_grid_params)
+        expect(permitted[:first_name]).to eq("Ada")
+        expect(permitted.keys.map(&:to_s)).not_to include("not_a_real_filter")
+      end
+
       context "when a chapter ambassador has the 'national view' ability" do
         let(:national_view) { true }
 

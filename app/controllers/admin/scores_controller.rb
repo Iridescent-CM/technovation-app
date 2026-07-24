@@ -35,10 +35,10 @@ module Admin
     private
 
     def grid_params
-      grid = params[:scored_submissions_grid] ||= {}
+      grid = permitted_grid_params
 
       current_round = SeasonToggles.current_judging_round(full_name: true).to_s
-      passed_round = params[:scored_submissions_grid].fetch(:round) { "" }
+      passed_round = grid.fetch(:round) { "" }
 
       round = if !passed_round.blank?
         passed_round
@@ -50,8 +50,8 @@ module Admin
 
       grid.merge({
         admin: true,
-        country: Array(params[:scored_submissions_grid][:country]),
-        state_province: Array(params[:scored_submissions_grid][:state_province]),
+        country: Array(grid[:country]),
+        state_province: Array(grid[:state_province]),
         current_account: current_account,
         round: round,
         column_names: detect_extra_columns(grid)

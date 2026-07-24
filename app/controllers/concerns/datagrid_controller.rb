@@ -8,6 +8,10 @@ module DatagridController
       :csv_export_supported?
 
     before_action -> {
+      # Keep an empty nest for first-load HTML (saved searches compare params[param_root]).
+      # Does not permit anything — only ensures the key is present.
+      params[param_root] ||= ActionController::Parameters.new
+
       @saved_searches = current_profile.saved_searches
         .for_param_root(param_root)
 
@@ -116,6 +120,31 @@ module DatagridController
 
   def modify_csv_scope(scope)
     self.class.csv_scope_modifier.call(scope, current_profile, params)
+  end
+
+  # Nested datagrid filter params only — replaces base-controller params.permit!
+  def permitted_grid_params
+    raw = params[param_root]
+    return ActiveSupport::HashWithIndifferentAccess.new if raw.blank?
+
+    ActiveSupport::HashWithIndifferentAccess.new(
+      raw.permit(*grid_params_permit_keys).to_unsafe_h
+    )
+  end
+
+  def grid_params_permit_keys
+    scalar_keys = [:order, :descending]
+    array_keys = [:column_names]
+
+    grid_klass.filters.each do |filter|
+      if filter.multiple?
+        array_keys << filter.name
+      else
+        scalar_keys << filter.name
+      end
+    end
+
+    scalar_keys.uniq + array_keys.uniq.map { |name| {name => []} }
   end
 
   def detect_extra_columns(grid_params)

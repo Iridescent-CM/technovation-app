@@ -31,7 +31,7 @@ module ChapterAmbassador
     private
 
     def grid_params
-      params[:activities_grid] ||= {}
+      permitted_grid_params
     end
 
     def csv_export_supported?(grid)

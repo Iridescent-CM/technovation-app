@@ -70,14 +70,15 @@ module Admin
     private
 
     def grid_params
-      grid = (params[:accounts_grid] ||= {}).merge(
+      permitted = permitted_grid_params
+      grid = permitted.merge(
         admin: true,
-        country: Array(params[:accounts_grid][:country]),
-        state_province: Array(params[:accounts_grid][:state_province]),
-        season: params[:accounts_grid].present? ? params[:accounts_grid][:season] : Season.current.year,
-        season_and_or: params[:accounts_grid][:season_and_or] ||
+        country: Array(permitted[:country]),
+        state_province: Array(permitted[:state_province]),
+        season: params[:accounts_grid].present? ? permitted[:season] : Season.current.year,
+        season_and_or: permitted[:season_and_or] ||
                          "match_any",
-        mentor_types: params[:accounts_grid][:mentor_types]
+        mentor_types: permitted[:mentor_types]
       )
 
       grid.merge(

@@ -24,11 +24,12 @@ module Admin
     private
 
     def grid_params
-      grid = (params[:unaffiliated_participants_grid] ||= {}).merge(
+      permitted = permitted_grid_params
+      grid = permitted.merge(
         admin: true,
         allow_state_search: true,
-        country: Array(params[:unaffiliated_participants_grid][:country]),
-        state_province: Array(params[:unaffiliated_participants_grid][:state_province])
+        country: Array(permitted[:country]),
+        state_province: Array(permitted[:state_province])
       )
 
       grid.merge(

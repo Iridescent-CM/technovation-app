@@ -9,10 +9,10 @@ module Admin
     private
 
     def grid_params
-      grid = params[:scores_grid] ||= {}
+      grid = permitted_grid_params
 
       current_round = SeasonToggles.current_judging_round(full_name: true).to_s
-      passed_round = params[:scores_grid].fetch(:round) { "" }
+      passed_round = grid.fetch(:round) { "" }
 
       round = if !passed_round.blank?
         passed_round
@@ -24,7 +24,7 @@ module Admin
 
       grid.merge({
         round: round,
-        season: params[:scores_grid][:season] || Season.current.year,
+        season: grid[:season] || Season.current.year,
         column_names: detect_extra_columns(grid)
       })
     end

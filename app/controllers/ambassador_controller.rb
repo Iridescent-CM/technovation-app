@@ -5,8 +5,6 @@ class AmbassadorController < ApplicationController
 
   before_action -> {
     set_last_profile_used(current_scope)
-
-    params.permit!
   }, if: -> { current_ambassador.authenticated? }
 
   before_action :require_chapterable_and_ambassador_onboarded
