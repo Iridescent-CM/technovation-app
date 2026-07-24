@@ -460,6 +460,15 @@ class Account < ActiveRecord::Base
       .where("activities.id IS NULL")
   }
 
+  scope :inactive_admins_for_deactivation, -> {
+    joins(:admin_profile)
+      .where(deactivated_at: nil)
+      .where(
+        "COALESCE(accounts.last_logged_in_at, accounts.created_at) < ?",
+        ADMIN_INACTIVITY_DEACTIVATION_AFTER.ago
+      )
+  }
+
   scope :confirmed_email, -> { where("email_confirmed_at IS NOT NULL") }
   scope :unconfirmed_email, -> { where("email_confirmed_at IS NULL") }
 
@@ -635,6 +644,8 @@ class Account < ActiveRecord::Base
 
   MAX_FAILED_ATTEMPTS = 10
   LOCKOUT_PERIOD = 30.minutes
+  ADMIN_PASSWORD_MAX_AGE = 90.days
+  ADMIN_INACTIVITY_DEACTIVATION_AFTER = 90.days
 
   def locked?
     return false if locked_at.blank?
@@ -669,6 +680,23 @@ class Account < ActiveRecord::Base
     update!(failed_attempts: 0, locked_at: nil)
   end
 
+  def deactivated?
+    deactivated_at.present?
+  end
+
+  def password_expired?
+    return false unless is_admin?
+    return false if password_changed_at.blank?
+
+    password_changed_at < ADMIN_PASSWORD_MAX_AGE.ago
+  end
+
+  def requires_admin_password_rules?
+    return false if not_admin?
+
+    temporary_password? || password_expired?
+  end
+
   before_validation -> {
     self.email = email.to_s.strip.downcase
 
@@ -679,6 +707,7 @@ class Account < ActiveRecord::Base
   }
 
   before_save :normalize_timezone, if: :will_save_change_to_timezone?
+  before_save :stamp_password_changed_at, if: :will_save_change_to_password_digest?
 
   before_create do
     self.email_confirmed_at = Time.current
@@ -731,13 +760,13 @@ class Account < ActiveRecord::Base
     length: {
       minimum: 20,
       on: :update,
-      if: -> { !full_admin? && !not_admin? }
+      if: :requires_admin_password_rules?
     }
 
   validates :password,
     password_complexity: true,
     on: :update,
-    if: -> { !full_admin? && !not_admin? && !inviting_new_admin }
+    if: -> { requires_admin_password_rules? && !inviting_new_admin }
 
   validates :first_name, :last_name,
     presence: true,
@@ -1331,6 +1360,10 @@ class Account < ActiveRecord::Base
 
   def changing_password_or_temporary_password?
     changing_password? || temporary_password?
+  end
+
+  def stamp_password_changed_at
+    self.password_changed_at = Time.current
   end
 
   def not_student?

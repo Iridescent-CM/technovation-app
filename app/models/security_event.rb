@@ -8,6 +8,8 @@ class SecurityEvent < ActiveRecord::Base
     "logout",
     "admin.impersonation.start",
     "admin.impersonation.stop",
+    "admin.deactivated",
+    "admin.reactivated",
     "password.changed",
     "password.reset"
   ].freeze

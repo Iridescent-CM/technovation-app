@@ -2,8 +2,8 @@ module Admin
   class AdminsController < AdminController
     include AdminHelper
 
-    before_action :get_admins, only: [:index, :destroy]
-    before_action :require_super_admin, only: [:new, :create, :destroy, :make_super_admin]
+    before_action :get_admins, only: [:index, :destroy, :reactivate]
+    before_action :require_super_admin, only: [:new, :create, :destroy, :make_super_admin, :reactivate]
 
     TECHNOVATION_ESTABLISHED_DATE = Date.new(2009, 1, 1)
 
@@ -38,6 +38,22 @@ module Admin
       admin = @admins.find(params.fetch(:id))
       admin.destroy!
       redirect_to admin_admins_path, success: "You deleted #{admin.name}"
+    end
+
+    def reactivate
+      admin = @admins.find(params.fetch(:id) { params.fetch(:admin_id) })
+      admin.update!(deactivated_at: nil)
+      admin.regenerate_auth_token
+
+      SecurityEventLogger.log(
+        event_type: "admin.reactivated",
+        account: admin,
+        actor: current_account,
+        request: request
+      )
+
+      redirect_to admin_admins_path,
+        success: t("controllers.admin.admins.reactivate.success", name: admin.name)
     end
 
     private

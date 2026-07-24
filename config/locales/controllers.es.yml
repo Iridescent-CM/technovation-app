@@ -77,8 +77,19 @@ es:
           one: "Lo sentimos, no reconocemos ese nombre y contraseña. Te queda 1 intento antes de que tu cuenta se bloquee durante 30 minutos."
           other: "Lo sentimos, no reconocemos ese nombre y contraseña. Te quedan %{count} intentos antes de que tu cuenta se bloquee durante 30 minutos."
         locked: "Demasiados intentos fallidos de inicio de sesión. Inténtalo de nuevo en 30 minutos, o restablece tu contraseña a continuación."
+        deactivated: "Esta cuenta ha sido desactivada. Contacta a un administrador de Technovation si necesitas que se restablezca el acceso."
       destroy:
         success: "Has cerrado sesión. ¡Nos vemos la próxima vez!"
+
+    admin:
+      passwords:
+        new:
+          alert: "Tu contraseña de administrador ha caducado. Establece una nueva contraseña para continuar."
+        update:
+          success: "Tu contraseña ha sido actualizada."
+      admins:
+        reactivate:
+          success: "Reactivaste a %{name}"
 
     signups:
       create:

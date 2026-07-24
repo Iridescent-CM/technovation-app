@@ -1,0 +1,29 @@
+<h3>Your admin password has expired</h3>
+
+<p>
+  <strong>ALL WORK RELATED PASSWORDS</strong>
+  must be generated with our password management software.
+</p>
+
+<p>
+  Make sure you create your password with the generator,
+  and please ensure that it is set to use at least 20 characters
+  with uppercase, lowercase, and a number.
+</p>
+
+<%= form_with model: @account, url: admin_password_path, method: :patch, local: true do |f| %>
+  <%= render "errors", record: @account %>
+
+  <p>
+    <%= f.email_field :email, readonly: true %>
+  </p>
+
+  <p>
+    <%= f.label :password, for: :account_password %>
+    <%= f.password_field :password, id: :account_password %>
+  </p>
+
+  <p>
+    <%= f.submit "Save password", class: "button" %>
+  </p>
+<% end %>

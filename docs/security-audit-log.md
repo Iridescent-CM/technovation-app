@@ -13,7 +13,9 @@ This app records security-sensitive authentication and account events in a dedic
 | `logout` | User signs out |
 | `admin.impersonation.start` | Admin starts "Login as" a participant |
 | `admin.impersonation.stop` | Admin returns from impersonation |
-| `password.changed` | Password updated via profile, admin participant edit, or admin signup |
+| `admin.deactivated` | Inactive admin auto-deactivated by scheduled job |
+| `admin.reactivated` | Super-admin reactivates a deactivated admin |
+| `password.changed` | Password updated via profile, admin participant edit, admin signup, or expired-password form |
 | `password.reset` | Password reset completed via reset token |
 
 Each event stores event type, subject account, actor account, IP address, user agent,
@@ -33,5 +35,4 @@ for event type and date range).
 ## Out of scope (future work)
 
 - Admin IP allowlist blocked-access events
-- Inactive admin deactivation events
 - Logging of general admin CRUD actions beyond the event types above
