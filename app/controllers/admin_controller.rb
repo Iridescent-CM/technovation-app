@@ -10,6 +10,13 @@ class AdminController < ApplicationController
   before_action :require_completed_admin_password
   before_action :require_fresh_admin_password
 
+  before_action -> {
+    if !current_account.full_admin? && !current_account.not_admin?
+      redirect_to admin_signup_path(token: current_account.admin_invitation_token),
+        alert: "You need to create a secure password" and return
+    end
+  }
+
   def current_user
     current_admin.account
   end

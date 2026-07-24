@@ -34,11 +34,12 @@ module DataGrids::Ambassador
     private
 
     def grid_params
-      grid = (params[:unaffiliated_participants_grid] ||= {}).merge(
+      permitted = permitted_grid_params
+      grid = permitted.merge(
         admin: false,
         allow_state_search: true,
         country: [country_code],
-        state_province: Array(params[:unaffiliated_participants_grid][:state_province])
+        state_province: Array(permitted[:state_province])
       )
 
       grid.merge(

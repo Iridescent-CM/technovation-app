@@ -118,6 +118,31 @@ module DatagridController
     self.class.csv_scope_modifier.call(scope, current_profile, params)
   end
 
+  # Nested datagrid filter params only — replaces base-controller params.permit!
+  def permitted_grid_params
+    raw = params[param_root]
+    return ActiveSupport::HashWithIndifferentAccess.new if raw.blank?
+
+    ActiveSupport::HashWithIndifferentAccess.new(
+      raw.permit(*grid_params_permit_keys).to_unsafe_h
+    )
+  end
+
+  def grid_params_permit_keys
+    scalar_keys = [:order, :descending]
+    array_keys = [:column_names]
+
+    grid_klass.filters.each do |filter|
+      if filter.multiple?
+        array_keys << filter.name
+      else
+        scalar_keys << filter.name
+      end
+    end
+
+    scalar_keys.uniq + array_keys.uniq.map { |name| {name => []} }
+  end
+
   def detect_extra_columns(grid_params)
     columns = Array(grid_params[:column_names]).flatten.map(&:to_s)
 

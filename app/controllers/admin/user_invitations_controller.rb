@@ -54,7 +54,7 @@ module Admin
     end
 
     def grid_params
-      grid = params[:user_invitations_grid] ||= {}
+      grid = permitted_grid_params
 
       grid.merge(
         column_names: detect_extra_columns(grid)

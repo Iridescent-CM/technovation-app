@@ -9,7 +9,7 @@ module Admin
     private
 
     def grid_params
-      grid = params[:security_events_grid] ||= {}
+      grid = permitted_grid_params
 
       grid.merge(
         column_names: detect_extra_columns(grid)

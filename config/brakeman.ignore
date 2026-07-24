@@ -1,10 +1,6 @@
 {
   "ignored_warnings": [
     {
-      "fingerprint": "0c4a844cadc8ffe4790df5b596188e32ffe865e5be7343df9c738e7004714b15",
-      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium Mass Assignment in app/controllers/ambassador_controller.rb:9)"
-    },
-    {
       "fingerprint": "11644f4bdceea68c7405e2348e1a97c6b758f28779ee173cb99be5d5f62e2931",
       "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak SQL Injection in app/data_grids/judges_grid.rb:239)"
     },
@@ -23,10 +19,6 @@
     {
       "fingerprint": "1eb8cf36a789d5b0dcca3a2d5259106cc1b8d024eff80ea6a7467aa196c95527",
       "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (High Format Validation in app/models/account.rb:744)"
-    },
-    {
-      "fingerprint": "2282dd65b760b6c44c2c0b4b44a17ad33c0dd180236e1b113555f34445e3646d",
-      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium Mass Assignment in app/controllers/chapter_ambassador_controller.rb:9)"
     },
     {
       "fingerprint": "258cfca0b240737a21f9ef43773bea39d22b3b86c04e27afd1e030c2a5fccf07",
@@ -155,10 +147,6 @@
     {
       "fingerprint": "bb2d0c1e480ae4512f065cac90bfdb55affacd8fd2ad1707c0ed8d738e22793e",
       "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (High Cross-Site Scripting in app/views/student/parental_consent_notices/_form.en.html.erb:14)"
-    },
-    {
-      "fingerprint": "bd0968096eab12d0bdc40a92e5c12d9f09fc61c3c984392905c84366ad69804e",
-      "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium Mass Assignment in app/controllers/admin_controller.rb:16)"
     },
     {
       "fingerprint": "be3f5c9cac4a35cf8f8e9d0f9c9df7a4a0eb94d104307bcef12e039e13c73ea1",

@@ -89,11 +89,12 @@ module Admin
     private
 
     def grid_params
-      grid = (params[:submissions_grid] ||= {}).merge(
+      permitted = permitted_grid_params
+      grid = permitted.merge(
         admin: true,
-        country: Array(params[:submissions_grid][:country]),
-        state_province: Array(params[:submissions_grid][:state_province]),
-        season: params[:submissions_grid].present? ? params[:submissions_grid][:season] : Season.current.year
+        country: Array(permitted[:country]),
+        state_province: Array(permitted[:state_province]),
+        season: params[:submissions_grid].present? ? permitted[:season] : Season.current.year
       )
 
       grid.merge(

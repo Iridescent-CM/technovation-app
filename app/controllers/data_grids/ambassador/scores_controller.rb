@@ -36,7 +36,7 @@ module DataGrids::Ambassador
     private
 
     def grid_params
-      grid = params[:scored_submissions_grid] ||= {}
+      grid = permitted_grid_params
 
       round = if SeasonToggles.display_scores?
         grid.fetch(:round) { "quarterfinals" }
@@ -52,7 +52,7 @@ module DataGrids::Ambassador
           if current_ambassador.country_code == "US"
             [current_ambassador.state_province]
           else
-            Array(params[:scored_submissions_grid][:state_province])
+            Array(grid[:state_province])
           end
         ),
         current_account: current_account,
