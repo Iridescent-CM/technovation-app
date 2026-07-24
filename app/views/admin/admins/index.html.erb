@@ -11,7 +11,7 @@
       <th>Email</th>
       <th>Last logged in</th>
       <th>Status</th>
-      <th colspan="3">Permissions</th>
+      <th colspan="4">Permissions</th>
     </tr>
   </thead>
 
@@ -21,7 +21,13 @@
         <td><%= admin.name %></td>
         <td><%= admin.email %></td>
         <td><%= safe_time_ago_in_words(admin.last_logged_in_at, 'ago') %></td>
-        <td><%= admin.admin_status.humanize %></td>
+        <td>
+          <%= admin.admin_status.humanize %>
+          <% if admin.deactivated? %>
+            <br>
+            <strong>(Deactivated <%= safe_time_ago_in_words(admin.deactivated_at, 'ago') %>)</strong>
+          <% end %>
+        </td>
         <td><%= admin.admin_profile.super_admin? ? "Super Admin" : "Admin"%></td>
         <% if Account.full_admin.size > 1 && current_admin.super_admin? %>
           <td>
@@ -41,6 +47,19 @@
                           data: {
                             method: :patch,
                             confirm: "You are UPDATING #{admin.name} to a SUPER ADMIN!",
+                          } %>
+            <% else %>
+              <p class="text-align--center">N/A</p>
+            <% end %>
+          </td>
+          <td>
+            <% if admin.deactivated? %>
+              <%= link_to 'reactivate',
+                          admin_admin_reactivate_path(admin),
+                          class: "button button--remove-bg",
+                          data: {
+                            method: :patch,
+                            confirm: "You are REACTIVATING #{admin.name}!",
                           } %>
             <% else %>
               <p class="text-align--center">N/A</p>

@@ -337,10 +337,13 @@ Rails.application.routes.draw do
 
     resources :admins do
       patch :make_super_admin
+      patch :reactivate
     end
 
     get :signup, to: "signups#new"
     patch :signups, to: "signups#update"
+
+    resource :password, only: [:new, :update], controller: "passwords"
 
     resources :job_statuses, only: :show
 

@@ -21,6 +21,13 @@ class SigninsController < ApplicationController
       return
     end
 
+    if @signin&.deactivated?
+      flash.now[:error] = t("controllers.signins.create.deactivated")
+      @signin = Account.new(email: submitted_email)
+      render :new
+      return
+    end
+
     if @signin.present? && submitted_password.present? && @signin.authenticate(submitted_password)
       SignIn.call(@signin, self, permanent: params[:remember_me] == "1")
       return

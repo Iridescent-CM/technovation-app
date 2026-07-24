@@ -153,6 +153,24 @@ RSpec.describe SigninsController do
       expect(assigns(:highlight_password_reset)).to be(true)
     end
 
+    it "rejects sign-in for a deactivated account without burning attempts" do
+      admin = FactoryBot.create(:admin)
+      admin.account.update!(deactivated_at: Time.current, failed_attempts: 0)
+
+      expect {
+        post :create, params: {
+          account: {
+            email: admin.email,
+            password: PasswordHelpers::VALID_PASSWORD
+          }
+        }
+      }.not_to change { admin.account.reload.failed_attempts }
+
+      expect(response).to render_template(:new)
+      expect(flash.now[:error]).to eq(I18n.t("controllers.signins.create.deactivated"))
+      expect(assigns(:signin)).to be_a_new(Account)
+    end
+
     it "resets failed attempts after a successful sign-in" do
       student = FactoryBot.create(:student)
       student.account.update!(failed_attempts: 3, locked_at: nil)

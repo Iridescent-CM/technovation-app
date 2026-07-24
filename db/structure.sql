@@ -164,7 +164,9 @@ CREATE TABLE public.accounts (
     no_chapterables_available boolean,
     force_chapterable_selection boolean DEFAULT false,
     failed_attempts integer DEFAULT 0 NOT NULL,
-    locked_at timestamp(6) without time zone
+    locked_at timestamp(6) without time zone,
+    password_changed_at timestamp(6) without time zone,
+    deactivated_at timestamp(6) without time zone
 );
 
 
@@ -5201,6 +5203,7 @@ ALTER TABLE ONLY public.program_information
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260724120000'),
 ('20260714120000'),
 ('20260713160000'),
 ('20260402233018'),
