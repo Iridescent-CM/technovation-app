@@ -27,18 +27,22 @@
           </td>
           <% if current_scope.in?(%w[student mentor]) %>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              <%= certificate.team.name %>
+              <%= certificate.team&.name %>
             </td>
           <% end %>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             <%= certificate.cert_type.titleize %>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <%= link_to "Download your certificate",
-                certificate.file_url,
-                target: "_blank",
-                class: "tw-green-btn"
-            %>
+            <% if certificate.file_url.present? %>
+              <%= link_to certificate.letter_type? ? "Download your letter" : "Download your certificate",
+                  certificate.file_url,
+                  target: "_blank",
+                  class: "tw-green-btn"
+              %>
+            <% else %>
+              Unavailable, please contact <%= mail_to ENV.fetch("HELP_EMAIL") %>
+            <% end %>
           </td>
         </tr>
       <% end %>

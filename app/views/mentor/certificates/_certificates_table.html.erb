@@ -22,12 +22,16 @@
                     <%= certificate.team.name%>
                   </td>
                   <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-left text-base font-medium sm:pr-6">
-                    <%= link_to "Open your certificate",
-                      certificate.file_url,
-                      target: "_blank",
-                      class: "tw-green-btn cursor-pointer",
-                      disabled: !current_account.took_program_survey?
-                    %>
+                    <% if certificate.file_url.present? %>
+                      <%= link_to "Open your certificate",
+                        certificate.file_url,
+                        target: "_blank",
+                        class: "tw-green-btn cursor-pointer",
+                        disabled: !current_account.took_program_survey?
+                      %>
+                    <% else %>
+                      Unavailable, please contact <%= mail_to ENV.fetch("HELP_EMAIL") %>
+                    <% end %>
                   </td>
                 </tr>
               <% end %>

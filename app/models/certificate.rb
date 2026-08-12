@@ -17,7 +17,7 @@ class Certificate < ApplicationRecord
   }
 
   scope :mentor_types, -> {
-    where(cert_type: CertificateTypes::MENTOR_CERTIFICATE_TYPES.keys)
+    where(cert_type: CertificateTypes::MENTOR_CERTIFICATE_TYPES.keys + [:mentor_letter])
   }
 
   scope :ambassador_types, -> {
@@ -74,11 +74,11 @@ class Certificate < ApplicationRecord
     end
   end
 
-  private
-
   def letter_type?
     CertificateTypes::LETTER_OF_RECOGNITION_TYPES.key?(cert_type.to_sym)
   end
+
+  private
 
   def letter_description
     role = cert_type.sub("_letter", "").humanize.titleize
