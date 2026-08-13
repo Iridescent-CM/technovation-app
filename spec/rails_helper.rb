@@ -71,6 +71,12 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
+  config.before(:each) do
+    allow(CRM::SetupAccountForCurrentSeasonJob).to receive(:perform_later)
+    allow(CRM::UpsertContactInfoJob).to receive(:perform_later)
+    allow(CRM::UpsertProgramInfoJob).to receive(:perform_later)
+  end
+
   config.before(:each, type: :system) do
     driven_by :rack_test
   end
