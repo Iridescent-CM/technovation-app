@@ -3,7 +3,7 @@
 
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Scores & Certificates" } do %>
 
-    <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
+    <% if SeasonToggles.display_scores? %>
       <% if @current_teams.any? %>
         <%= render "mentor/scores/team_scores_and_certificates", current_teams: @current_teams %>
       <% else %>

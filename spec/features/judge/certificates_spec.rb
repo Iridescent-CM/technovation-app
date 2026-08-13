@@ -75,7 +75,7 @@ RSpec.feature "Judge certificates" do
     expect(page).to have_content("Certificates are currently unavailable.")
   end
 
-  scenario "non-onboarded judges see no certificates when judging is set to finished" do
+  scenario "non-onboarded judges can open the certificate tab when judging is set to finished" do
     SeasonToggles.set_judging_round(:finished)
     SeasonToggles.display_scores_on!
 
@@ -83,7 +83,10 @@ RSpec.feature "Judge certificates" do
     sign_in(judge)
 
     expect(page).to have_content("Thank you for your interest in judging this season. The season is currently finished.")
-    expect(page).not_to have_link("Your judge certificate")
+    expect(page).to have_link("Your judge certificate")
+
+    click_link "Your judge certificate"
+    expect(page).to have_content("You don't have a certificate for this season.")
   end
 
   scenario "onboarded judges with no completed scores see no certificates or badge" do
@@ -354,5 +357,54 @@ RSpec.feature "Judge certificates" do
 
     click_link("prev-certs-tab")
     expect(page).to have_content("If you participated in past seasons, this is where you can view and download your certificates.")
+  end
+
+  scenario "not-onboarded judge can view current certificates and letters" do
+    SeasonToggles.set_judging_round(:finished)
+    SeasonToggles.display_scores_on!
+
+    judge = FactoryBot.create(:judge)
+    FactoryBot.create(
+      :certificate,
+      :with_file,
+      account: judge.account,
+      cert_type: :bronze_judge,
+      team: nil
+    )
+    FactoryBot.create(
+      :certificate,
+      :with_file,
+      account: judge.account,
+      cert_type: :bronze_judge_letter,
+      team: nil
+    )
+
+    sign_in(judge)
+
+    expect(page).to have_link("Your judge certificate")
+    expect(page).not_to have_link("Judge Submissions")
+
+    click_link "Your judge certificate"
+    expect(page).to have_link("View your certificate")
+    expect(page).to have_link("View your letter of recognition")
+  end
+
+  scenario "Judge can view their previous judge letters" do
+    judge = FactoryBot.create(:judge, :onboarded, :general_certificate)
+    previous_letter = FactoryBot.create(
+      :certificate,
+      :past,
+      :with_file,
+      account: judge.account,
+      cert_type: :bronze_judge_letter,
+      team: nil
+    )
+
+    sign_in(judge)
+
+    click_link("prev-certs-tab")
+    expect(page).to have_content(previous_letter.season)
+    expect(page).to have_content(previous_letter.cert_type.titleize)
+    expect(page).to have_link("Download your letter")
   end
 end

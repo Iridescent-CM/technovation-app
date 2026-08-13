@@ -1,10 +1,15 @@
+<% mentor_onboarded = current_mentor.onboarded? %>
 <% current_teams.each do |team| %>
   <div class="rounded-lg shadow-lg border mb-8">
     <div class="p-6">
       <div class="mb-8">
         <p class="text-xl font-semibold">
           Team:
-          <span class="tw-link"><%= link_to team.name, mentor_team_path(team) %></span>
+          <% if mentor_onboarded %>
+            <span class="tw-link"><%= link_to team.name, mentor_team_path(team) %></span>
+          <% else %>
+            <%= team.name %>
+          <% end %>
         </p>
         <p class="text-xl font-semibold">
           Submission:

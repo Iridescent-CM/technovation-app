@@ -4,7 +4,7 @@
   <%= render layout: "application/templates/dashboards/energetic_container", locals: { heading: "Certificates" } do %>
     <div class="tab">
       <div id="certificates-tab-content" class="tab-content tw-active">
-        <% if current_mentor.onboarded? && SeasonToggles.display_scores? %>
+        <% if SeasonToggles.display_scores? %>
           <% if @current_certificates.any? %>
             <% if current_account.took_program_survey? %>
               <% if @current_mentor_letter.present? %>
