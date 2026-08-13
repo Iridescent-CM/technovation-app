@@ -140,7 +140,8 @@ RSpec.feature "Mentor certificates" do
     click_link "Scores & Certificates"
     click_link "Certificates"
 
-    expect(page).to have_content(
+    expect(page).to have_content("You don't have a certificate for this season.")
+    expect(page).not_to have_content(
       "Reading your scores and certificates is not available right now."
     )
 
@@ -193,5 +194,53 @@ RSpec.feature "Mentor certificates" do
     expect(page).not_to have_content(
       "Reading your scores and certificates is not available right now."
     )
+  end
+
+  scenario "not-onboarded mentor can view current certificates and letters after completing the post survey" do
+    mentor = FactoryBot.create(:mentor, not_onboarded: true)
+    mentor.account.took_program_survey!
+    FactoryBot.create(
+      :certificate,
+      :with_file,
+      account: mentor.account,
+      cert_type: :mentor
+    )
+    FactoryBot.create(
+      :certificate,
+      :with_file,
+      account: mentor.account,
+      cert_type: :mentor_letter,
+      team: nil
+    )
+
+    sign_in(mentor)
+
+    click_link "Scores & Certificates"
+    click_link "Certificates"
+
+    expect(page).to have_link("Open your certificate")
+    expect(page).to have_link("Open your letter of recognition")
+    expect(page).not_to have_content("You must complete the mentor training")
+    expect(page).not_to have_content("You need to sign the consent waiver")
+  end
+
+  scenario "not-onboarded mentor still needs the post survey to open current certificates" do
+    mentor = FactoryBot.create(:mentor, not_onboarded: true)
+    FactoryBot.create(
+      :certificate,
+      :with_file,
+      account: mentor.account,
+      cert_type: :mentor
+    )
+
+    sign_in(mentor)
+
+    click_link "Scores & Certificates"
+    click_link "Certificates"
+
+    expect(page).to have_content("Before you can access your certificate, please complete the post survey")
+    expect(page).not_to have_link("Open your certificate")
+    expect(page).not_to have_content("You must complete the mentor training")
+    expect(page).not_to have_content("You need to sign the consent waiver")
   end
 end

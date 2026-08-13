@@ -58,4 +58,28 @@ RSpec.feature "Mentors view scores" do
 
     expect(page).to have_content("View details")
   end
+
+  scenario "not-onboarded mentor can view finished scores" do
+    team = FactoryBot.create(:team)
+    mentor = FactoryBot.create(:mentor, not_onboarded: true)
+
+    TeamRosterManaging.add(team, mentor)
+
+    submission = FactoryBot.create(
+      :submission,
+      :complete,
+      team: team
+    )
+
+    FactoryBot.create(:submission_score, :complete, team_submission: submission)
+
+    sign_in(mentor)
+    click_link("View Scores & Certificates")
+
+    expect(page).to have_content("View details")
+    expect(page).to have_content(team.name)
+    expect(page).not_to have_link(team.name, href: mentor_team_path(team))
+    expect(page).not_to have_content("You must complete the mentor training")
+    expect(page).not_to have_content("You need to sign the consent waiver")
+  end
 end

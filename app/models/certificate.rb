@@ -8,8 +8,14 @@ class Certificate < ApplicationRecord
 
   mount_uploader :file, FileProcessor
 
+  JUDGE_LETTER_CERT_TYPES = %i[bronze_judge_letter silver_judge_letter gold_judge_letter].freeze
+
   scope :judge_types, -> {
     where(cert_type: CertificateTypes::JUDGE_CERTIFICATE_TYPES.keys)
+  }
+
+  scope :judge_certificates_and_letters, -> {
+    where(cert_type: CertificateTypes::JUDGE_CERTIFICATE_TYPES.keys + JUDGE_LETTER_CERT_TYPES)
   }
 
   scope :student_types, -> {
@@ -29,7 +35,7 @@ class Certificate < ApplicationRecord
   }
 
   scope :judge_letter_types, -> {
-    where(cert_type: %i[bronze_judge_letter silver_judge_letter gold_judge_letter])
+    where(cert_type: JUDGE_LETTER_CERT_TYPES)
   }
 
   scope :for_team, ->(team) {
