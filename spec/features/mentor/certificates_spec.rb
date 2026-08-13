@@ -92,7 +92,7 @@ RSpec.feature "Mentor certificates" do
 
   scenario "mentor can view their previous mentor certificates" do
     mentor = FactoryBot.create(:mentor, :onboarded)
-    previous_certificate = FactoryBot.create(:certificate, :past, account: mentor.account, cert_type: :mentor)
+    previous_certificate = FactoryBot.create(:certificate, :past, :with_file, account: mentor.account, cert_type: :mentor)
 
     sign_in(mentor)
 
@@ -114,6 +114,84 @@ RSpec.feature "Mentor certificates" do
 
     expect(page).to have_content(
       "If you participated in past seasons, this is where you can view and download your certificates."
+    )
+  end
+
+  scenario "not-onboarded mentor can view and download previous certificates and letters" do
+    mentor = FactoryBot.create(:mentor, not_onboarded: true)
+    previous_certificate = FactoryBot.create(
+      :certificate,
+      :past,
+      :with_file,
+      account: mentor.account,
+      cert_type: :mentor
+    )
+    previous_letter = FactoryBot.create(
+      :certificate,
+      :past,
+      :with_file,
+      account: mentor.account,
+      cert_type: :mentor_letter,
+      team: nil
+    )
+
+    sign_in(mentor)
+
+    click_link "Scores & Certificates"
+    click_link "Certificates"
+
+    expect(page).to have_content(
+      "Reading your scores and certificates is not available right now."
+    )
+
+    click_link "Previous Certificates"
+
+    expect(page).to have_content(previous_certificate.season)
+    expect(page).to have_content(previous_certificate.cert_type.titleize)
+    expect(page).to have_link("Download your certificate", count: 1)
+
+    expect(page).to have_content(previous_letter.season)
+    expect(page).to have_content(previous_letter.cert_type.titleize)
+    expect(page).to have_link("Download your letter", count: 1)
+  end
+
+  scenario "previous certificate without a generated file offers no download link" do
+    mentor = FactoryBot.create(:mentor, not_onboarded: true)
+    FactoryBot.create(
+      :certificate,
+      :past,
+      account: mentor.account,
+      cert_type: :mentor
+    )
+
+    sign_in(mentor)
+
+    click_link "Scores & Certificates"
+    click_link "Previous Certificates"
+
+    expect(page).not_to have_link("Download your certificate")
+    expect(page).to have_content("Unavailable, please contact")
+  end
+
+  scenario "not-onboarded mentor opens the previous certificates tab from the scores page", js: true do
+    mentor = FactoryBot.create(:mentor, not_onboarded: true)
+    FactoryBot.create(
+      :certificate,
+      :past,
+      :with_file,
+      account: mentor.account,
+      cert_type: :mentor_letter,
+      team: nil
+    )
+
+    sign_in(mentor)
+
+    click_link "Scores & Certificates"
+    click_link "Previous Certificates"
+
+    expect(page).to have_link("Download your letter")
+    expect(page).not_to have_content(
+      "Reading your scores and certificates is not available right now."
     )
   end
 end

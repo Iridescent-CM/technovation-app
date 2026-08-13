@@ -93,6 +93,10 @@
       "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Weak SQL Injection in app/data_grids/mentors_grid.rb:94)"
     },
     {
+      "fingerprint": "d84924377155b41e094acae7404ec2e521629d86f97b0ff628e3d1b263f8101c",
+      "note": "Baselined 2026-08-13 for #6349 CI gate; Rails 7.2.3.1 EOL warning severity increased to High after 2026-08-09 EOL date passed, superseding the fingerprint below; triage separately (High Unmaintained Dependency in Gemfile.lock:457)"
+    },
+    {
       "fingerprint": "98b26f60d776fd41ee6f088c833725145be9aac2d7c5b33780241c273622db42",
       "note": "Baselined 2026-07-22 for #6311 CI gate; triage separately (Medium Unmaintained Dependency in Gemfile.lock:457)"
     },
