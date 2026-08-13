@@ -233,6 +233,10 @@ jobs:
             fi
 
       - run:
+          name: Install libgif-dev
+          command: sudo apt-get install -y libgif-dev
+
+      - run:
           name: Install node packages
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
 
