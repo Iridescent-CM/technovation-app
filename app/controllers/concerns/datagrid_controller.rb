@@ -127,24 +127,32 @@ module DatagridController
     raw = params[param_root]
     return ActiveSupport::HashWithIndifferentAccess.new if raw.blank?
 
-    ActiveSupport::HashWithIndifferentAccess.new(
+    permitted = ActiveSupport::HashWithIndifferentAccess.new(
       raw.permit(*grid_params_permit_keys).to_unsafe_h
     )
+
+    multiple_grid_filter_names.each do |name|
+      permitted[name] = Array(permitted[name]) if permitted.key?(name)
+    end
+
+    permitted
   end
 
   def grid_params_permit_keys
     scalar_keys = [:order, :descending]
-    array_keys = [:column_names]
+    array_keys = multiple_grid_filter_names
 
     grid_klass.filters.each do |filter|
-      if filter.multiple?
-        array_keys << filter.name
-      else
-        scalar_keys << filter.name
-      end
+      scalar_keys << filter.name unless filter.multiple?
     end
 
-    scalar_keys.uniq + array_keys.uniq.map { |name| {name => []} }
+    # A multi-value filter can arrive as a single scalar (saved-search
+    # redirects, bookmarked URLs), so permit both shapes.
+    (scalar_keys | array_keys) + array_keys.map { |name| {name => []} }
+  end
+
+  def multiple_grid_filter_names
+    ([:column_names] + grid_klass.filters.select(&:multiple?).map(&:name)).uniq
   end
 
   def detect_extra_columns(grid_params)
