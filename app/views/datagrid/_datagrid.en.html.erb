@@ -77,13 +77,10 @@
       <% grid.attributes.each do |name, value| %>
         <% next if value.blank? %>
 
-        <% if Array(value).many? %>
-          <%= f.select "#{param_root}[#{name}]", nil, {},
-            class: "hidden",
-            multiple: true do %>
-            <% Array(value).each do |v| %>
-              <%= content_tag :option, v, selected: true %>
-            <% end %>
+        <% if value.is_a?(Array) %>
+          <% value.each do |v| %>
+            <% next if v.blank? %>
+            <%= hidden_field_tag "#{param_root}[#{name}][]", v, id: nil %>
           <% end %>
         <% else %>
           <%= f.hidden_field "#{param_root}[#{name}]", value: value %>

@@ -54,6 +54,18 @@ RSpec.describe DataGrids::Ambassador::ParticipantsController do
       context "when a chapter ambassador has the 'national view' ability" do
         let(:national_view) { true }
 
+        it "runs the CSV scope modifier the way ExportJob does (issue #6354)" do
+          get :index
+
+          csv_scope = described_class.class_eval(
+            described_class.csv_scope_modifier
+          )
+
+          expect {
+            csv_scope.call(Account.all, chapter_ambassador, {})
+          }.not_to raise_error
+        end
+
         context "when viewing a chapter in the ChA's chapter's region" do
           let(:another_brazil_chapter) { FactoryBot.create(:chapter, :brazil) }
 

@@ -31,6 +31,67 @@ RSpec.describe Admin::ParticipantsController do
       end
     end
 
+    context "exporting a CSV with a single-value filter (issue #6354)" do
+      let!(:mentor) { FactoryBot.create(:mentor, :onboarded) }
+
+      it "normalizes a scalar multi-value filter into an array" do
+        get :index, params: {
+          accounts_grid: {
+            scope_names: "mentor",
+            season: Season.current.year.to_s
+          }
+        }
+
+        expect(response).to have_http_status(:ok)
+
+        permitted = controller.send(:permitted_grid_params)
+        expect(permitted[:scope_names]).to eq(["mentor"])
+        expect(permitted[:season]).to eq([Season.current.year.to_s])
+      end
+
+      it "enqueues ExportJob with the single selected filter values intact" do
+        allow(ExportJob).to receive(:perform_later)
+
+        get :index, format: :json, params: {
+          accounts_grid: {
+            scope_names: ["mentor"],
+            season: [Season.current.year]
+          }
+        }
+
+        expect(ExportJob).to have_received(:perform_later) do |*args|
+          filters = args[3]
+
+          expect(filters["scope_names"]).to eq(["mentor"])
+          expect(filters["season"]).to eq([Season.current.year.to_s])
+        end
+      end
+
+      context "rendering the export modal" do
+        render_views
+
+        it "emits array params for a single selected filter value" do
+          get :index, params: {
+            accounts_grid: {
+              scope_names: ["mentor"],
+              season: [Season.current.year]
+            }
+          }
+
+          expect(response).to have_http_status(:ok)
+
+          assert_select "#export_csv input[name='accounts_grid[scope_names][]'][value=?]",
+            "mentor"
+          assert_select "#export_csv input[name='accounts_grid[season][]'][value=?]",
+            Season.current.year.to_s
+
+          # The scalar shape is what permit() silently discards.
+          assert_select "#export_csv input[name='accounts_grid[scope_names]']", false
+          assert_select "#export_csv input[name='accounts_grid[season]']", false
+        end
+      end
+    end
+
     context "when arriving from a club's stats overview link (issue #6070)" do
       render_views
 
