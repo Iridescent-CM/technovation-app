@@ -6,12 +6,13 @@ class AccountsGrid
   CSV_EXPORT_PRELOADS = [
     :background_check,
     :consent_waiver,
+    :division,
     :chapter_ambassador_profile,
     :club_ambassador_profile,
     {current_chapter_assignments: :chapterable},
     {current_club_assignments: :chapterable},
     {
-      student_profile: [:parental_consents, :media_consent, :current_teams],
+      student_profile: [:parental_consents, :parental_consent, :media_consent, :current_teams],
       mentor_profile: [:expertises, :current_teams, {mentor_profile_mentor_types: :mentor_type}],
       judge_profile: [:regional_pitch_events, {judge_profile_judge_types: :judge_type}]
     }
@@ -177,7 +178,7 @@ class AccountsGrid
 
   column :team_division do
     if student_profile.present?
-      Division.for(self).name.humanize
+      division&.name&.humanize || "-"
     else
       "-"
     end
@@ -232,8 +233,15 @@ class AccountsGrid
   end
 
   column :parental_consent do |account, grid|
-    if account.student_profile&.parental_consent.present?
-      account.student_profile.parental_consent_signed?(grid.season) ? "Signed" : "Pending"
+    profile = account.student_profile
+
+    if profile&.parental_consent.present?
+      seasons = Array(grid.season).flatten.map(&:to_i)
+      signed = profile.parental_consents.any? { |consent|
+        consent.signed? && (consent.seasons & seasons).any?
+      }
+
+      signed ? "Signed" : "Pending"
     else
       "-"
     end
@@ -297,7 +305,11 @@ class AccountsGrid
   end
 
   column :country do |account, _grid|
-    FriendlyCountry.new(account).country_name
+    country_code = account.read_attribute(:country)
+    country = Carmen::Country.coded(country_code) ||
+      Carmen::Country.named(country_code)
+
+    country&.name || country_code
   end
 
   column :geolocation, header: "Geolocation", if: ->(g) {

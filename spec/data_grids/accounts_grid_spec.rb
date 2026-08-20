@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe AccountsGrid do
   describe "CSV export" do
     it "avoids N+1 queries when rendering association-backed columns" do
-      student = FactoryBot.create(:student, :onboarded)
+      students = FactoryBot.create_list(:student, 3, :onboarded)
       mentor = FactoryBot.create(:mentor, :onboarded)
       judge = FactoryBot.create(:judge, :onboarded)
 
@@ -12,11 +12,14 @@ RSpec.describe AccountsGrid do
         country: [],
         state_province: [],
         season: Season.current.year,
-        season_and_or: "match_any"
+        season_and_or: "match_any",
+        column_names: %w[
+          id profile_type chapter club mentor_types mentor_expertise
+          judge_types team_division team_names background_check
+          invitation_status parental_consent media_consent consent_waiver
+          virtual_or_live
+        ]
       )
-
-      assets = grid.assets.to_a
-      skip "no participants in test database" if assets.empty?
 
       queries = []
       subscription = ActiveSupport::Notifications.subscribe("sql.active_record") do |*, payload|
@@ -25,18 +28,29 @@ RSpec.describe AccountsGrid do
         queries << payload[:sql]
       end
 
-      assets.each do |account|
+      exported_ids = []
+      grid.send(:each_with_batches) do |account|
         grid.row_for(account)
+        exported_ids << account.id
       end
 
       ActiveSupport::Notifications.unsubscribe(subscription)
 
-      profile_queries = queries.count { |sql|
-        sql.match?(/FROM "(student_profiles|mentor_profiles|judge_profiles|mentor_profile_mentor_types|judge_profile_judge_types|teams|parental_consents|background_checks|consent_waivers)"/)
+      association_query_counts = queries.each_with_object(Hash.new(0)) { |sql, counts|
+        table = sql[/(?<=FROM ")[^"]+/]
+        counts[table] += 1 if %w[
+          divisions student_profiles mentor_profiles judge_profiles
+          mentor_profile_mentor_types judge_profile_judge_types teams
+          parental_consents background_checks consent_waivers
+        ].include?(table)
       }
 
-      expect(profile_queries).to eq(0)
-      expect(assets.map(&:id)).to include(student.account.id, mentor.account.id, judge.account.id)
+      expect(association_query_counts.values).to all(be <= 2)
+      expect(exported_ids).to include(
+        *students.map(&:account_id),
+        mentor.account.id,
+        judge.account.id
+      )
     end
 
     it "includes expected participant columns" do
@@ -54,6 +68,26 @@ RSpec.describe AccountsGrid do
       expect(header).to include("Participant ID")
       expect(header).to include("Email")
       expect(header).to include("Team name(s)")
+    end
+
+    it "renders country names without external geocoding requests" do
+      account = Account.new(
+        first_name: "Ada",
+        last_name: "Lovelace",
+        email: "ada@example.com",
+        country: "US"
+      )
+      grid = described_class.new(
+        admin: true,
+        country: [],
+        state_province: [],
+        column_names: ["country"]
+      )
+
+      expect(Geocoder).not_to receive(:search)
+
+      country_index = grid.header.index("Country")
+      expect(grid.row_for(account)[country_index]).to eq("United States")
     end
   end
 end
