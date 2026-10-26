@@ -90,7 +90,8 @@ RSpec.describe "Registration toggles", :js do
       expect(page).not_to have_content("I am a mentor and/or educator who will support team(s) of students")
       expect(page).not_to have_content("I am over 18 years old and will judge submissions")
 
-      expect(page).to have_content("Registration is currently closed")
+      expect(page).to have_content("Our new home is open.")
+      expect(page).not_to have_content("Registration is currently closed")
     end
   end
 end

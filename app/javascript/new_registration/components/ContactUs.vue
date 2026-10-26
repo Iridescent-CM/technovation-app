@@ -23,10 +23,10 @@
             alt=""
             class="social-icon"
         /></a>
-        <a href="https://twitter.com/technovation"
+        <a href="https://x.com/technovation"
           ><img
-            :src="require('social-media/twitter.png')"
-            alt=""
+            :src="require('social-media/x.png')"
+            alt="X"
             class="social-icon"
         /></a>
         <a href="https://www.instagram.com/technovationglobal"
