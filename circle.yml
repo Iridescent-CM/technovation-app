@@ -208,21 +208,7 @@ jobs:
 
       - run:
           name: Install wkhtmltopdf
-          command: |
-            sudo sed -i 's|http://archive.ubuntu.com/ubuntu|http://mirrors.rit.edu/ubuntu|g' /etc/apt/sources.list
-            sudo sed -i 's|http://security.ubuntu.com/ubuntu|http://mirrors.rit.edu/ubuntu|g' /etc/apt/sources.list
-
-            updated=0
-            for attempt in 1 2 3; do
-              if sudo apt-get update; then
-                updated=1
-                break
-              fi
-              echo "apt-get update failed (attempt ${attempt}); the Ubuntu mirror may be mid-sync. Retrying..."
-              sleep 15
-            done
-            test "$updated" = 1
-            sudo apt-get install -y wkhtmltopdf
+          command: sudo apt-get install -y wkhtmltopdf
 
       - run:
           name: Install gems
