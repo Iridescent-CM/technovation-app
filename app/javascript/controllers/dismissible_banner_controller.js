@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static values = {
-    storageKey: { type: String, default: "pardon_our_dust_banner_dismissed" },
+    storageKey: { type: String, default: "platform_moved_banner_dismissed" },
   };
 
   connect() {
