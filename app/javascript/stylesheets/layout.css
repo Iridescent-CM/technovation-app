@@ -86,3 +86,34 @@ html {
   @apply flex flex-row justify-between items-center;
 }
 
+.pardon-our-dust-banner {
+  @apply container mx-auto mb-6 w-full lg:w-3/4;
+}
+
+.pardon-our-dust-banner__inner {
+  @apply relative flex items-start gap-3 rounded-md border border-gray-200 border-l-4 border-l-energetic-blue bg-blue-50 p-4 pr-12 shadow-sm;
+}
+
+.pardon-our-dust-banner__icon {
+  @apply mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white text-energetic-blue;
+}
+
+.pardon-our-dust-banner__content {
+  @apply min-w-0 flex-1 text-sm leading-6 text-gray-700;
+}
+
+.pardon-our-dust-banner__title {
+  @apply text-base font-semibold leading-6 text-tg-dark-blue;
+}
+
+.pardon-our-dust-banner__body {
+  @apply mt-1;
+}
+
+.pardon-our-dust-banner__cta {
+  @apply mt-3 inline-flex items-center rounded bg-energetic-blue px-4 py-2 text-sm font-medium text-white no-underline shadow-sm hover:bg-tg-dark-blue hover:text-white hover:no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-energetic-blue focus-visible:ring-offset-2;
+}
+
+.pardon-our-dust-banner__dismiss {
+  @apply absolute top-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded text-gray-500 hover:bg-white hover:text-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-energetic-blue;
+}
